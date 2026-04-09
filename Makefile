@@ -3,7 +3,7 @@ ifeq ($(UNAME_S), Darwin)
 MLX_DIR	= minilibx_opengl
 LIBS	= -lmlx ./src/libft/libft.a -framework OpenGL -framework AppKit
 else
-MLX_DIR	= mlx_linux
+MLX_DIR	= minilibx_linux
 LIBS	= -lmlx ./src/libft/libft.a -lXext -lX11 -lm -lbsd
 endif
 
