@@ -47,6 +47,18 @@ typedef struct s_hit_point
 	int		index;
 }	t_hit_point;
 
+typedef struct s_cy
+{
+	t_ray	ray;
+	t_obj	*obj;
+	t_xyz	axis;
+	double	radius;
+	double	half_h;
+	double	min;
+	double	max;
+}	t_cy;
+
+
 int				ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray,
 					t_xyz *color);
 t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
@@ -111,4 +123,10 @@ t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
 					double spec_ref);
 void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
+
+bool			hit_cy_core(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_point *hit);
+
 #endif

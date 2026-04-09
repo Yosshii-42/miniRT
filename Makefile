@@ -39,7 +39,9 @@ SRCS	= src/parser/check_element.c \
 		  src/calc/plus_minus_vector.c \
 		  src/calc/normalize.c \
 		  src/calc/distance_vector.c \
+		  src/calc/solve_abc.c \
 		  src/raytracing/ray_intersections.c \
+		  src/raytracing/cylinder.c \
 		  src/raytracing/calc_screen_vector.c \
 		  src/raytracing/calc_distance_obj.c \
 		  src/raytracing/hit_obj_calc.c \

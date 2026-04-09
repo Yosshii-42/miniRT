@@ -38,4 +38,7 @@ t_xyz	normalize(t_xyz vector);
 double	squared_norm(t_xyz v);
 double	distance_between(t_xyz a, t_xyz b);
 
+//
+bool	solve_quadratic(double abc[3], double *t0, double *t1);
+
 #endif

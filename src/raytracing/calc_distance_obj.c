@@ -72,9 +72,9 @@ double	hit_cylinder_caps(t_obj *obj, t_ray *ray, t_xyz norm_c)
 		t[i + 1] = dot(minus_v1_v2(caps[i], ray->pos), norm_c) / denom;
 		d = minus_v1_v2(plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[i + 1])), \
 		caps[i]);
-		if (squared_norm(d) <= sqr(obj->diameter * 0.5))
+		if (0 < t[i + 1] && squared_norm(d) <= sqr(obj->diameter * 0.5))
 		{
-			if (t[0] < 0 || (t[i + 1] < t[0] && 0 < t[i + 1]))
+			if (t[0] < 0 || t[i + 1] < t[0])
 				t[0] = t[i + 1];
 		}
 		i++;
@@ -89,18 +89,24 @@ double	dist_cylndr(double *abcd, t_obj *obj, t_ray *ray, t_hit_point *h_obj)
 	t_xyz	norm_c;
 
 	t[0] = NO_HIT;
+	// t[1] = NO_HIT;
+	// t[2] = NO_HIT;
+	// t[3] = NO_HIT;
 	norm_c = normalize(obj->vector);
-	if (abcd[L_D] < 0)
-		return (NO_HIT);
-	t[1] = (-1 * abcd[L_B] - sqrt(abcd[L_D])) / (2 * abcd[L_A]);
-	t[2] = (-1 * abcd[L_B] + sqrt(abcd[L_D])) / (2 * abcd[L_A]);
-	hit_pos[0] = plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[1]));
-	hit_pos[1] = plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[2]));
-	t[0] = get_nearest_inter_cy(obj, hit_pos, t, norm_c);
+	if (fabs(abcd[L_A]) > EPS && abcd[L_D] >= 0)
+	{
+		t[1] = (-1 * abcd[L_B] - sqrt(abcd[L_D])) / (2 * abcd[L_A]);
+		t[2] = (-1 * abcd[L_B] + sqrt(abcd[L_D])) / (2 * abcd[L_A]);
+		hit_pos[0] = plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[1]));
+		hit_pos[1] = plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[2]));
+		t[0] = get_nearest_inter_cy(obj, hit_pos, t, norm_c);
+	}
+	// if (abcd[L_D] < 0)
+	// 	return (NO_HIT);
 	t[3] = hit_cylinder_caps(obj, ray, norm_c);
 	if ((t[0] < 0 && 0 < t[3]) || (t[3] < t[0] && 0 < t[3]))
 		t[0] = t[3];
-	if (0)
+	if (h_obj != NULL)
 		set_h_obj_cy(obj, ray, h_obj, t);
 	return (t[0]);
 }

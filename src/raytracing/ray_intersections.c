@@ -60,30 +60,57 @@ double	hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	return (-1);
 }
 
+// 軸を正規化
+// top/bottom centerを作る
+//　side
+// cap
+// cap
+// 一番近いものを採用
 double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 {
-	t_xyz	ray_to_obj;
-	double	abcd[4];
-	double	radius;
-	t_xyz	norm_cylinder;
+	t_cy		cy;
+	t_hit_point	tmp;
 
-	radius = obj->diameter / 2.0;
-	norm_cylinder = normalize(obj->vector);
-	ray_to_obj = minus_v1_v2(ray->pos, obj->xyz);
-	abcd[L_A] = squared_norm(cross(ray->dir, norm_cylinder));
-	abcd[L_B] = dot(cross(ray->dir, norm_cylinder), \
-	cross(ray_to_obj, norm_cylinder)) * 2;
-	abcd[L_C] = dot(cross(ray_to_obj, norm_cylinder), \
-	cross(ray_to_obj, norm_cylinder)) - sqr(radius);
-	if (abcd[L_A] == 0)
-		return (NO_HIT);
-	abcd[L_D] = abcd[L_B] * abcd[L_B] - 4 * abcd[L_A] * abcd[L_C];
-	if (abcd[L_D] <= 0)
+	cy.ray = *ray;
+	cy.obj = obj;
+	cy.axis = normalize(obj->vector);
+	cy.radius = obj->diameter / 2.0;
+	cy.half_h = obj->height / 2.0;
+	cy.min = EPS;
+	cy.max = MAX_DIST;
+	if (!hit_cy_core(&cy, &tmp))
 		return (NO_HIT);
 	if (rec_hit)
-		return (dist_cylndr(abcd, obj, ray, h_obj));
-	return (dist_cylndr(abcd, obj, ray, NULL));
+		*h_obj = tmp;
+	return (tmp.dist);
 }
+
+// double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
+// {
+// 	t_xyz	ray_to_obj;
+// 	double	abcd[4];
+// 	double	radius;
+// 	t_xyz	norm_cylinder;
+
+// 	radius = obj->diameter / 2.0;
+// 	norm_cylinder = normalize(obj->vector);
+// 	ray_to_obj = minus_v1_v2(ray->pos, obj->xyz);
+// 	abcd[L_A] = squared_norm(cross(ray->dir, norm_cylinder));
+// 	abcd[L_B] = dot(cross(ray->dir, norm_cylinder), \
+// 	cross(ray_to_obj, norm_cylinder)) * 2;
+// 	abcd[L_C] = dot(cross(ray_to_obj, norm_cylinder), \
+// 	cross(ray_to_obj, norm_cylinder)) - sqr(radius);
+// 	if (abcd[L_A] == 0)
+// 		return (NO_HIT);
+// 	abcd[L_D] = abcd[L_B] * abcd[L_B] - 4 * abcd[L_A] * abcd[L_C];
+// 	if (abcd[L_D] <= 0)
+// 		return (NO_HIT);
+// 	if (rec_hit)
+// 		return (dist_cylndr(abcd, obj, ray, h_obj));
+// 	return (dist_cylndr(abcd, obj, ray, NULL));
+// }
+
+
 
 double	hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 {

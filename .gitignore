@@ -4,6 +4,7 @@
 miniRT
 miniRT_bonus
 out
+minilibx-linux/
 ./mlx_linux/*
 mlx_linux/LICENSE
 mlx_linux/Makefile
