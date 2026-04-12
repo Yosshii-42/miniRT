@@ -36,6 +36,7 @@ SRCS	= src/parser/check_element.c \
 		  src/ui/close_handler.c \
 		  src/calc/dot_cross_normalize.c \
 		  src/calc/arithmetic_operations.c \
+		  src/calc/vec_length.c \
 		  src/calc/utils.c \
 		  src/raytracing/ray_intersections.c \
 		  src/raytracing/cylinder.c \

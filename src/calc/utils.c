@@ -18,22 +18,9 @@ double	sqr(double x)
 	return (x * x);
 }
 
-double	vec_length_sq(t_xyz v)
+double	deg_to_rad(double deg)
 {
-	return (sqr(v.x) + sqr(v.y) + sqr(v.z));
-}
-
-double	vec_length(t_xyz v)
-{
-	return (sqrt(vec_length_sq(v)));
-}
-
-double	vec_dist(t_xyz a, t_xyz b)
-{
-	t_xyz	diff;
-
-	diff = vec_sub(a, b);
-	return (sqrt(vec_length_sq(diff)));
+	return (deg * M_PI / 180.0);
 }
 
 bool	solve_quadratic(double abc[3], double *t0, double *t1)

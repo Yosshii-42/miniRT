@@ -21,7 +21,7 @@ t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 {
 	double	dot_res;
 	t_xyz	reverse_vec;
-	// t_xyz	rev_cam_vec;
+	t_xyz	view_dir;
 	double	specular_ref;
 	t_xyz	incident_dir;
 
@@ -34,11 +34,8 @@ t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 		reverse_vec = vec_sub(
 			vec_scale(hit_obj.norm, 2 * dot_res), incident_dir);
 		reverse_vec = normalize(reverse_vec);
-		// rev_cam_vec = vec_scale(cam_ray.dir, -1);
-		// rev_cam_vec = normalize(rev_cam_vec);
-		t_xyz view_dir = normalize(vec_sub(cam_ray.pos, hit_obj.pos));
+		view_dir = normalize(vec_sub(cam_ray.pos, hit_obj.pos));
 		specular_ref = dot(reverse_vec, view_dir);
-		// specular_ref = dot(reverse_vec, rev_cam_vec);
 		specular_ref = pow(clamp_double(specular_ref, 0.0, 1.0), SHINENESS);
 	}
 	return (pls_shade(obj, lit, dot_res, specular_ref));

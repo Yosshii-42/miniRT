@@ -30,7 +30,7 @@ int	hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p)
 	ret = -1;
 	i = 0;
 	obj_cpy = obj;
-	while(obj_cpy)
+	while (obj_cpy)
 	{
 		tmp_hit = *hit_p;
 		tmp_dist = hit_cam_ray(obj_cpy, ray, &tmp_hit, true);
@@ -47,30 +47,6 @@ int	hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p)
 	if (ret == -1)
 		hit_p->dist = -1;
 	return (ret);
-	// t_obj	*obj_cpy;
-	// double	tmp;
-	// int		i;
-	// int		ret;
-
-	// hit_p->dist = MAX_DIST + 1;
-	// ret = -1;
-	// i = 0;
-	// obj_cpy = obj;
-	// while (obj_cpy)
-	// {
-	// 	tmp = hit_cam_ray(obj_cpy, ray, hit_p, true);
-	// 	if (tmp > 0 && tmp < MAX_DIST && tmp < hit_p->dist)
-	// 	{
-	// 		hit_p->dist = tmp;
-	// 		hit_p->index = i;
-	// 		ret = i;
-	// 	}
-	// 	obj_cpy = obj_cpy->next;
-	// 	i++;
-	// }
-	// if (hit_p->dist == MAX_DIST + 1)
-	// 	hit_p->dist = -1;
-	// return (ret);
 }
 
 // 各オブジェクト判定は

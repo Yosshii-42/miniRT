@@ -13,7 +13,8 @@
 ** 3. 最終的に最も近い交点を hit に格納
 ** ※ cy->max を更新することで「一番近いもの」を維持している
 */
-bool	hit_cy_core(t_cy *cy, t_hit_point *hit) {
+bool	hit_cy_core(t_cy *cy, t_hit_point *hit)
+{
 	t_hit_point	side_hit;
 	t_hit_point	cap_hit;
 	bool		has_side;
@@ -24,16 +25,9 @@ bool	hit_cy_core(t_cy *cy, t_hit_point *hit) {
 	if (!has_side && !has_cap)
 		return (false);
 	if (has_side && !has_cap)
-	{
-		*hit = side_hit;
-		return (true);
-
-	}
+		return (*hit = side_hit, true);
 	if (!has_side && has_cap)
-	{
-		*hit = cap_hit;
-		return (true);
-	}
+		return (*hit = cap_hit, true);
 	if (side_hit.dist < cap_hit.dist)
 		*hit = side_hit;
 	else
@@ -122,7 +116,7 @@ bool	judge_t(t_cy *cy, t_hit_point *hit, double t)
 
 	pos = vec_add(cy->ray.pos, vec_scale(cy->ray.dir, t));
 	s = dot(vec_sub(pos, cy->obj->xyz), cy->axis);
-	if (-cy->half_h +EPS <= s && s <= cy->half_h - EPS)
+	if (-cy->half_h <= s && s <= cy->half_h)
 	{
 		hit->dist = t;
 		hit->pos = pos;
@@ -148,42 +142,27 @@ bool	judge_t(t_cy *cy, t_hit_point *hit, double t)
 */
 bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 {
-	// double	abc[3];
-	// double	t0;
-	// double	t1;
-
-	// calc_cy_side_abc(cy, abc);
-	// if (!solve_quadratic(abc, &t0, &t1))
-	// 	return (false);
-	// if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, hit, t0))
-	// 		return (true);
-	// if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, hit, t1))
-	// 		return (true);
-	// return (false);
-
 	double abc[3];
-    double t0, t1;
-    bool found = false;
+    double t0;
+	double t1;
+    bool found;
     t_hit_point tmp;
 
+	found = false;
     calc_cy_side_abc(cy, abc);
     if (!solve_quadratic(abc, &t0, &t1))
         return false;
-
-    // 小さい方からチェック
     if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, &tmp, t0))
     {
         *hit = tmp;
         found = true;
     }
-
     if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, &tmp, t1))
     {
         if (!found || tmp.dist < hit->dist)
             *hit = tmp;
         found = true;
     }
-
     return found;
 }
 

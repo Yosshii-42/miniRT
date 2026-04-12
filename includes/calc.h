@@ -27,11 +27,14 @@ t_xyz	vec_mul(t_xyz a, t_xyz b);
 t_xyz	vec_scale(t_xyz v, double s);
 t_xyz	vec_div(t_xyz v, double s);
 
-// utils.c
-double	sqr(double x);
+// vec_length.c
 double	vec_length_sq(t_xyz v);
 double	vec_length(t_xyz v);
 double	vec_dist(t_xyz a, t_xyz b);
+
+// utils.c
+double	sqr(double x);
+double	deg_to_rad(double deg);
 bool	solve_quadratic(double abc[3], double *t0, double *t1);
 
 #endif

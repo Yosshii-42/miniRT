@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
-#include "../../includes/raytracing.h"
-#include "../../includes/ui.h"
-#include "../../includes/calc.h"
+#include "parser.h"
+#include "raytracing.h"
+#include "ui.h"
+#include "calc.h"
 #include <mlx.h>
 #include <math.h>
 
@@ -22,7 +22,11 @@ int	init_window(t_obj *data, t_env *env)
 	t_mlx_env	mlx;
 
 	mlx.mlx = mlx_init();
+	if (!mlx.mlx)
+		print_error_and_exit("mlx_init failed", NULL);
 	mlx.window = mlx_new_window(mlx.mlx, W_WIDTH, W_HEIGHT, WIN_TITLE);
+	if (!mlx.window)
+		print_error_and_exit("mlx_new_window failed", NULL);
 	mlx_key_hook(mlx.window, key_handler, &mlx);
 	render_window(&mlx, data, env);
 	mlx_hook(mlx.window, DESTROY_NOTIFY, 0, close_btn_click, &mlx);
@@ -36,14 +40,14 @@ int	render_window(t_mlx_env *mlx, t_obj *obj, t_env *env)
 		print_error_and_exit("render_window", "arg is NULL");
 	mlx->img = malloc(sizeof(t_meta_img));
 	if (!mlx->img)
-		print_error_and_exit("mlx_new_image failed", NULL);
+		print_error_and_exit("malloc failed", "t_meta_img");
 	mlx->img->img = mlx_new_image(mlx->mlx, W_WIDTH, W_HEIGHT);
 	if (!mlx->img->img)
 		print_error_and_exit("mlx_new_image failed", NULL);
 	mlx->img->addr = mlx_get_data_addr(mlx->img->img, \
 		&mlx->img->bits_per_pixel, &mlx->img->line_length, &mlx->img->endian);
 	if (!mlx->img->addr)
-		print_error_and_exit("mlx_new_image failed", NULL);
+		print_error_and_exit("mlx_get_data_addr failed", NULL);
 	render_scene(mlx, obj, env);
 	return (EXIT_SUCCESS);
 }
@@ -51,16 +55,21 @@ int	render_window(t_mlx_env *mlx, t_obj *obj, t_env *env)
 t_obj	get_indexed_obj(int index, t_obj *obj)
 {
 	t_obj	*ret;
-	int		j;
+	int		i;
 
-	ret = obj;
 	if (!obj)
 		print_error_and_exit("get_indexed_obj", "obj is null");
 	if (index < 0)
-		return (*obj);
-	j = -1;
-	while (ret && ++j != index)
+		print_error_and_exit("get_indexed_obj", "invalid index");
+	ret = obj;
+	i = 0;
+	while (ret && i < index)
+	{
 		ret = ret->next;
+		i++;
+	}
+	if (!ret)
+		print_error_and_exit("get_indexed_obj", "index out of range");
 	return (*ret);
 }
 
@@ -117,28 +126,25 @@ int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
 	cpy_obj = get_indexed_obj(hit_obj.index, obj);
 	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
 	tmp_lit = env->lit;
-	if (hit_obj.index >= 0)
+	pls_amb_color(&cpy_obj, env, color);
+	// while (tmp_lit && tmp_lit->valid_flag)
+	// {
+	// 	ret = calc_shadow(obj, tmp_lit, &hit_obj);
+	// 	if (ret == NOT_RENDERED_SHADOW)
+	// 		*color = vec_add(
+	// 			calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
+	// 	tmp_lit = tmp_lit->next;
+	// }
+	while (tmp_lit)
 	{
-		pls_amb_color(&cpy_obj, env, color);
-		// while (tmp_lit && tmp_lit->valid_flag)
-		// {
-		// 	ret = calc_shadow(obj, tmp_lit, &hit_obj);
-		// 	if (ret == NOT_RENDERED_SHADOW)
-		// 		*color = vec_add(
-		// 			calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
-		// 	tmp_lit = tmp_lit->next;
-		// }
-		while (tmp_lit)
+		if (tmp_lit->valid_flag)
 		{
-			if (tmp_lit->valid_flag)
-			{
-				ret = calc_shadow(obj, tmp_lit, &hit_obj);
-				if (ret == NOT_RENDERED_SHADOW)
-					*color = vec_add(calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
-			}
-			tmp_lit = tmp_lit->next;
+			ret = calc_shadow(obj, tmp_lit, &hit_obj);
+			if (ret == NOT_RENDERED_SHADOW)
+				*color = vec_add(calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
 		}
-		return (clamp_xyz(color, 0, 255), 1);
+		tmp_lit = tmp_lit->next;
 	}
+	return (clamp_xyz(color, 0, 255), 1);
 	return (0);
 }

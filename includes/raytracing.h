@@ -20,6 +20,8 @@
 # define MAX_DIST 65535
 # define EPS 0.000001f
 # define EPSILON 0.0078125f
+# define PLANE_PARALLEL 1e-6
+# define M_PI 3.14159265358979323846
 # define RENDERED_SHADOW 0
 # define NOT_RENDERED_SHADOW 1
 # define NO_LIGHT 2
@@ -80,45 +82,44 @@ double			convert_x_to_screen(int x);
 double			convert_y_to_screen(int y);
 void			set_screen_vector(t_xyz *screen, int x, int y, double fov);
 
-double			hit_sphere(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
-double			hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
-double			hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
+// cam
 double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 					bool rec_hit);
+t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
 
+// shpere
+double			hit_sphere(t_obj *obj, t_ray *ray);
 double			distance_sphere(double *abcd);
-double			dist_cylndr(double *abcd, t_obj *obj, t_ray *ray,
-					t_hit_point *h_obj);
-double			hit_cylinder_caps(t_obj *obj, t_ray *ray, t_xyz norm_c);
-double			get_nearest_inter_cy(t_obj *obj, t_xyz *h_pos, double *t,
-					t_xyz norm_c);
 
+// plane
+double			hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
+					bool rec_hit);
+
+// cylinder
+double			hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
+					bool rec_hit);
+bool			hit_cy_core(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
+					t_hit_point *hit);
+
+// hit
 void			fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj);
 void			set_hit_obj(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 					double dist);
-void			set_h_obj_cy(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					double *t);
-
-t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
-
 int				hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p);
 int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p);
 
-void			is_light_inside_sp(t_obj *obj, t_lit *lit);
+// light
 void			is_light_inside_cy(t_obj *obj, t_lit *lit);
-
-int				hit_nearest_obj(t_obj *obj, t_ray *ray,
-					t_hit_point *hit_p);
 int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray,
 					t_hit_point *hit_p);
-
 void			check_light_and_cam_pos(t_obj *obj, t_lit *lit,
 					t_ray cam_ray);
 void			check_light_pos(t_obj *obj, t_env *env,
 					t_ray cam_ray);
+
 
 unsigned int	clamp(double value, int min, int max);
 double			clamp_double(double value, double min, double max);
@@ -136,11 +137,7 @@ t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
 void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
 
-bool			hit_cy_core(t_cy *cy, t_hit_point *hit);
-bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
-bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
-bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
-	t_hit_point *hit);
+
 
 void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
 

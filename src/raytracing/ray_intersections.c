@@ -14,7 +14,7 @@
 #include "../../includes/parser.h"
 #include "../../includes/raytracing.h"
 // check if cam_ray is hitting to sphere and return distance
-double	hit_sphere(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
+double	hit_sphere(t_obj *obj, t_ray *ray)
 {
 	t_xyz	ray_to_obj;
 	double	abcd[4];
@@ -27,11 +27,9 @@ double	hit_sphere(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	abcd[L_B] = 2 * dot(ray->dir, ray_to_obj);
 	abcd[L_C] = vec_length_sq(ray_to_obj) - radius * radius;
 	abcd[L_D] = abcd[L_B] * abcd[L_B] - 4 * abcd[L_A] * abcd[L_C];
-	if (abcd[L_D] <= 0)
+	if (abcd[L_D] < 0)
 		return (NO_HIT);
 	ret = distance_sphere(abcd);
-	if (ret > 0 && rec_hit && 0)
-		set_hit_obj(obj, ray, h_obj, ret);
 	return (ret);
 }
 
@@ -45,19 +43,17 @@ double	hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	double	denominator;
 	double	ret;
 
+	(void)h_obj;
+	(void)rec_hit;
 	p_norm = normalize(obj->vector);
 	denominator = dot(ray->dir, p_norm);
-	if (denominator)
-	{
-		numerator = -1 * dot(vec_sub(ray->pos, obj->xyz), p_norm);
-		if (!numerator)
-			return (-1);
-		ret = numerator / denominator;
-		if (ret > 0 && rec_hit && 0)
-			set_hit_obj(obj, ray, h_obj, ret);
-		return (ret);
-	}
-	return (-1);
+	if (fabs(denominator) < PLANE_PARALLEL)
+		return (NO_HIT);
+	numerator = dot(vec_sub(obj->xyz, ray->pos), p_norm);
+	ret = numerator / denominator;
+	if (ret <= EPSILON)
+		return (NO_HIT);
+	return (ret);
 }
 
 // 軸を正規化
@@ -88,37 +84,10 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	return (tmp.dist);
 }
 
-// double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
-// {
-// 	t_xyz	ray_to_obj;
-// 	double	abcd[4];
-// 	double	radius;
-// 	t_xyz	norm_cylinder;
-
-// 	radius = obj->diameter / 2.0;
-// 	norm_cylinder = normalize(obj->vector);
-// 	ray_to_obj = vec_sub(ray->pos, obj->xyz);
-// 	abcd[L_A] = vec_length_sq(cross(ray->dir, norm_cylinder));
-// 	abcd[L_B] = dot(cross(ray->dir, norm_cylinder), 
-// 	cross(ray_to_obj, norm_cylinder)) * 2;
-// 	abcd[L_C] = dot(cross(ray_to_obj, norm_cylinder), 
-// 	cross(ray_to_obj, norm_cylinder)) - sqr(radius);
-// 	if (abcd[L_A] == 0)
-// 		return (NO_HIT);
-// 	abcd[L_D] = abcd[L_B] * abcd[L_B] - 4 * abcd[L_A] * abcd[L_C];
-// 	if (abcd[L_D] <= 0)
-// 		return (NO_HIT);
-// 	if (rec_hit)
-// 		return (dist_cylndr(abcd, obj, ray, h_obj));
-// 	return (dist_cylndr(abcd, obj, ray, NULL));
-// }
-
-
-
 double	hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 {
 	if (obj->id == SP)
-		return (hit_sphere(obj, ray, h_obj, rec_hit));
+		return (hit_sphere(obj, ray));
 	else if (obj->id == PL)
 		return (hit_plane(obj, ray, h_obj, rec_hit));
 	else if (obj->id == CY)

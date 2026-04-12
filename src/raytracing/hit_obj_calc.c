@@ -14,6 +14,7 @@
 #include "../../includes/raytracing.h"
 #include "../../includes/calc.h"
 
+// dist が決まった後に、pos と norm を完成させる関　sphere-ok
 void	fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj)
 {
 	h_obj->pos = vec_add(c_ray.pos, vec_scale(c_ray.dir, h_obj->dist));
@@ -23,9 +24,13 @@ void	fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj)
 		h_obj->norm = normalize(h_obj->norm);
 	}
 	else if (obj->id == PL)
+	{
 		h_obj->norm = normalize(obj->vector);
-	else if (obj->id == CY)
-		set_h_obj_cy(obj, &c_ray, h_obj, &h_obj->dist);
+		if (dot(c_ray.dir, h_obj->norm) > 0)
+			h_obj->norm = vec_scale(h_obj->norm, -1);
+	}
+	// else if (obj->id == CY)
+	// 	set_h_obj_cy(obj, &c_ray, h_obj, &h_obj->dist);
 }
 
 void	set_hit_obj(t_obj *obj, t_ray *ray, t_hit_point *h_obj, double dist)
