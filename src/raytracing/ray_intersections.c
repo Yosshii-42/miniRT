@@ -22,10 +22,10 @@ double	hit_sphere(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	double	ret;
 
 	radius = obj->diameter / 2.0;
-	ray_to_obj = minus_v1_v2(ray->pos, obj->xyz);
-	abcd[L_A] = squared_norm(ray->dir);
+	ray_to_obj = vec_sub(ray->pos, obj->xyz);
+	abcd[L_A] = vec_length_sq(ray->dir);
 	abcd[L_B] = 2 * dot(ray->dir, ray_to_obj);
-	abcd[L_C] = squared_norm(ray_to_obj) - radius * radius;
+	abcd[L_C] = vec_length_sq(ray_to_obj) - radius * radius;
 	abcd[L_D] = abcd[L_B] * abcd[L_B] - 4 * abcd[L_A] * abcd[L_C];
 	if (abcd[L_D] <= 0)
 		return (NO_HIT);
@@ -49,7 +49,7 @@ double	hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	denominator = dot(ray->dir, p_norm);
 	if (denominator)
 	{
-		numerator = -1 * dot(minus_v1_v2(ray->pos, obj->xyz), p_norm);
+		numerator = -1 * dot(vec_sub(ray->pos, obj->xyz), p_norm);
 		if (!numerator)
 			return (-1);
 		ret = numerator / denominator;
@@ -97,8 +97,8 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 
 // 	radius = obj->diameter / 2.0;
 // 	norm_cylinder = normalize(obj->vector);
-// 	ray_to_obj = minus_v1_v2(ray->pos, obj->xyz);
-// 	abcd[L_A] = squared_norm(cross(ray->dir, norm_cylinder));
+// 	ray_to_obj = vec_sub(ray->pos, obj->xyz);
+// 	abcd[L_A] = vec_length_sq(cross(ray->dir, norm_cylinder));
 // 	abcd[L_B] = dot(cross(ray->dir, norm_cylinder), 
 // 	cross(ray_to_obj, norm_cylinder)) * 2;
 // 	abcd[L_C] = dot(cross(ray_to_obj, norm_cylinder), 

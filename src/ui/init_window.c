@@ -124,7 +124,7 @@ int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
 		// {
 		// 	ret = calc_shadow(obj, tmp_lit, &hit_obj);
 		// 	if (ret == NOT_RENDERED_SHADOW)
-		// 		*color = plus_v1_v2(
+		// 		*color = vec_add(
 		// 			calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
 		// 	tmp_lit = tmp_lit->next;
 		// }
@@ -134,7 +134,7 @@ int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
 			{
 				ret = calc_shadow(obj, tmp_lit, &hit_obj);
 				if (ret == NOT_RENDERED_SHADOW)
-					*color = plus_v1_v2(calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
+					*color = vec_add(calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
 			}
 			tmp_lit = tmp_lit->next;
 		}

@@ -26,17 +26,17 @@ t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 	t_xyz	incident_dir;
 
 	specular_ref = 0.0;
-	incident_dir = minus_v1_v2(lit->xyz, hit_obj.pos);
+	incident_dir = vec_sub(lit->xyz, hit_obj.pos);
 	incident_dir = normalize(incident_dir);
 	dot_res = fmax(dot(incident_dir, hit_obj.norm), 0.0);
 	if (dot_res > 0)
 	{
-		reverse_vec = minus_v1_v2(
-			multi_v_f(hit_obj.norm, 2 * dot_res), incident_dir);
+		reverse_vec = vec_sub(
+			vec_scale(hit_obj.norm, 2 * dot_res), incident_dir);
 		reverse_vec = normalize(reverse_vec);
-		// rev_cam_vec = multi_v_f(cam_ray.dir, -1);
+		// rev_cam_vec = vec_scale(cam_ray.dir, -1);
 		// rev_cam_vec = normalize(rev_cam_vec);
-		t_xyz view_dir = normalize(minus_v1_v2(cam_ray.pos, hit_obj.pos));
+		t_xyz view_dir = normalize(vec_sub(cam_ray.pos, hit_obj.pos));
 		specular_ref = dot(reverse_vec, view_dir);
 		// specular_ref = dot(reverse_vec, rev_cam_vec);
 		specular_ref = pow(clamp_double(specular_ref, 0.0, 1.0), SHINENESS);

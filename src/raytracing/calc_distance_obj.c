@@ -39,14 +39,14 @@ double	distance_sphere(double *abcd)
 
 double	get_nearest_inter_cy(t_obj *obj, t_xyz *h_pos, double *t, t_xyz norm_c)
 {
-	if (0 <= dot(minus_v1_v2(h_pos[0], obj->xyz), norm_c) \
-	&& dot(minus_v1_v2(h_pos[0], obj->xyz), norm_c) <= obj->height)
+	if (0 <= dot(vec_sub(h_pos[0], obj->xyz), norm_c) \
+	&& dot(vec_sub(h_pos[0], obj->xyz), norm_c) <= obj->height)
 	{
 		if (0 < t[1])
 			t[0] = t[1];
 	}
-	if (0 <= dot(minus_v1_v2(h_pos[1], obj->xyz), norm_c) \
-	&& dot(minus_v1_v2(h_pos[1], obj->xyz), norm_c) <= obj->height)
+	if (0 <= dot(vec_sub(h_pos[1], obj->xyz), norm_c) \
+	&& dot(vec_sub(h_pos[1], obj->xyz), norm_c) <= obj->height)
 	{
 		if (t[0] < 0 || (0 < t[2] && t[2] < t[0]))
 			t[0] = t[2];
@@ -64,15 +64,15 @@ double	hit_cylinder_caps(t_obj *obj, t_ray *ray, t_xyz norm_c)
 
 	i = 0;
 	caps[0] = obj->xyz;
-	caps[1] = plus_v1_v2(obj->xyz, multi_v_f(norm_c, obj->height));
+	caps[1] = vec_add(obj->xyz, vec_scale(norm_c, obj->height));
 	t[0] = NO_HIT;
 	denom = dot(ray->dir, norm_c);
 	while (i < 2)
 	{
-		t[i + 1] = dot(minus_v1_v2(caps[i], ray->pos), norm_c) / denom;
-		d = minus_v1_v2(plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[i + 1])), \
+		t[i + 1] = dot(vec_sub(caps[i], ray->pos), norm_c) / denom;
+		d = vec_sub(vec_add(ray->pos, vec_scale(ray->dir, t[i + 1])), \
 		caps[i]);
-		if (0 < t[i + 1] && squared_norm(d) <= sqr(obj->diameter * 0.5))
+		if (0 < t[i + 1] && vec_length_sq(d) <= sqr(obj->diameter * 0.5))
 		{
 			if (t[0] < 0 || t[i + 1] < t[0])
 				t[0] = t[i + 1];
@@ -97,8 +97,8 @@ double	dist_cylndr(double *abcd, t_obj *obj, t_ray *ray, t_hit_point *h_obj)
 	{
 		t[1] = (-1 * abcd[L_B] - sqrt(abcd[L_D])) / (2 * abcd[L_A]);
 		t[2] = (-1 * abcd[L_B] + sqrt(abcd[L_D])) / (2 * abcd[L_A]);
-		hit_pos[0] = plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[1]));
-		hit_pos[1] = plus_v1_v2(ray->pos, multi_v_f(ray->dir, t[2]));
+		hit_pos[0] = vec_add(ray->pos, vec_scale(ray->dir, t[1]));
+		hit_pos[1] = vec_add(ray->pos, vec_scale(ray->dir, t[2]));
 		t[0] = get_nearest_inter_cy(obj, hit_pos, t, norm_c);
 	}
 	// if (abcd[L_D] < 0)

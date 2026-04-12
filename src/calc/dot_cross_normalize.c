@@ -26,3 +26,11 @@ t_xyz	cross(t_xyz v1, t_xyz v2)
 	tmp.z = v1.x * v2.y - v1.y * v2.x;
 	return (tmp);
 }
+
+t_xyz	normalize(t_xyz v)
+{
+	double	length;
+
+	length = vec_length(v);
+	return (vec_div(v, length));
+}

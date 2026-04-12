@@ -34,12 +34,9 @@ SRCS	= src/parser/check_element.c \
 		  src/parser/utils.c \
 		  src/ui/init_window.c \
 		  src/ui/close_handler.c \
-		  src/calc/dot_cross.c \
-		  src/calc/multi_divid_vector.c \
-		  src/calc/plus_minus_vector.c \
-		  src/calc/normalize.c \
-		  src/calc/distance_vector.c \
-		  src/calc/solve_abc.c \
+		  src/calc/dot_cross_normalize.c \
+		  src/calc/arithmetic_operations.c \
+		  src/calc/utils.c \
 		  src/raytracing/ray_intersections.c \
 		  src/raytracing/cylinder.c \
 		  src/raytracing/calc_screen_vector.c \

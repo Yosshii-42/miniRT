@@ -9,14 +9,14 @@ float dot(const vector_t* a, const vector_t* b)
   return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
-float squared_norm(const vector_t*v)
+float vec_length_sq(const vector_t*v)
 {
   return SQR(v->x) + SQR(v->y) + SQR(v->z);
 }
 
 float norm(const vector_t *v)
 {
-  return sqrt(squared_norm(v));
+  return sqrt(vec_length_sq(v));
 }
 
 float normalize(vector_t* v)

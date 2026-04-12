@@ -39,12 +39,12 @@ t_xyz	pls_shade(t_obj *obj, t_lit *lit, double diff_ref, double spec_ref)
 	t_xyz	lit_rgb;
 
 	lit_rgb = lit->rgb;
-	lit_rgb = divid_v_f(lit_rgb, 255.0);
-	dif_col = multi_v_f(multi_v1_v2(obj->rgb, lit_rgb), diff_ref);
-	dif_col = multi_v_f(dif_col, lit->t);
-	spec_col = multi_v_f(multi_v_f(lit_rgb, 255.0), spec_ref);
-	spec_col = multi_v_f(spec_col, lit->t);
-	ret_col = plus_v1_v2(dif_col, spec_col);
+	lit_rgb = vec_div(lit_rgb, 255.0);
+	dif_col = vec_scale(vec_mul(obj->rgb, lit_rgb), diff_ref);
+	dif_col = vec_scale(dif_col, lit->t);
+	spec_col = vec_scale(vec_scale(lit_rgb, 255.0), spec_ref);
+	spec_col = vec_scale(spec_col, lit->t);
+	ret_col = vec_add(dif_col, spec_col);
 	return (ret_col);
 }
 

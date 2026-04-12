@@ -11,26 +11,51 @@
 /* ************************************************************************** */
 
 #include "calc.h"
+#include "raytracing.h"
 
 double	sqr(double x)
 {
 	return (x * x);
 }
 
-double	calc_length2(t_xyz vector)
+double	vec_length_sq(t_xyz v)
 {
-	return (sqr(vector.x) + sqr(vector.y) + sqr(vector.z));
+	return (sqr(v.x) + sqr(v.y) + sqr(v.z));
 }
 
-double	calc_length(t_xyz vector)
+double	vec_length(t_xyz v)
 {
-	return (sqrt(calc_length2(vector)));
+	return (sqrt(vec_length_sq(v)));
 }
 
-t_xyz	normalize(t_xyz vector)
+double	vec_dist(t_xyz a, t_xyz b)
 {
-	double	length;
+	t_xyz	diff;
 
-	length = calc_length(vector);
-	return (divid_v_f(vector, length));
+	diff = vec_sub(a, b);
+	return (sqrt(vec_length_sq(diff)));
+}
+
+bool	solve_quadratic(double abc[3], double *t0, double *t1)
+{
+	double	d;
+	double	tmp;
+
+	if (fabs(abc[0]) < EPS)
+		return (false);
+	d = abc[1] * abc[1] - 4.0 * abc[0] * abc[2];
+	if (d < -EPS)
+		return (false);
+	if (d < 0.0)
+		d = 0.0;
+	d = sqrt(d);
+	*t0 = (-abc[1] - d) / (2.0 * abc[0]);
+	*t1 = (-abc[1] + d) / (2.0 * abc[0]);
+	if (*t1 < *t0)
+	{
+		tmp = *t0;
+		*t0 = *t1;
+		*t1 = tmp;
+	}
+	return (true); 
 }

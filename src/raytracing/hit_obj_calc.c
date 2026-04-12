@@ -16,10 +16,10 @@
 
 void	fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj)
 {
-	h_obj->pos = plus_v1_v2(c_ray.pos, multi_v_f(c_ray.dir, h_obj->dist));
+	h_obj->pos = vec_add(c_ray.pos, vec_scale(c_ray.dir, h_obj->dist));
 	if (obj->id == SP)
 	{
-		h_obj->norm = minus_v1_v2(h_obj->pos, obj->xyz);
+		h_obj->norm = vec_sub(h_obj->pos, obj->xyz);
 		h_obj->norm = normalize(h_obj->norm);
 	}
 	else if (obj->id == PL)
@@ -31,10 +31,10 @@ void	fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj)
 void	set_hit_obj(t_obj *obj, t_ray *ray, t_hit_point *h_obj, double dist)
 {
 	h_obj->dist = dist;
-	h_obj->pos = plus_v1_v2(ray->pos, multi_v_f(ray->dir, h_obj->dist));
+	h_obj->pos = vec_add(ray->pos, vec_scale(ray->dir, h_obj->dist));
 	if (obj->id == SP)
 	{
-		h_obj->norm = minus_v1_v2(h_obj->pos, obj->xyz);
+		h_obj->norm = vec_sub(h_obj->pos, obj->xyz);
 		h_obj->norm = normalize(h_obj->norm);
 	}
 	else if (obj->id == PL)
@@ -51,17 +51,17 @@ void	set_h_obj_cy(t_obj *obj, t_ray *ray, t_hit_point *h_obj, double *t)
 	if (t[0] == NO_HIT)
 		return ;
 	h_obj->dist = t[0];
-	h_obj->pos = plus_v1_v2(ray->pos, multi_v_f(ray->dir, h_obj->dist));
+	h_obj->pos = vec_add(ray->pos, vec_scale(ray->dir, h_obj->dist));
 	obj_center = obj->xyz;
 	obj_vector = normalize(obj->vector);
-	s = dot(minus_v1_v2(h_obj->pos, obj_center), obj_vector);
+	s = dot(vec_sub(h_obj->pos, obj_center), obj_vector);
 	if (s >= 0 && s <= obj->height)
 	{
-		pos = plus_v1_v2(obj_center, multi_v_f(obj_vector, s));
-		h_obj->norm = normalize(minus_v1_v2(h_obj->pos, pos));
+		pos = vec_add(obj_center, vec_scale(obj_vector, s));
+		h_obj->norm = normalize(vec_sub(h_obj->pos, pos));
 	}
 	else if (s < 0)
-		h_obj->norm = multi_v_f(obj_vector, -1);
+		h_obj->norm = vec_scale(obj_vector, -1);
 	else
 		h_obj->norm = obj_vector;
 }

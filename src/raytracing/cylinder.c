@@ -60,15 +60,15 @@ bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 	t_xyz		bottom;
 	bool		found;
 
-	top = plus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, cy->half_h));
-	bottom = minus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, cy->half_h));
+	top = vec_add(cy->obj->xyz, vec_scale(cy->axis, cy->half_h));
+	bottom = vec_sub(cy->obj->xyz, vec_scale(cy->axis, cy->half_h));
 	found = false;
 	if (hit_cy_cap(cy, top, cy->axis, HIT_CY_CAP_TOP, &tmp))
 	{
 		*hit = tmp;
 		found = true;
 	}
-	if (hit_cy_cap(cy, bottom, multi_v_f(cy->axis, -1.0),
+	if (hit_cy_cap(cy, bottom, vec_scale(cy->axis, -1.0),
 		HIT_CY_CAP_BOTTOM, &tmp))
 	{
 		if (!found || tmp.dist < hit->dist)
@@ -97,12 +97,12 @@ void	calc_cy_side_abc(t_cy *cy, double abc[3])
 	t_xyz	d_cross;
 	t_xyz	oc_cross;
 
-	oc = minus_v1_v2(cy->ray.pos, cy->obj->xyz);
+	oc = vec_sub(cy->ray.pos, cy->obj->xyz);
 	d_cross = cross(cy->ray.dir, cy->axis);
 	oc_cross = cross(oc, cy->axis);
-	// abc[0] = squared_norm(cross(cy->ray.dir, cy->axis));
+	// abc[0] = vec_length_sq(cross(cy->ray.dir, cy->axis));
 	// abc[1] = 2.0 * dot(cross(cy->ray.dir, cy->axis), cross(oc, cy->axis));
-	// abc[2] = squared_norm(cross(oc, cy->axis)) - sqr(cy->radius);
+	// abc[2] = vec_length_sq(cross(oc, cy->axis)) - sqr(cy->radius);
 	abc[0] = dot(d_cross, d_cross);
 	abc[1] = 2.0 * dot(d_cross, oc_cross);
 	abc[2] = dot(oc_cross, oc_cross) - cy->radius * cy->radius;
@@ -120,17 +120,17 @@ bool	judge_t(t_cy *cy, t_hit_point *hit, double t)
 	t_xyz	pos;
 	double	s;
 
-	pos = plus_v1_v2(cy->ray.pos, multi_v_f(cy->ray.dir, t));
-	s = dot(minus_v1_v2(pos, cy->obj->xyz), cy->axis);
+	pos = vec_add(cy->ray.pos, vec_scale(cy->ray.dir, t));
+	s = dot(vec_sub(pos, cy->obj->xyz), cy->axis);
 	if (-cy->half_h +EPS <= s && s <= cy->half_h - EPS)
 	{
 		hit->dist = t;
 		hit->pos = pos;
-		hit->norm = normalize(minus_v1_v2(pos,
-			plus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, s))));
+		hit->norm = normalize(vec_sub(pos,
+			vec_add(cy->obj->xyz, vec_scale(cy->axis, s))));
 		hit->part = HIT_CY_SIDE;
 		// if (dot(hit->norm, cy->ray.dir) > 0)
-		// 	hit->norm = multi_v_f(hit->norm, -1.0);
+		// 	hit->norm = vec_scale(hit->norm, -1.0);
 		return (true);
 	}
 	return (false);
@@ -211,12 +211,12 @@ bool	hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
 	denom = dot(cy->ray.dir, normal);
 	if (fabs(denom) < EPS)
 		return (false);
-	t = dot(minus_v1_v2(center, cy->ray.pos), normal) / denom;
+	t = dot(vec_sub(center, cy->ray.pos), normal) / denom;
 	if (t < cy->min || cy->max < t)
 		return (false);
-	position = plus_v1_v2(cy->ray.pos, multi_v_f(cy->ray.dir, t));
-	direction = minus_v1_v2(position, center);
-	if (squared_norm(direction) > sqr(cy->radius))
+	position = vec_add(cy->ray.pos, vec_scale(cy->ray.dir, t));
+	direction = vec_sub(position, center);
+	if (vec_length_sq(direction) > sqr(cy->radius))
 		return (false);
 	hit->dist = t;
 	hit->pos = position;

@@ -21,14 +21,14 @@ int	calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p)
 	double		ret;
 	t_hit_point	tmp_hit;
 
-	incident_dir = minus_v1_v2(lit->xyz, hit_p->pos);
+	incident_dir = vec_sub(lit->xyz, hit_p->pos);
 	incident_dir = normalize(incident_dir);
 	tmp_hit = *hit_p;
 	tmp_hit.dist = MAX_DIST;
-	shadow_ray.pos = plus_v1_v2(hit_p->pos, multi_v_f(hit_p->norm, EPSILON));
-	// shadow_ray.pos = plus_v1_v2(hit_p->pos, multi_v_f(incident_dir, EPSILON));
+	shadow_ray.pos = vec_add(hit_p->pos, vec_scale(hit_p->norm, EPSILON));
+	// shadow_ray.pos = vec_add(hit_p->pos, vec_scale(incident_dir, EPSILON));
 	shadow_ray.dir = incident_dir;
-	dist_shadow_to_lit = distance_between(lit->xyz, hit_p->pos);
+	dist_shadow_to_lit = vec_dist(lit->xyz, hit_p->pos);
 	ret = hit_shadow_ray(obj, &shadow_ray, &tmp_hit);
 	if (ret != -1 && tmp_hit.dist > EPSILON \
 		&& tmp_hit.dist < dist_shadow_to_lit - EPSILON)
