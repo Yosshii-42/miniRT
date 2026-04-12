@@ -32,6 +32,17 @@ typedef enum e_letter
 	L_D
 }	t_letter;
 
+typedef enum e_hit_part
+{
+	HIT_NONE,
+	HIT_CY_SIDE,
+	HIT_CY_CAP_TOP,
+	HIT_CY_CAP_BOTTOM,
+	
+	HIT_SPHERE,
+	hIT_PLANE
+}	t_hit_part;
+
 typedef struct s_ray
 {
 	t_xyz	pos;
@@ -41,10 +52,11 @@ typedef struct s_ray
 // dist is distance, pos is hit position, norm is nomral vector
 typedef struct s_hit_point
 {
-	double	dist;
-	t_xyz	pos;
-	t_xyz	norm;
-	int		index;
+	double		dist;
+	t_xyz		pos;
+	t_xyz		norm;
+	int			index;
+	t_hit_part	part;
 }	t_hit_point;
 
 typedef struct s_cy
@@ -127,6 +139,9 @@ void			color_set_to_pixel(t_meta_img *img, int x, int y,
 bool			hit_cy_core(t_cy *cy, t_hit_point *hit);
 bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
 bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
-bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_point *hit);
+bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
+	t_hit_point *hit);
+
+void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
 
 #endif

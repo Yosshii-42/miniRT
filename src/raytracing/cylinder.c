@@ -14,22 +14,31 @@
 ** ※ cy->max を更新することで「一番近いもの」を維持している
 */
 bool	hit_cy_core(t_cy *cy, t_hit_point *hit) {
-	t_hit_point	tmp;
-	bool		found;
+	t_hit_point	side_hit;
+	t_hit_point	cap_hit;
+	bool		has_side;
+	bool		has_cap;
 
-	found = false;
-	if (hit_cy_side(cy, &tmp))
+	has_side = hit_cy_side(cy, &side_hit);
+	has_cap = hit_cy_caps(cy, &cap_hit);
+	if (!has_side && !has_cap)
+		return (false);
+	if (has_side && !has_cap)
 	{
-		*hit = tmp;
-		cy->max = tmp.dist;
-		found = true;
+		*hit = side_hit;
+		return (true);
+
 	}
-	if (hit_cy_caps(cy, &tmp))
+	if (!has_side && has_cap)
 	{
-		*hit = tmp;
-		found = true;
+		*hit = cap_hit;
+		return (true);
 	}
-	return (found);
+	if (side_hit.dist < cap_hit.dist)
+		*hit = side_hit;
+	else
+		*hit = cap_hit;
+	return (true);
 }
 
 /*
@@ -54,16 +63,16 @@ bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 	top = plus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, cy->half_h));
 	bottom = minus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, cy->half_h));
 	found = false;
-	if (hit_cy_cap(cy, top, cy->axis, &tmp))
+	if (hit_cy_cap(cy, top, cy->axis, HIT_CY_CAP_TOP, &tmp))
 	{
 		*hit = tmp;
-		cy->max = tmp.dist;
 		found = true;
 	}
-	if (hit_cy_cap(cy, bottom, multi_v_f(cy->axis, -1.0), &tmp))
+	if (hit_cy_cap(cy, bottom, multi_v_f(cy->axis, -1.0),
+		HIT_CY_CAP_BOTTOM, &tmp))
 	{
-		*hit = tmp;
-		cy->max = tmp.dist;
+		if (!found || tmp.dist < hit->dist)
+			*hit = tmp;
 		found = true;
 	}
 	return (found);
@@ -85,11 +94,46 @@ bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 void	calc_cy_side_abc(t_cy *cy, double abc[3])
 {
 	t_xyz	oc;
+	t_xyz	d_cross;
+	t_xyz	oc_cross;
 
 	oc = minus_v1_v2(cy->ray.pos, cy->obj->xyz);
-	abc[0] = squared_norm(cross(cy->ray.dir, cy->axis));
-	abc[1] = 2.0 * dot(cross(cy->ray.dir, cy->axis), cross(oc, cy->axis));
-	abc[2] = squared_norm(cross(oc, cy->axis)) - sqr(cy->radius);
+	d_cross = cross(cy->ray.dir, cy->axis);
+	oc_cross = cross(oc, cy->axis);
+	// abc[0] = squared_norm(cross(cy->ray.dir, cy->axis));
+	// abc[1] = 2.0 * dot(cross(cy->ray.dir, cy->axis), cross(oc, cy->axis));
+	// abc[2] = squared_norm(cross(oc, cy->axis)) - sqr(cy->radius);
+	abc[0] = dot(d_cross, d_cross);
+	abc[1] = 2.0 * dot(d_cross, oc_cross);
+	abc[2] = dot(oc_cross, oc_cross) - cy->radius * cy->radius;
+}
+
+// ** 4. 交点 P を求める
+// ** 5. 軸方向距離 s を計算
+// **    → s = (P - center)・axis
+// ** 6. -half_h <= s <= half_h を満たすか確認
+// **    → 円柱の高さ範囲内かチェック
+// ** 7. 側面法線を計算
+// **    → 軸からの放射方向
+bool	judge_t(t_cy *cy, t_hit_point *hit, double t)
+{
+	t_xyz	pos;
+	double	s;
+
+	pos = plus_v1_v2(cy->ray.pos, multi_v_f(cy->ray.dir, t));
+	s = dot(minus_v1_v2(pos, cy->obj->xyz), cy->axis);
+	if (-cy->half_h +EPS <= s && s <= cy->half_h - EPS)
+	{
+		hit->dist = t;
+		hit->pos = pos;
+		hit->norm = normalize(minus_v1_v2(pos,
+			plus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, s))));
+		hit->part = HIT_CY_SIDE;
+		// if (dot(hit->norm, cy->ray.dir) > 0)
+		// 	hit->norm = multi_v_f(hit->norm, -1.0);
+		return (true);
+	}
+	return (false);
 }
 
 /*
@@ -99,37 +143,48 @@ void	calc_cy_side_abc(t_cy *cy, double abc[3])
 ** 1. 無限円柱との交差を二次方程式で求める
 **    → a t² + b t + c = 0
 ** 2. 解の公式で t0, t1 を求める
-** 3. min <= t <= max を満たす解を選ぶ
-** 4. 交点 P を求める
-** 5. 軸方向距離 s を計算
-**    → s = (P - center)・axis
-** 6. -half_h <= s <= half_h を満たすか確認
-**    → 円柱の高さ範囲内かチェック
-** 7. 側面法線を計算
-**    → 軸からの放射方向
+** 3. min <= t <= max を満たす解を選び
+**    judge_t()で側面法線が得られたらtrueを返す
 */
 bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 {
-	double	abc[3];
-	double	t[2];
-	double	s;
+	// double	abc[3];
+	// double	t0;
+	// double	t1;
 
-	calc_cy_side_abc(cy, abc);
-	if (!solve_quadratic(abc, &t[0], &t[1]))
-		return (false);
-	if (cy->min <= t[0] && t[0] <= cy->max)
-		hit->dist = t[0];
-	else if (cy->min <= t[1] && t[1] <= cy->max)
-		hit->dist = t[1];
-	else
-		return (false);
-	hit->pos = plus_v1_v2(cy->ray.pos, multi_v_f(cy->ray.dir, hit->dist));
-	s = dot(minus_v1_v2(hit->pos, cy->obj->xyz), cy->axis);
-	if (s < -cy->half_h || cy->half_h < s)
-		return (false);
-	hit->norm = normalize(minus_v1_v2(hit->pos,
-		plus_v1_v2(cy->obj->xyz, multi_v_f(cy->axis, s))));
-	return (true);
+	// calc_cy_side_abc(cy, abc);
+	// if (!solve_quadratic(abc, &t0, &t1))
+	// 	return (false);
+	// if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, hit, t0))
+	// 		return (true);
+	// if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, hit, t1))
+	// 		return (true);
+	// return (false);
+
+	double abc[3];
+    double t0, t1;
+    bool found = false;
+    t_hit_point tmp;
+
+    calc_cy_side_abc(cy, abc);
+    if (!solve_quadratic(abc, &t0, &t1))
+        return false;
+
+    // 小さい方からチェック
+    if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, &tmp, t0))
+    {
+        *hit = tmp;
+        found = true;
+    }
+
+    if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, &tmp, t1))
+    {
+        if (!found || tmp.dist < hit->dist)
+            *hit = tmp;
+        found = true;
+    }
+
+    return found;
 }
 
 // denom = レイと平面の向きの関係（どれくらい当たるか）
@@ -145,7 +200,8 @@ bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 **    → |P - center|² <= radius²
 ** 6. ヒット情報（距離・位置・法線）を設定
 */
-bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_point *hit)
+bool	hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
+	t_hit_point *hit)
 {
 	double	denom;
 	double	t;
@@ -165,5 +221,6 @@ bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_point *hit)
 	hit->dist = t;
 	hit->pos = position;
 	hit->norm = normal;
+	hit->part = part;
 	return (true);
 }

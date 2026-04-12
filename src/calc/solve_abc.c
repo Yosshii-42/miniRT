@@ -9,8 +9,10 @@ bool	solve_quadratic(double abc[3], double *t0, double *t1)
 	if (fabs(abc[0]) < EPS)
 		return (false);
 	d = abc[1] * abc[1] - 4.0 * abc[0] * abc[2];
-	if (d < 0.0)
+	if (d < -EPS)
 		return (false);
+	if (d < 0.0)
+		d = 0.0;
 	d = sqrt(d);
 	*t0 = (-abc[1] - d) / (2.0 * abc[0]);
 	*t1 = (-abc[1] + d) / (2.0 * abc[0]);

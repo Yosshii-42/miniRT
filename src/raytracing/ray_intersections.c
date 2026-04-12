@@ -81,7 +81,10 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	if (!hit_cy_core(&cy, &tmp))
 		return (NO_HIT);
 	if (rec_hit)
+	{
 		*h_obj = tmp;
+		set_face_normal(ray, h_obj);
+	}
 	return (tmp.dist);
 }
 
@@ -96,9 +99,9 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 // 	norm_cylinder = normalize(obj->vector);
 // 	ray_to_obj = minus_v1_v2(ray->pos, obj->xyz);
 // 	abcd[L_A] = squared_norm(cross(ray->dir, norm_cylinder));
-// 	abcd[L_B] = dot(cross(ray->dir, norm_cylinder), \
+// 	abcd[L_B] = dot(cross(ray->dir, norm_cylinder), 
 // 	cross(ray_to_obj, norm_cylinder)) * 2;
-// 	abcd[L_C] = dot(cross(ray_to_obj, norm_cylinder), \
+// 	abcd[L_C] = dot(cross(ray_to_obj, norm_cylinder), 
 // 	cross(ray_to_obj, norm_cylinder)) - sqr(radius);
 // 	if (abcd[L_A] == 0)
 // 		return (NO_HIT);

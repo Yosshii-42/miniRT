@@ -64,6 +64,16 @@ t_obj	get_indexed_obj(int index, t_obj *obj)
 	return (*ret);
 }
 
+void	reset_light_flags(t_env *env)
+{
+	t_lit	*l = env->lit;
+	while (l)
+	{
+		l->valid_flag = true;
+		l = l->next;
+	}
+}
+
 int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 {
 	int		x;
@@ -73,15 +83,16 @@ int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 	t_ray	cam_ray;
 
 	y = -1;
-	init_xyz(&color);
 	while (++y < W_HEIGHT)
 	{
 		x = -1;
 		while (++x < W_WIDTH)
 		{
+			init_xyz(&color);
 			set_screen_vector(&screen_vec, x, y, env->cam_degree);
 			cam_ray.pos = env->cam_xyz;
 			cam_ray.dir = calc_cam_dir(screen_vec, env->cam_vector);
+			reset_light_flags(env);
 			check_light_pos(obj, env, cam_ray);
 			ray_tracing(obj, env, cam_ray, &color);
 			color_set_to_pixel \
@@ -109,12 +120,22 @@ int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
 	if (hit_obj.index >= 0)
 	{
 		pls_amb_color(&cpy_obj, env, color);
-		while (tmp_lit && tmp_lit->valid_flag)
+		// while (tmp_lit && tmp_lit->valid_flag)
+		// {
+		// 	ret = calc_shadow(obj, tmp_lit, &hit_obj);
+		// 	if (ret == NOT_RENDERED_SHADOW)
+		// 		*color = plus_v1_v2(
+		// 			calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
+		// 	tmp_lit = tmp_lit->next;
+		// }
+		while (tmp_lit)
 		{
-			ret = calc_shadow(obj, tmp_lit, &hit_obj);
-			if (ret == NOT_RENDERED_SHADOW)
-				*color = plus_v1_v2(\
-					calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
+			if (tmp_lit->valid_flag)
+			{
+				ret = calc_shadow(obj, tmp_lit, &hit_obj);
+				if (ret == NOT_RENDERED_SHADOW)
+					*color = plus_v1_v2(calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray), *color);
+			}
 			tmp_lit = tmp_lit->next;
 		}
 		return (clamp_xyz(color, 0, 255), 1);
