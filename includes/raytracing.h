@@ -92,10 +92,10 @@ void			check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray);
 // shade.c
 t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
 					t_ray cam_ray);
-t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
-					double spec_ref);					
+t_xyz			pls_shade(t_xyz base_color, t_obj *obj, t_lit *lit,
+					double diff_ref, double spec_ref);					
 int				set_amb_col(t_xyz *color, t_env *env);
-void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col);
+void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col, t_hit_point hit);
 
 // shadow.c
 int				calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p);
@@ -106,6 +106,11 @@ double			clamp_double(double value, double min, double max);
 void			clamp_xyz(t_xyz *rgb, double min, double max);
 void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
+
+// checker.c
+t_xyz	get_checker_color(t_obj *obj, t_hit_point hit);
+void	get_sphere_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
+t_xyz	get_sp_checker_color(t_obj *obj, t_hit_point hit);
 
 // hit.c
 double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,

@@ -46,3 +46,13 @@ bool	solve_quadratic(double abc[3], double *t0, double *t1)
 	}
 	return (true); 
 }
+
+t_xyz	make_xyz(double x, double y, double z)
+{
+	t_xyz	ret;
+
+	ret.x = x;
+	ret.y = y;
+	ret.z = z;
+	return (ret);
+}

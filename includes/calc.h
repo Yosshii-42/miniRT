@@ -36,5 +36,6 @@ double	vec_dist(t_xyz a, t_xyz b);
 double	sqr(double x);
 double	deg_to_rad(double deg);
 bool	solve_quadratic(double abc[3], double *t0, double *t1);
+t_xyz	make_xyz(double x, double y, double z);
 
 #endif
