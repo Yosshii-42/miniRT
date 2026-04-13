@@ -45,3 +45,4 @@ void	set_screen_vector(t_xyz *screen, int x, int y, double fov)
 	screen->y = convert_y_to_screen(y) * scale;
 	screen->z = 0;
 }
+

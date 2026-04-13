@@ -26,7 +26,6 @@ int	calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p)
 	tmp_hit = *hit_p;
 	tmp_hit.dist = MAX_DIST;
 	shadow_ray.pos = vec_add(hit_p->pos, vec_scale(hit_p->norm, EPSILON));
-	// shadow_ray.pos = vec_add(hit_p->pos, vec_scale(incident_dir, EPSILON));
 	shadow_ray.dir = incident_dir;
 	dist_shadow_to_lit = vec_dist(lit->xyz, hit_p->pos);
 	ret = hit_shadow_ray(obj, &shadow_ray, &tmp_hit);

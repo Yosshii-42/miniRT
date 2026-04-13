@@ -66,21 +66,6 @@ void	is_light_inside_cy(t_obj *obj, t_lit *lit)
 	);
 	if (dist2 <= sqr(obj->diameter / 2.0))
 		lit->valid_flag = false;
-	// t_xyz	center_to_light;
-	// double	dist2;
-	// t_xyz	v_perp;
-	// double	t;
-	// double	r2;
-
-	// center_to_light = vec_sub(lit->xyz, obj->xyz);
-	// t = dot(center_to_light, obj->vector);
-	// if (t < 0 || t > obj->height)
-	// 	return ;
-	// v_perp = vec_sub(center_to_light, vec_scale(obj->vector, t));
-	// dist2 = dot(v_perp, v_perp);
-	// r2 = sqr(obj->diameter / 2);
-	// if (dist2 <= r2)
-	// 	lit->valid_flag = false;
 }
 
 void	check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray)

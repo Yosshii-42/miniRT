@@ -72,73 +72,72 @@ typedef struct s_cy
 	double	max;
 }	t_cy;
 
+// render.c
+int				ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color);
 
-int				ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray,
-					t_xyz *color);
-t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
-					double spec_ref);
+// camera.c
+t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
 
+// screen.c
 double			convert_x_to_screen(int x);
 double			convert_y_to_screen(int y);
 void			set_screen_vector(t_xyz *screen, int x, int y, double fov);
 
-// cam
+// light.c
+void			check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray);
+void			is_light_inside_cy(t_obj *obj, t_lit *lit);
+void			is_light_inside_sp(t_obj *obj, t_lit *lit);
+void			check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray);
+
+// shade.c
+t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
+					t_ray cam_ray);
+t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
+					double spec_ref);					
+int				set_amb_col(t_xyz *color, t_env *env);
+void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col);
+
+// shadow.c
+int				calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p);
+
+// color.c
+unsigned int	clamp(double value, int min, int max);
+double			clamp_double(double value, double min, double max);
+void			clamp_xyz(t_xyz *rgb, double min, double max);
+void			color_set_to_pixel(t_meta_img *img, int x, int y,
+					unsigned int color);
+
+// hit.c
 double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 					bool rec_hit);
-t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
+int				hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p);
+int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p);
+void			fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj);
+void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
 
-// shpere
+// obj_shpere.c
 double			hit_sphere(t_obj *obj, t_ray *ray);
 double			distance_sphere(double *abcd);
 
-// plane
+// obj_plane.c
 double			hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 					bool rec_hit);
 
-// cylinder
+// obj_cylinder.c
 double			hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 					bool rec_hit);
 bool			hit_cy_core(t_cy *cy, t_hit_point *hit);
+
+// obj_cylinder_core.c
 bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
 bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
 bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
 					t_hit_point *hit);
+bool			judge_t(t_cy *cy, t_hit_point *hit, double t);
+void			calc_cy_side_abc(t_cy *cy, double abc[3]);
 
-// hit
-void			fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj);
+// unused
 void			set_hit_obj(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 					double dist);
-int				hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p);
-int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p);
-
-// light
-void			is_light_inside_cy(t_obj *obj, t_lit *lit);
-int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray,
-					t_hit_point *hit_p);
-void			check_light_and_cam_pos(t_obj *obj, t_lit *lit,
-					t_ray cam_ray);
-void			check_light_pos(t_obj *obj, t_env *env,
-					t_ray cam_ray);
-
-
-unsigned int	clamp(double value, int min, int max);
-double			clamp_double(double value, double min, double max);
-void			clamp_xyz(t_xyz *rgb, double min, double max);
-
-t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
-					t_ray cam_ray);
-
-int				calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p);
-
-int				set_amb_col(t_xyz *color, t_env *env);
-void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col);
-t_xyz			pls_shade(t_obj *obj, t_lit *lit, double diff_ref,
-					double spec_ref);
-void			color_set_to_pixel(t_meta_img *img, int x, int y,
-					unsigned int color);
-
-
-
-void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
 
 #endif
