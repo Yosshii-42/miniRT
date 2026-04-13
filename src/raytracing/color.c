@@ -38,3 +38,11 @@ void	clamp_xyz(t_xyz *rgb, double min, double max)
 	rgb->y = clamp(rgb->y, min, max);
 	rgb->z = clamp(rgb->z, min, max);
 }
+
+void	color_set_to_pixel(t_meta_img *img, int x, int y, unsigned int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}

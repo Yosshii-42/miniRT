@@ -62,9 +62,9 @@ int main()
 	s_c.x = eye_pos.x - sphere_pos.x;
 	s_c.y = eye_pos.y - sphere_pos.y;
 	s_c.z = eye_pos.z - sphere_pos.z;
-	A = squared_norm(&eye_dir);
+	A = vec_length_sq(&eye_dir);
 	B = 2 * dot(&eye_dir, &s_c);
-	C = squared_norm(&s_c) - sphere_r * sphere_r;
+	C = vec_length_sq(&s_c) - sphere_r * sphere_r;
 	D = B * B - 4 * A * C;
 	float t1 = (-B + sqrt(D)) / (2  * A);
 	float t2 = (-B - sqrt(D)) / (2  * A);

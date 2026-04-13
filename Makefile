@@ -34,22 +34,22 @@ SRCS	= src/parser/check_element.c \
 		  src/parser/utils.c \
 		  src/ui/init_window.c \
 		  src/ui/close_handler.c \
-		  src/calc/dot_cross.c \
-		  src/calc/multi_divid_vector.c \
-		  src/calc/plus_minus_vector.c \
-		  src/calc/normalize.c \
-		  src/calc/distance_vector.c \
-		  src/raytracing/ray_intersections.c \
-		  src/raytracing/calc_screen_vector.c \
-		  src/raytracing/calc_distance_obj.c \
-		  src/raytracing/hit_obj_calc.c \
-		  src/raytracing/calc_camera_pos.c \
-		  src/raytracing/calc_shade.c \
-		  src/raytracing/calc_shadow.c \
-		  src/raytracing/check_light_pos.c \
-		  src/raytracing/check_nearest_obj.c \
-		  src/raytracing/clamp_utils.c \
-		  src/raytracing/color_utils.c 
+		  src/calc/dot_cross_normalize.c \
+		  src/calc/arithmetic_operations.c \
+		  src/calc/vec_length.c \
+		  src/calc/utils.c \
+		  src/raytracing/render.c \
+		  src/raytracing/obj_sphere.c \
+		  src/raytracing/obj_plane.c \
+		  src/raytracing/obj_cylinder.c \
+		  src/raytracing/obj_cylinder_core.c \
+		  src/raytracing/screen.c \
+		  src/raytracing/hit.c \
+		  src/raytracing/camera.c \
+		  src/raytracing/shade.c \
+		  src/raytracing/shadow.c \
+		  src/raytracing/light.c \
+		  src/raytracing/color.c
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)
 OBJS	= $(SRCS:.c=.o)

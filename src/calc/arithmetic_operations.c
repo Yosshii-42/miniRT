@@ -12,32 +12,52 @@
 
 #include "calc.h"
 
-t_xyz	multi_v1_v2(t_xyz v1, t_xyz v2)
+t_xyz	vec_add(t_xyz a, t_xyz b)
 {
 	t_xyz	tmp;
 
-	tmp.x = v1.x * v2.x;
-	tmp.y = v1.y * v2.y;
-	tmp.z = v1.z * v2.z;
+	tmp.x = a.x + b.x;
+	tmp.y = a.y + b.y;
+	tmp.z = a.z + b.z;
 	return (tmp);
 }
 
-t_xyz	multi_v_f(t_xyz v, double f)
+t_xyz	vec_sub(t_xyz a, t_xyz b)
 {
 	t_xyz	tmp;
 
-	tmp.x = v.x * f;
-	tmp.y = v.y * f;
-	tmp.z = v.z * f;
+	tmp.x = a.x - b.x;
+	tmp.y = a.y - b.y;
+	tmp.z = a.z - b.z;
 	return (tmp);
 }
 
-t_xyz	divid_v_f(t_xyz v, double f)
+t_xyz	vec_mul(t_xyz a, t_xyz b)
 {
 	t_xyz	tmp;
 
-	tmp.x = v.x / f;
-	tmp.y = v.y / f;
-	tmp.z = v.z / f;
+	tmp.x = a.x * b.x;
+	tmp.y = a.y * b.y;
+	tmp.z = a.z * b.z;
+	return (tmp);
+}
+
+t_xyz	vec_scale(t_xyz v, double s)
+{
+	t_xyz	tmp;
+
+	tmp.x = v.x * s;
+	tmp.y = v.y * s;
+	tmp.z = v.z * s;
+	return (tmp);
+}
+
+t_xyz	vec_div(t_xyz v, double s)
+{
+	t_xyz	tmp;
+
+	tmp.x = v.x / s;
+	tmp.y = v.y / s;
+	tmp.z = v.z / s;
 	return (tmp);
 }

@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
-#include "../../includes/ui.h"
+#include "parser.h"
+#include "ui.h"
+#include "raytracing.h"
+#include "calc.h"
 #include <math.h>
 
 double	convert_x_to_screen(int x)
@@ -38,8 +40,9 @@ void	set_screen_vector(t_xyz *screen, int x, int y, double fov)
 {
 	double	scale;
 
-	scale = tan((fov * 0.5) * M_PI / 180.0);
+	scale = tan(deg_to_rad(fov * 0.5));
 	screen->x = convert_x_to_screen(x) * scale;
 	screen->y = convert_y_to_screen(y) * scale;
 	screen->z = 0;
 }
+

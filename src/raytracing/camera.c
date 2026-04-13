@@ -30,9 +30,9 @@ t_xyz	calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec)
 	right = normalize(cross(up, forward));
 	up = cross(forward, right);
 	dir = normalize(\
-		plus_v1_v2(\
-			plus_v1_v2(\
-				multi_v_f(right, screen_vec.x), multi_v_f(up, screen_vec.y)), \
+		vec_add(\
+			vec_add(\
+				vec_scale(right, screen_vec.x), vec_scale(up, screen_vec.y)), \
 				forward));
 	return (dir);
 }

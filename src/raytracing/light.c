@@ -21,8 +21,8 @@ void	check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray)
 	t_xyz	norm_p;
 
 	norm_p = normalize(obj->vector);
-	dot_n_light = dot(norm_p, minus_v1_v2(lit->xyz, obj->xyz));
-	dot_n_camera = dot(norm_p, minus_v1_v2(cam_ray.pos, obj->xyz));
+	dot_n_light = dot(norm_p, vec_sub(lit->xyz, obj->xyz));
+	dot_n_camera = dot(norm_p, vec_sub(cam_ray.pos, obj->xyz));
 	if ((dot_n_light > 0 && dot_n_camera > 0) \
 	|| (dot_n_light < 0 && dot_n_camera < 0))
 		;
@@ -38,7 +38,7 @@ void	is_light_inside_sp(t_obj *obj, t_lit *lit)
 	double	epsilon;
 
 	r2 = sqr(obj->diameter / 2);
-	center_to_light = minus_v1_v2(lit->xyz, obj->xyz);
+	center_to_light = vec_sub(lit->xyz, obj->xyz);
 	dist2 = dot(center_to_light, center_to_light);
 	epsilon = EPS * r2;
 	if (dist2 >= r2 - epsilon)
@@ -49,19 +49,22 @@ void	is_light_inside_sp(t_obj *obj, t_lit *lit)
 void	is_light_inside_cy(t_obj *obj, t_lit *lit)
 {
 	t_xyz	center_to_light;
+	t_xyz	axis;
+	double	axis_dist;
 	double	dist2;
-	t_xyz	v_perp;
-	double	t;
-	double	r2;
+	double	half_h;
 
-	center_to_light = minus_v1_v2(lit->xyz, obj->xyz);
-	t = dot(center_to_light, obj->vector);
-	if (t < 0 || t > obj->height)
+	center_to_light = vec_sub(lit->xyz, obj->xyz);
+	axis = normalize(obj->vector);
+	half_h = obj->height / 2.0;
+	axis_dist = dot(center_to_light, axis);
+	if (axis_dist < -half_h || half_h < axis_dist)
 		return ;
-	v_perp = minus_v1_v2(center_to_light, multi_v_f(obj->vector, t));
-	dist2 = dot(v_perp, v_perp);
-	r2 = sqr(obj->diameter / 2);
-	if (dist2 <= r2)
+	dist2 = dot(
+		vec_sub(center_to_light, vec_scale(axis, axis_dist)),
+		vec_sub(center_to_light, vec_scale(axis, axis_dist))
+	);
+	if (dist2 <= sqr(obj->diameter / 2.0))
 		lit->valid_flag = false;
 }
 

@@ -11,26 +11,38 @@
 /* ************************************************************************** */
 
 #include "calc.h"
+#include "raytracing.h"
 
 double	sqr(double x)
 {
 	return (x * x);
 }
 
-double	calc_length2(t_xyz vector)
+double	deg_to_rad(double deg)
 {
-	return (sqr(vector.x) + sqr(vector.y) + sqr(vector.z));
+	return (deg * M_PI / 180.0);
 }
 
-double	calc_length(t_xyz vector)
+bool	solve_quadratic(double abc[3], double *t0, double *t1)
 {
-	return (sqrt(calc_length2(vector)));
-}
+	double	d;
+	double	tmp;
 
-t_xyz	normalize(t_xyz vector)
-{
-	double	length;
-
-	length = calc_length(vector);
-	return (divid_v_f(vector, length));
+	if (fabs(abc[0]) < EPS)
+		return (false);
+	d = abc[1] * abc[1] - 4.0 * abc[0] * abc[2];
+	if (d < -EPS)
+		return (false);
+	if (d < 0.0)
+		d = 0.0;
+	d = sqrt(d);
+	*t0 = (-abc[1] - d) / (2.0 * abc[0]);
+	*t1 = (-abc[1] + d) / (2.0 * abc[0]);
+	if (*t1 < *t0)
+	{
+		tmp = *t0;
+		*t0 = *t1;
+		*t1 = tmp;
+	}
+	return (true); 
 }
