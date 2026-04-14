@@ -79,7 +79,7 @@ int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
 	cpy_obj = get_indexed_obj(hit_obj.index, obj);
 	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
 	tmp_lit = env->lit;
-	pls_amb_color(&cpy_obj, env, color);
+	pls_amb_color(&cpy_obj, env, color, hit_obj);
 	while (tmp_lit)
 	{
 		if (tmp_lit->valid_flag)
