@@ -7,7 +7,9 @@
 
 static void	reset_light_flags(t_env *env)
 {
-	t_lit	*l = env->lit;
+	t_lit	*l;
+
+	l = env->lit;
 	while (l)
 	{
 		l->valid_flag = true;
@@ -55,9 +57,9 @@ int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 			cam_ray.pos = env->cam_xyz;
 			cam_ray.dir = calc_cam_dir(screen_vec, env->cam_vector);
 			reset_light_flags(env);
-			check_light_pos(obj, env, cam_ray);
+			// check_light_pos(obj, env, cam_ray);
 			ray_tracing(obj, env, cam_ray, &color);
-			color_set_to_pixel \
+			color_set_to_pixel
 				(mlx->img, x, y, make_trgb(0, color.x, color.y, color.z));
 		}
 	}
@@ -86,8 +88,8 @@ int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
 		{
 			ret = calc_shadow(obj, tmp_lit, &hit_obj);
 			if (ret == NOT_RENDERED_SHADOW)
-				*color = vec_add(calc_shade(&cpy_obj, tmp_lit, hit_obj, cam_ray),
-					*color);
+				*color = vec_add(calc_shade(&cpy_obj, tmp_lit, hit_obj,
+							cam_ray), *color);
 		}
 		tmp_lit = tmp_lit->next;
 	}

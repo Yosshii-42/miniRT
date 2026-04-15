@@ -14,28 +14,28 @@
 */
 bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 {
-	double abc[3];
-    double t0;
-	double t1;
-    bool found;
-    t_hit_point tmp;
+	double		abc[3];
+	double		t0;
+	double		t1;
+	bool		found;
+	t_hit_point	tmp;
 
 	found = false;
-    calc_cy_side_abc(cy, abc);
-    if (!solve_quadratic(abc, &t0, &t1))
-        return false;
-    if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, &tmp, t0))
-    {
-        *hit = tmp;
-        found = true;
-    }
-    if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, &tmp, t1))
-    {
-        if (!found || tmp.dist < hit->dist)
-            *hit = tmp;
-        found = true;
-    }
-    return found;
+	calc_cy_side_abc(cy, abc);
+	if (!solve_quadratic(abc, &t0, &t1))
+		return (false);
+	if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, &tmp, t0))
+	{
+		*hit = tmp;
+		found = true;
+	}
+	if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, &tmp, t1))
+	{
+		if (!found || tmp.dist < hit->dist)
+			*hit = tmp;
+		found = true;
+	}
+	return (found);
 }
 
 /*
@@ -66,7 +66,7 @@ bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 		found = true;
 	}
 	if (hit_cy_cap(cy, bottom, vec_scale(cy->axis, -1.0),
-		HIT_CY_CAP_BOTTOM, &tmp))
+			HIT_CY_CAP_BOTTOM, &tmp))
 	{
 		if (!found || tmp.dist < hit->dist)
 			*hit = tmp;
@@ -162,7 +162,7 @@ bool	judge_t(t_cy *cy, t_hit_point *hit, double t)
 		hit->dist = t;
 		hit->pos = pos;
 		hit->norm = normalize(vec_sub(pos,
-			vec_add(cy->obj->xyz, vec_scale(cy->axis, s))));
+					vec_add(cy->obj->xyz, vec_scale(cy->axis, s))));
 		hit->part = HIT_CY_SIDE;
 		// if (dot(hit->norm, cy->ray.dir) > 0)
 		// 	hit->norm = vec_scale(hit->norm, -1.0);

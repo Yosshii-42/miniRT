@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/23 21:05:16 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/04/15 13:31:41 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYTRACING_H
 # define RAYTRACING_H
 
-# include "./parser.h"
-# include "./ui.h"
+# include "parser.h"
+# include "ui.h"
+# include "types.h"
 # define SHINENESS 16
 # define NO_HIT -99
 # define MAX_DIST 65535
@@ -90,10 +91,8 @@ void			is_light_inside_sp(t_obj *obj, t_lit *lit);
 void			check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray);
 
 // shade.c
-t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
-					t_ray cam_ray);
-t_xyz			pls_shade(t_xyz base_color, t_obj *obj, t_lit *lit,
-					double diff_ref, double spec_ref);					
+t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray);
+t_xyz			pls_shade(t_obj *obj, t_hit_point hit, t_lit *lit, double diff_ref, double spec_ref);
 int				set_amb_col(t_xyz *color, t_env *env);
 void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col, t_hit_point hit);
 
@@ -108,9 +107,12 @@ void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
 
 // checker.c
-t_xyz	get_checker_color(t_obj *obj, t_hit_point hit);
-void	get_sphere_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
-t_xyz	get_sp_checker_color(t_obj *obj, t_hit_point hit);
+t_xyz			get_checker_color(t_obj *obj, t_hit_point hit);
+void			get_sphere_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
+t_xyz			get_sp_checker_color(t_obj *obj, t_hit_point hit);
+
+// image.c
+t_xyz			get_sp_texture_color(t_obj *obj, t_hit_point hit, t_meta_img *tex);
 
 // hit.c
 double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,

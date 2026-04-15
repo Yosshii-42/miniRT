@@ -1,4 +1,3 @@
-
 #include "calc.h"
 #include "parser.h"
 #include "raytracing.h"
@@ -30,7 +29,6 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	}
 	return (tmp.dist);
 }
-
 
 /*
 ** hit_cy_core
