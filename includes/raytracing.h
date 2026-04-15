@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/15 13:31:41 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/15 22:03:39 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int				ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color);
 t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
 
 // screen.c
-double			convert_x_to_screen(int x);
-double			convert_y_to_screen(int y);
-void			set_screen_vector(t_xyz *screen, int x, int y, double fov);
+double			convert_x_to_screen(double x);
+double			convert_y_to_screen(double y);
+void			set_screen_vector(t_xyz *screen, double x, double y, double fov);
 
 // light.c
 void			check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray);

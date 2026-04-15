@@ -38,14 +38,31 @@ static t_obj	get_indexed_obj(int index, t_obj *obj)
 	return (*ret);
 }
 
+static void	init_offset(double sx[4], double sy[4])
+{
+	sx[0] = 0.25;
+	sx[1] = 0.75;
+	sx[2] = 0.25;
+	sx[3] = 0.75;
+	sy[0] = 0.25;
+	sy[1] = 0.25;
+	sy[2] = 0.75;
+	sy[3] = 0.75;
+}
+
 int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 {
-	int		x;
-	int		y;
+	double	x;
+	double	y;
 	t_xyz	color;
+	t_xyz	sample_color;
 	t_xyz	screen_vec;
 	t_ray	cam_ray;
+	double	sx[4];
+	double	sy[4];
+	int		i;
 
+	init_offset(sx, sy);
 	y = -1;
 	while (++y < W_HEIGHT)
 	{
@@ -53,12 +70,16 @@ int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 		while (++x < W_WIDTH)
 		{
 			init_xyz(&color);
-			set_screen_vector(&screen_vec, x, y, env->cam_degree);
-			cam_ray.pos = env->cam_xyz;
-			cam_ray.dir = calc_cam_dir(screen_vec, env->cam_vector);
-			reset_light_flags(env);
-			// check_light_pos(obj, env, cam_ray);
-			ray_tracing(obj, env, cam_ray, &color);
+			i = -1;
+			while (++i < 4) {
+				set_screen_vector(&screen_vec, x + sx[i], y + sy[i], env->cam_degree);
+				cam_ray.pos = env->cam_xyz;
+				cam_ray.dir = calc_cam_dir(screen_vec, env->cam_vector);
+				reset_light_flags(env);
+				ray_tracing(obj, env, cam_ray, &sample_color);
+				color = vec_add(color, sample_color);
+			}
+			color = vec_div(color, 4.0);
 			color_set_to_pixel
 				(mlx->img, x, y, make_trgb(0, color.x, color.y, color.z));
 		}
