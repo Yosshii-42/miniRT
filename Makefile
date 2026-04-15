@@ -51,7 +51,7 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/light.c \
 		  src/raytracing/color.c \
 		  src/raytracing/checker.c \
-		  src/raytracing/image.c
+		  src/raytracing/image.c 
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)
 OBJS	= $(SRCS:.c=.o)

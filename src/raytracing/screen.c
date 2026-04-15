@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:47:58 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 16:45:01 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/15 22:02:57 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "calc.h"
 #include <math.h>
 
-double	convert_x_to_screen(int x)
+double	convert_x_to_screen(double x)
 {
 	double	ret;
 	double	aspect_ratio;
@@ -27,7 +27,7 @@ double	convert_x_to_screen(int x)
 	return (ret * aspect_ratio);
 }
 
-double	convert_y_to_screen(int y)
+double	convert_y_to_screen(double y)
 {
 	double	ret;
 
@@ -36,7 +36,7 @@ double	convert_y_to_screen(int y)
 	return (ret);
 }
 
-void	set_screen_vector(t_xyz *screen, int x, int y, double fov)
+void	set_screen_vector(t_xyz *screen, double x, double y, double fov)
 {
 	double	scale;
 
