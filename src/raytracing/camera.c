@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_camera_pos.c                                  :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:26:32 by tamatsuu          #+#    #+#             */
-/*   Updated: 2025/04/23 19:27:07 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:47:54 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_xyz	calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec)
 		up = (t_xyz){1, 0, 0};
 	right = normalize(cross(up, forward));
 	up = cross(forward, right);
-	dir = normalize(\
-		vec_add(\
-			vec_add(\
-				vec_scale(right, screen_vec.x), vec_scale(up, screen_vec.y)), \
-				forward));
+	dir = normalize(
+			vec_add(
+				vec_add(
+					vec_scale(right, screen_vec.x),
+					vec_scale(up, screen_vec.y)), forward));
 	return (dir);
 }

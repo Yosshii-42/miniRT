@@ -9,9 +9,11 @@ t_xyz	get_checker_color(t_obj *obj, t_hit_point hit)
 	int		ix;
 	int		iz;
 	double	scale;
+	t_env	*env;
 
+	env = set_get_env(GET, NULL);
 	if (obj->id == PL && (obj->vector.y == 1 || obj->vector.y == -1))
-	{	
+	{
 		scale = 0.2;
 		ix = (int)floor(hit.pos.x * scale);
 		iz = (int)floor(hit.pos.z * scale);
@@ -21,7 +23,8 @@ t_xyz	get_checker_color(t_obj *obj, t_hit_point hit)
 		return (make_xyz(0.0, 0.0, 0.0));
 	}
 	if (obj->id == SP)
-		return (get_sp_checker_color(obj, hit));
+		return (get_sp_texture_color(obj, hit, &(env->tex)));
+		// return (get_sp_checker_color(obj, hit));
 	return (obj->rgb);
 }
 
@@ -31,6 +34,7 @@ t_xyz	get_checker_color(t_obj *obj, t_hit_point hit)
 void	get_sphere_uv(t_obj *obj, t_hit_point hit, double *u, double *v)
 {
 	t_xyz	p;
+
 	p = vec_sub(hit.pos, obj->xyz);
 	p = normalize(p);
 	*u = atan2(p.z, p.x) / (2.0 * M_PI) + 0.5;

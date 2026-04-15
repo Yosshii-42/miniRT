@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_light_pos.c                                  :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:24:54 by tamatsuu          #+#    #+#             */
-/*   Updated: 2025/04/23 20:50:09 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:49:06 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray)
 	norm_p = normalize(obj->vector);
 	dot_n_light = dot(norm_p, vec_sub(lit->xyz, obj->xyz));
 	dot_n_camera = dot(norm_p, vec_sub(cam_ray.pos, obj->xyz));
-	if ((dot_n_light > 0 && dot_n_camera > 0) \
-	|| (dot_n_light < 0 && dot_n_camera < 0))
+	if ((dot_n_light > 0 && dot_n_camera > 0)
+		|| (dot_n_light < 0 && dot_n_camera < 0))
 		;
 	else
 		lit->valid_flag = false;
@@ -61,9 +61,9 @@ void	is_light_inside_cy(t_obj *obj, t_lit *lit)
 	if (axis_dist < -half_h || half_h < axis_dist)
 		return ;
 	dist2 = dot(
-		vec_sub(center_to_light, vec_scale(axis, axis_dist)),
-		vec_sub(center_to_light, vec_scale(axis, axis_dist))
-	);
+			vec_sub(center_to_light, vec_scale(axis, axis_dist)),
+			vec_sub(center_to_light, vec_scale(axis, axis_dist))
+			);
 	if (dist2 <= sqr(obj->diameter / 2.0))
 		lit->valid_flag = false;
 }

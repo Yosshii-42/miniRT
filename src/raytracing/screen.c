@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_screen_vector.c                               :+:      :+:    :+:   */
+/*   screen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:47:58 by tamatsuu          #+#    #+#             */
-/*   Updated: 2025/04/20 21:49:00 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:45:01 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ void	set_screen_vector(t_xyz *screen, int x, int y, double fov)
 	screen->y = convert_y_to_screen(y) * scale;
 	screen->z = 0;
 }
-

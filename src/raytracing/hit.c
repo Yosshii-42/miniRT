@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit_obj_calc.c                                     :+:      :+:    :+:   */
+/*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 00:31:53 by tamatsuu          #+#    #+#             */
-/*   Updated: 2025/04/23 19:35:29 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:52:40 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,11 @@ void	fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj)
 	// 	set_h_obj_cy(obj, &c_ray, h_obj, &h_obj->dist);
 }
 
-
 void	set_face_normal(t_ray *ray, t_hit_point *h_obj)
 {
 	if (dot(ray->dir, h_obj->norm) > 0)
 		h_obj->norm = vec_scale(h_obj->norm, -1.0);
 }
-
-
-
-
 
 void	set_hit_obj(t_obj *obj, t_ray *ray, t_hit_point *h_obj, double dist)
 {

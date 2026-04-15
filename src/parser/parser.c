@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <yotsurud@student.42.fr>          #+#  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-12 05:21:15 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/12 15:24:51 by yotsurud         ###   ########.fr       */
+/*   Created: 2025/04/12 05:21:15 by yotsurud          #+#    #+#             */
+/*   Updated: 2026/04/15 07:39:04 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "ui.h"
 
 void	parser(char *filename, int part)
 {
