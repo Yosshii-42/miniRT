@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:06:40 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/15 07:58:20 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/16 22:35:07 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,64 +37,12 @@
 # define DBL_MAX 1.7976931348623158e+308
 # define DBL_MIN 2.2250738585072014e-308
 
-// enum
-// {
-// 	A,
-// 	C,
-// 	L,
-// 	PL,
-// 	SP,
-// 	CY
-// };
-
-// typedef struct s_meta_img	t_meta_img;
-
-// typedef struct s_xyx
-// {
-// 	double	x;
-// 	double	y;
-// 	double	z;
-// }	t_xyz;
-
-// typedef struct s_lit
-// {
-// 	int				flag;
-// 	t_xyz			xyz;
-// 	double			t;
-// 	t_xyz			rgb;
-// 	bool			valid_flag;
-// 	struct s_lit	*next;
-// }	t_lit;
-
-// typedef struct s_env
-// {
-// 	int			part;
-// 	int			flag[3];
-// 	double		amb_t;
-// 	t_xyz		amb_rgb;
-// 	t_xyz		cam_xyz;
-// 	t_xyz		cam_vector;
-// 	double		cam_degree;
-// 	t_lit		*lit;
-// 	t_meta_img	tex;
-// }	t_env;
-
-// typedef struct s_obj
-// {
-// 	int				id;
-// 	t_xyz			xyz;
-// 	t_xyz			vector;
-// 	t_xyz			rgb;
-// 	double			diameter;
-// 	double			height;
-// 	struct s_obj	*next;
-// }	t_obj;
-
 //check_element.c
 int				check_first_element(char *str);
 int				count_split(char **split);
 void			check_array_num(double arr[3], int select);
 void			check_comma(char *str);
+bool			check_file(char *filename);
 
 //check_range.c
 bool			is_minus1_1(double num);
@@ -105,12 +53,13 @@ bool			is_0_255(double num);
 //free.c
 void			free_split(char **split);
 void			free_lit(t_lit *lit);
-void			free_obj(t_obj *data);
+void			free_obj(t_obj *obj, t_mlx_env *mlx);
 
 //ft_atof.c
 double			ft_atof(char *nptr);
 
 //init.c
+void			init_meta_img(t_meta_img *tex);
 void			init_xyz(t_xyz *xyz);
 void			init_env(t_env *env, t_lit *lit, int part);
 void			init_lit(t_lit *lit);

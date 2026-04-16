@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 16:59:46 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/16 23:40:28 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_xyz	pls_shade(t_obj *obj, t_hit_point hit, t_lit *lit, double diff_ref, double
 	t_xyz	lit_rgb;
 	t_xyz	base_color;
 
-	base_color = get_checker_color(obj, hit);
+	base_color = get_optional_color(obj, hit);
 	lit_rgb = lit->rgb;
 	lit_rgb = vec_div(lit_rgb, 255.0);
 	dif_col = vec_scale(vec_mul(base_color, lit_rgb), diff_ref);
@@ -72,7 +72,7 @@ void	pls_amb_color(t_obj *obj, t_env *env, t_xyz *col, t_hit_point hit)
 {
 	t_xyz	base_color;
 
-	base_color = get_checker_color(obj, hit);
+	base_color = get_optional_color(obj, hit);
 	col->x = base_color.x * (env->amb_rgb.x / 255.0) * env->amb_t;
 	col->y = base_color.y * (env->amb_rgb.y / 255.0) * env->amb_t;
 	col->z = base_color.z * (env->amb_rgb.z / 255.0) * env->amb_t;

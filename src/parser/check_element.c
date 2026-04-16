@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_element.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <yotsurud@student.42.fr>          #+#  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-12 05:14:27 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/12 15:28:58 by yotsurud         ###   ########.fr       */
+/*   Created: 2025/04/12 05:14:27 by yotsurud          #+#    #+#             */
+/*   Updated: 2026/04/16 21:57:02 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,15 @@ void	check_comma(char *str)
 		print_error_and_exit("set array", "too many \',\'");
 	else if (count < 2)
 		print_error_and_exit("set array", "too few \',\'");
+}
+
+bool	check_file(char *filename)
+{
+	if (!filename)
+		print_error_and_exit("image file", "file name required");
+	while (*filename && *filename != '.')
+		filename++;
+	if (!(ft_strncmp(filename, ".xpm", 4) == 0 && filename[4] == '\0'))
+		print_error_and_exit("image file", "\'.xpm\' file required");
+	return (true);
 }
