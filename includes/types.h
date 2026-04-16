@@ -8,7 +8,10 @@ enum
 	L,
 	PL,
 	SP,
-	CY
+	CY,
+	CN,
+	IM,
+	CH,
 };
 
 typedef struct s_meta_img
@@ -56,7 +59,6 @@ typedef struct s_env
 	t_xyz		cam_vector;
 	double		cam_degree;
 	t_lit		*lit;
-	t_meta_img	tex;
 }	t_env;
 
 typedef struct s_obj
@@ -67,7 +69,10 @@ typedef struct s_obj
 	t_xyz			rgb;
 	double			diameter;
 	double			height;
+	int				texture;
+	char			*filename;			
 	struct s_obj	*next;
+	t_meta_img		tex;
 }	t_obj;
 
 #endif
