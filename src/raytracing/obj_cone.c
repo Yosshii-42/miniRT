@@ -39,14 +39,13 @@ static bool	hit_cone_side(t_cn *cn, t_hit_point *hit)
 	if (fabs(cn->a) < EPS)
 		return (false);
 	cn->b = 2.0 * (dot(cn->ray.dir, cn->co)
-		- (1.0 + cn->k) * cn->dir_axis * cn->co_axis);
+			- (1.0 + cn->k) * cn->dir_axis * cn->co_axis);
 	cn->c = dot(cn->co, cn->co) - (1.0 + cn->k) * sqr(cn->co_axis);
 	discriminant = sqr(cn->b) - 4.0 * cn->a * cn->c;
 	if (discriminant < 0)
 		return (false);
 	t0 = (-cn->b - sqrt(discriminant)) / (2.0 * cn->a);
 	t1 = (-cn->b + sqrt(discriminant)) / (2.0 * cn->a);
-
 	if (t0 > EPSILON && judge_cone_t(cn, hit, t0))
 		return (true);
 	if (t1 > EPSILON && judge_cone_t(cn, hit, t1))

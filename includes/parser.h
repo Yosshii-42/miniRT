@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:06:40 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/17 16:56:47 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 21:28:39 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void			set_texture(char **split, t_obj *new, int count);
 //make_obj_cy_cn.c
 void			set_cy_data(char **split, t_obj *new);
 void			set_cn_data(char **split, t_obj *new);
-
-
 
 //parser.c
 void			parser(char *filename, int part);

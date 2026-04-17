@@ -5,11 +5,11 @@
 
 t_xyz	get_optional_color(t_obj *obj, t_hit_point hit)
 {
-	if (obj->id == PL && obj->texture == IM &&
-		(obj->vector.y == 1 || obj->vector.y == -1))
+	if (obj->id == PL && obj->texture == IM
+		&& (obj->vector.y == 1 || obj->vector.y == -1))
 		return (get_pl_texture_color(obj, hit, &(obj->tex)));
-	if (obj->id == PL && obj->texture == CH &&
-		(obj->vector.y == 1 || obj->vector.y == -1))
+	if (obj->id == PL && obj->texture == CH
+		&& (obj->vector.y == 1 || obj->vector.y == -1))
 		return (get_pl_checker_color(obj, hit));
 	if (obj->id == SP && obj->texture == IM)
 		return (get_sp_texture_color(obj, hit, &(obj->tex)));
@@ -30,4 +30,3 @@ t_xyz	color_from_int(unsigned int c)
 {
 	return (make_xyz((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF));
 }
-

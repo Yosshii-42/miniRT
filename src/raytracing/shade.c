@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/16 23:40:28 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 21:32:24 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 	return (pls_shade(obj, hit_obj, lit, dot_res, specular_ref));
 }
 
-t_xyz	pls_shade(t_obj *obj, t_hit_point hit, t_lit *lit, double diff_ref, double spec_ref)
+t_xyz	pls_shade(t_obj *obj, t_hit_point hit, t_lit *lit, double diff_ref,
+	double spec_ref)
 {
 	t_xyz	dif_col;
 	t_xyz	spec_col;

@@ -2,6 +2,57 @@
 #include "parser.h"
 #include "raytracing.h"
 
+// cylinder side quadratic coefficients
+/*
+** calc_cy_side_abc
+** 円柱側面の交差判定に必要な二次方程式の係数 a, b, c を計算
+** レイを円柱の式に代入すると
+**    a t^2 + b t + c = 0
+** という形になる
+** 1. oc = ray.origin - cylinder.center
+** 2. 円柱軸方向成分を除いたベクトルを使って計算
+**    → cross を使うことで軸方向を排除
+** 3. a, b, c を求める
+** ※ この係数は solve_quadratic() に渡す
+*/
+static void	calc_cy_side_abc(t_cy *cy)
+{
+	t_xyz	d_cross;
+	t_xyz	oc_cross;
+
+	d_cross = cross(cy->ray.dir, cy->axis);
+	oc_cross = cross(cy->oc, cy->axis);
+	cy->a = dot(d_cross, d_cross);
+	cy->b = 2.0 * dot(d_cross, oc_cross);
+	cy->c = dot(oc_cross, oc_cross) - cy->radius * cy->radius;
+}
+
+// ** 4. 交点 P を求める
+// ** 5. 軸方向距離 s を計算
+// **    → s = (P - center)・axis
+// ** 6. -half_h <= s <= half_h を満たすか確認
+// **    → 円柱の高さ範囲内かチェック
+// ** 7. 側面法線を計算
+// **    → 軸からの放射方向
+static bool	judge_cylinder_t(t_cy *cy, t_hit_point *hit, double t)
+{
+	t_xyz	pos;
+	double	s;
+
+	pos = vec_add(cy->ray.pos, vec_scale(cy->ray.dir, t));
+	s = dot(vec_sub(pos, cy->obj->xyz), cy->axis);
+	if (-cy->half_h <= s && s <= cy->half_h)
+	{
+		hit->dist = t;
+		hit->pos = pos;
+		hit->norm = normalize(vec_sub(pos,
+					vec_add(cy->obj->xyz, vec_scale(cy->axis, s))));
+		hit->part = HIT_CY_SIDE;
+		return (true);
+	}
+	return (false);
+}
+
 /*
 ** hit_cy_side
 **
@@ -14,7 +65,6 @@
 */
 bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 {
-	double		abc[3];
 	double		t0;
 	double		t1;
 	bool		found;
@@ -22,15 +72,15 @@ bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 
 	found = false;
 	init_t_hit_point(&tmp);
-	calc_cy_side_abc(cy, abc);
-	if (!solve_quadratic(abc, &t0, &t1))
+	calc_cy_side_abc(cy);
+	if (!solve_quadratic(cy, &t0, &t1))
 		return (false);
-	if (cy->min <= t0 && t0 <= cy->max && judge_t(cy, &tmp, t0))
+	if (cy->min <= t0 && t0 <= cy->max && judge_cylinder_t(cy, &tmp, t0))
 	{
 		*hit = tmp;
 		found = true;
 	}
-	if (cy->min <= t1 && t1 <= cy->max && judge_t(cy, &tmp, t1))
+	if (cy->min <= t1 && t1 <= cy->max && judge_cylinder_t(cy, &tmp, t1))
 	{
 		if (!found || tmp.dist < hit->dist)
 			*hit = tmp;
@@ -54,21 +104,16 @@ bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 {
 	t_hit_point	tmp;
-	t_xyz		top;
-	t_xyz		bottom;
 	bool		found;
 
 	init_t_hit_point(&tmp);
-	top = vec_add(cy->obj->xyz, vec_scale(cy->axis, cy->half_h));
-	bottom = vec_sub(cy->obj->xyz, vec_scale(cy->axis, cy->half_h));
 	found = false;
-	if (hit_cy_cap(cy, top, cy->axis, HIT_CY_CAP_TOP, &tmp))
+	if (hit_cy_cap(cy, cy->axis, HIT_CY_CAP_TOP, &tmp))
 	{
 		*hit = tmp;
 		found = true;
 	}
-	if (hit_cy_cap(cy, bottom, vec_scale(cy->axis, -1.0),
-			HIT_CY_CAP_BOTTOM, &tmp))
+	if (hit_cy_cap(cy, vec_scale(cy->axis, -1.0), HIT_CY_CAP_BOTTOM, &tmp))
 	{
 		if (!found || tmp.dist < hit->dist)
 			*hit = tmp;
@@ -90,14 +135,18 @@ bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 **    → |P - center|² <= radius²
 ** 6. ヒット情報（距離・位置・法線）を設定
 */
-bool	hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
-	t_hit_point *hit)
+bool	hit_cy_cap(t_cy *cy, t_xyz normal, t_hit_part part, t_hit_point *hit)
 {
 	double	denom;
 	double	t;
 	t_xyz	position;
 	t_xyz	direction;
+	t_xyz	center;
 
+	if (part == HIT_CY_CAP_TOP)
+		center = cy->top;
+	else
+		center = cy->bottom;
 	denom = dot(cy->ray.dir, normal);
 	if (fabs(denom) < EPS)
 		return (false);
@@ -113,62 +162,4 @@ bool	hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
 	hit->norm = normal;
 	hit->part = part;
 	return (true);
-}
-
-// cylinder side quadratic coefficients
-/*
-** calc_cy_side_abc
-** 円柱側面の交差判定に必要な二次方程式の係数 a, b, c を計算
-** レイを円柱の式に代入すると
-**    a t^2 + b t + c = 0
-** という形になる
-** 1. oc = ray.origin - cylinder.center
-** 2. 円柱軸方向成分を除いたベクトルを使って計算
-**    → cross を使うことで軸方向を排除
-** 3. a, b, c を求める
-** ※ この係数は solve_quadratic() に渡す
-*/
-void	calc_cy_side_abc(t_cy *cy, double abc[3])
-{
-	t_xyz	oc;
-	t_xyz	d_cross;
-	t_xyz	oc_cross;
-
-	oc = vec_sub(cy->ray.pos, cy->obj->xyz);
-	d_cross = cross(cy->ray.dir, cy->axis);
-	oc_cross = cross(oc, cy->axis);
-	// abc[0] = vec_length_sq(cross(cy->ray.dir, cy->axis));
-	// abc[1] = 2.0 * dot(cross(cy->ray.dir, cy->axis), cross(oc, cy->axis));
-	// abc[2] = vec_length_sq(cross(oc, cy->axis)) - sqr(cy->radius);
-	abc[0] = dot(d_cross, d_cross);
-	abc[1] = 2.0 * dot(d_cross, oc_cross);
-	abc[2] = dot(oc_cross, oc_cross) - cy->radius * cy->radius;
-}
-
-// ** 4. 交点 P を求める
-// ** 5. 軸方向距離 s を計算
-// **    → s = (P - center)・axis
-// ** 6. -half_h <= s <= half_h を満たすか確認
-// **    → 円柱の高さ範囲内かチェック
-// ** 7. 側面法線を計算
-// **    → 軸からの放射方向
-bool	judge_t(t_cy *cy, t_hit_point *hit, double t)
-{
-	t_xyz	pos;
-	double	s;
-
-	pos = vec_add(cy->ray.pos, vec_scale(cy->ray.dir, t));
-	s = dot(vec_sub(pos, cy->obj->xyz), cy->axis);
-	if (-cy->half_h <= s && s <= cy->half_h)
-	{
-		hit->dist = t;
-		hit->pos = pos;
-		hit->norm = normalize(vec_sub(pos,
-					vec_add(cy->obj->xyz, vec_scale(cy->axis, s))));
-		hit->part = HIT_CY_SIDE;
-		// if (dot(hit->norm, cy->ray.dir) > 0)
-		// 	hit->norm = vec_scale(hit->norm, -1.0);
-		return (true);
-	}
-	return (false);
 }
