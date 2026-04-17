@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/15 22:03:39 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 00:43:55 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,18 @@ void			clamp_xyz(t_xyz *rgb, double min, double max);
 void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
 
-// checker.c
-t_xyz			get_checker_color(t_obj *obj, t_hit_point hit);
-void			get_sphere_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
-t_xyz			get_sp_checker_color(t_obj *obj, t_hit_point hit);
+// texture.c
+t_xyz			get_optional_color(t_obj *obj, t_hit_point hit);
+unsigned int	get_tex_pixel(t_meta_img *tex, int x, int y);
+t_xyz			color_from_int(unsigned int c);
+					
+// texture_pl.c
+t_xyz			get_pl_checker_color(t_obj *obj, t_hit_point hit);
+t_xyz			get_pl_texture_color(t_obj *obj, t_hit_point hit, t_meta_img *tex);
 
-// image.c
+// texture_sp.c
+void			get_sp_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
+t_xyz			get_sp_checker_color(t_obj *obj, t_hit_point hit);
 t_xyz			get_sp_texture_color(t_obj *obj, t_hit_point hit, t_meta_img *tex);
 
 // hit.c

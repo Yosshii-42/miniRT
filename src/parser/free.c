@@ -6,11 +6,12 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:15:54 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/17 14:51:30 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 14:58:58 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "mlx.h"
 
 void	free_split(char **split)
 {
@@ -41,7 +42,7 @@ void	free_lit(t_lit *lit)
 	}
 }
 
-void	free_obj(t_obj *obj)
+void	free_obj(t_obj *obj, t_mlx_env *mlx)
 {
 	t_obj	*tmp;
 

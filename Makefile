@@ -15,6 +15,7 @@ HEADER	= ./includes
 LIBFT_DIR = ./src/libft
 
 CFLAGS	= -Wall -Wextra -Werror -O3
+CFLAGS  += -fsanitize=address
 IFLAGS	= -I$(HEADER) -I$(MLX_DIR)
 LDFLAGS	= -L$(LIBFT_DIR) -L$(MLX_DIR)
 
@@ -50,7 +51,9 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/shadow.c \
 		  src/raytracing/light.c \
 		  src/raytracing/color.c \
-		  src/raytracing/checker.c \
+		  src/raytracing/texture.c \
+		  src/raytracing/texture_pl.c \
+		  src/raytracing/texture_sp.c \
 		  src/raytracing/image.c 
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)

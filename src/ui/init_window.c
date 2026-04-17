@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 18:54:11 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 16:59:27 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/16 22:50:46 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,41 @@
 #include <mlx.h>
 #include <math.h>
 
-int	init_window(t_obj *data, t_env *env)
+static void	load_textures(t_mlx_env *mlx, t_obj *obj)
+{
+	while (obj)
+	{
+		if (obj->texture == IM && obj->filename)
+		{
+			obj->tex.img = mlx_xpm_file_to_image(
+				mlx->mlx, obj->filename, &obj->tex.width, &obj->tex.height
+			);
+			if (!obj->tex.img)
+				print_error_and_exit("image load error", obj->filename);
+			obj->tex.addr = mlx_get_data_addr(
+				obj->tex.img, &obj->tex.bits_per_pixel,
+				&obj->tex.line_length, &obj->tex.endian
+			);
+			if (!obj->tex.addr)
+				print_error_and_exit("mlx_get_data_addr", "failed");
+		}
+		obj = obj->next;
+	}
+}
+
+int	init_window(t_obj *obj, t_env *env)
 {
 	t_mlx_env	mlx;
-	t_meta_img	tex;
 
 	mlx.mlx = mlx_init();
 	if (!mlx.mlx)
-		print_error_and_exit("mlx_init failed", NULL);
+		print_error_and_exit("mlx_init", "failed");
 	mlx.window = mlx_new_window(mlx.mlx, W_WIDTH, W_HEIGHT, WIN_TITLE);
 	if (!mlx.window)
-		print_error_and_exit("mlx_new_window failed", NULL);
-	tex.img = mlx_xpm_file_to_image(mlx.mlx, "earth.xpm", &tex.width, &tex.height);
-	tex.addr = mlx_get_data_addr(tex.img, &tex.bits_per_pixel, &tex.line_length, &tex.endian);
-	env->tex = tex;
+		print_error_and_exit("mlx_new_window", "failed");
+	load_textures(&mlx, obj);
 	mlx_key_hook(mlx.window, key_handler, &mlx);
-	render_window(&mlx, data, env);
+	render_window(&mlx, obj, env);
 	mlx_hook(mlx.window, DESTROY_NOTIFY, 0, close_btn_click, &mlx);
 	mlx_loop(mlx.mlx);
 	return (EXIT_SUCCESS);

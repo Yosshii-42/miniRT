@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsururukakou <tsururukakou@student.42.f    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:19:44 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/17 01:09:31 by tsururukako      ###   ########.fr       */
+/*   Updated: 2026/04/16 22:37:25 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+void	init_meta_img(t_meta_img *tex)
+{
+	tex->img = NULL;
+	tex->addr = NULL;
+	tex->width = 0;
+	tex->height = 0;
+	tex->bits_per_pixel = 0;
+	tex->line_length = 0;
+	tex->endian = 0;
+}
 
 void	init_xyz(t_xyz *xyz)
 {
@@ -43,13 +54,16 @@ void	init_lit(t_lit *lit)
 	lit->next = NULL;
 }
 
-void	init_obj(t_obj *data)
+void	init_obj(t_obj *obj)
 {
-	data->id = -1;
-	init_xyz(&data->xyz);
-	init_xyz(&data->vector);
-	init_xyz(&data->rgb);
-	data->diameter = 0.0;
-	data->height = 0.0;
-	data->next = NULL;
+	obj->id = -1;
+	init_xyz(&obj->xyz);
+	init_xyz(&obj->vector);
+	init_xyz(&obj->rgb);
+	obj->diameter = 0.0;
+	obj->height = 0.0;
+	obj->texture = -1;
+	obj->filename = NULL;
+	init_meta_img(&obj->tex);
+	obj->next = NULL;
 }

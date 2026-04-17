@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:37:19 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/15 13:41:55 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/16 17:26:58 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	check_argv(int argc, char **argv)
 	filename = argv[1];
 	while (filename)
 	{
-		if (ft_memcmp(filename, "./", 2) == 0)
+		if (ft_strncmp(filename, "./", 2) == 0)
 			filename += 2;
-		else if (ft_memcmp(filename, "../", 3) == 0)
+		else if (ft_strncmp(filename, "../", 3) == 0)
 			filename += 3;
 		else
 			break ;
 	}
-	while (*filename != '.')
+	while (*filename && *filename != '.')
 		filename++;
-	if (ft_memcmp(filename, ".rt", 4))
+	if (!(ft_strncmp(filename, ".rt", 3) == 0 && filename[3] == '\0'))
 		print_error_and_exit("main", "*.rt file required");
 }
 
