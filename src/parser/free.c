@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <yotsurud@student.42.fr>          #+#  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-12 05:15:54 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/12 15:28:38 by yotsurud         ###   ########.fr       */
+/*   Created: 2025/04/12 05:15:54 by yotsurud          #+#    #+#             */
+/*   Updated: 2026/04/17 14:51:30 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void	free_obj(t_obj *obj)
 		while (obj)
 		{
 			tmp = obj->next;
+			if (obj->filename)
+				free(obj->filename);
+			if (obj->tex.img)
+				mlx_destroy_image(mlx->mlx, obj->tex.img);
 			free(obj);
 			obj = tmp;
 		}
