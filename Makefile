@@ -15,7 +15,7 @@ HEADER	= ./includes
 LIBFT_DIR = ./src/libft
 
 CFLAGS	= -Wall -Wextra -Werror -O3
-CFLAGS  += -fsanitize=address
+# CFLAGS  += -fsanitize=address
 IFLAGS	= -I$(HEADER) -I$(MLX_DIR)
 LDFLAGS	= -L$(LIBFT_DIR) -L$(MLX_DIR)
 
@@ -28,7 +28,9 @@ SRCS	= src/parser/check_element.c \
 		  src/parser/init.c\
 		  src/parser/make_env_data.c \
 		  src/parser/make_lit_data.c \
-		  src/parser/make_obj_data.c \
+		  src/parser/make_obj.c \
+		  src/parser/make_obj_pl_sp.c \
+		  src/parser/make_obj_cy_cn.c \
 		  src/parser/parser.c \
 		  src/parser/print_function.c \
 		  src/parser/setter_getter.c \
@@ -44,6 +46,7 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/obj_plane.c \
 		  src/raytracing/obj_cylinder.c \
 		  src/raytracing/obj_cylinder_core.c \
+		  src/raytracing/obj_cone.c \
 		  src/raytracing/screen.c \
 		  src/raytracing/hit.c \
 		  src/raytracing/camera.c \
@@ -54,7 +57,8 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/texture.c \
 		  src/raytracing/texture_pl.c \
 		  src/raytracing/texture_sp.c \
-		  src/raytracing/image.c 
+		  src/raytracing/image.c \
+		  src/raytracing/init.c
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)
 OBJS	= $(SRCS:.c=.o)

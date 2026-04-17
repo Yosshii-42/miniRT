@@ -21,6 +21,7 @@ bool	hit_cy_side(t_cy *cy, t_hit_point *hit)
 	t_hit_point	tmp;
 
 	found = false;
+	init_t_hit_point(&tmp);
 	calc_cy_side_abc(cy, abc);
 	if (!solve_quadratic(abc, &t0, &t1))
 		return (false);
@@ -57,6 +58,7 @@ bool	hit_cy_caps(t_cy *cy, t_hit_point *hit)
 	t_xyz		bottom;
 	bool		found;
 
+	init_t_hit_point(&tmp);
 	top = vec_add(cy->obj->xyz, vec_scale(cy->axis, cy->half_h));
 	bottom = vec_sub(cy->obj->xyz, vec_scale(cy->axis, cy->half_h));
 	found = false;

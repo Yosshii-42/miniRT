@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:14:27 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/16 21:57:02 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 17:20:09 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	check_first_element(char *str)
 {
-	if (!ft_memcmp(str, "A", 2) || !ft_memcmp(str, "C", 2))
+	if ((*str == 'A' && str[1] == '\0')|| (*str == 'C' && str[1] == '\0'))
 		return (ENV);
-	if (!ft_memcmp(str, "L", 2))
+	if ((*str == 'L' && str[1] == '\0'))
 		return (LIT);
-	if (!ft_memcmp(str, "sp", 3) || !ft_memcmp(str, "pl", 3)
-		|| !ft_memcmp(str, "cy", 3))
+	if ((ft_strncmp(str, "sp", 2) == 0 && str[2] == '\0')
+		|| (ft_strncmp(str, "pl", 2) == 0 && str[2] == '\0')
+		|| (ft_strncmp(str, "cy", 2) == 0 && str[2] == '\0')
+		|| (ft_strncmp(str, "cn", 2) == 0 && str[2] == '\0'))
 		return (OBJ);
 	return (OTHER);
 }

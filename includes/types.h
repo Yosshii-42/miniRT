@@ -75,4 +75,66 @@ typedef struct s_obj
 	t_meta_img		tex;
 }	t_obj;
 
+typedef enum e_letter
+{
+	L_A,
+	L_B,
+	L_C,
+	L_D
+}	t_letter;
+
+typedef enum e_hit_part
+{
+	HIT_NONE,
+	HIT_CY_SIDE,
+	HIT_CY_CAP_TOP,
+	HIT_CY_CAP_BOTTOM,
+	
+	HIT_SPHERE,
+	hIT_PLANE
+}	t_hit_part;
+
+typedef struct s_ray
+{
+	t_xyz	pos;
+	t_xyz	dir;
+}	t_ray;
+
+// dist is distance, pos is hit position, norm is nomral vector
+typedef struct s_hit_point
+{
+	double		dist;
+	t_xyz		pos;
+	t_xyz		norm;
+	int			index;
+	t_hit_part	part;
+}	t_hit_point;
+
+typedef struct s_cy
+{
+	t_ray	ray;
+	t_obj	*obj;
+	t_xyz	axis;
+	double	radius;
+	double	half_h;
+	double	min;
+	double	max;
+}	t_cy;
+
+typedef struct s_cn
+{
+	t_ray	ray;
+	t_obj	*obj;
+	t_xyz	axis;
+	double	radius;
+	double	height;
+	t_xyz	co;
+	double	k;
+	double	dir_axis;
+	double	co_axis;
+	double	a;
+	double	b;
+	double	c;
+}	t_cn;
+
 #endif
