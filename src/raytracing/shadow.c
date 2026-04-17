@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:12:31 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 16:51:36 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 18:22:13 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p)
 	double		ret;
 	t_hit_point	tmp_hit;
 
+	init_t_hit_point(&tmp_hit);
 	incident_dir = vec_sub(lit->xyz, hit_p->pos);
 	incident_dir = normalize(incident_dir);
 	tmp_hit = *hit_p;

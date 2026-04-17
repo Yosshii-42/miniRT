@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:15:54 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/17 01:23:55 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 20:11:03 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	free_obj(t_obj *obj, t_mlx_env *mlx)
 			if (obj->filename)
 				free(obj->filename);
 			if (obj->tex.img)
+			{
 				mlx_destroy_image(mlx->mlx, obj->tex.img);
+				obj->tex.img = NULL;
+			}
 			free(obj);
 			obj = tmp;
 		}

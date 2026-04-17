@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 00:31:53 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 16:52:40 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 18:04:54 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ double	hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 		return (hit_plane(obj, ray, h_obj, rec_hit));
 	else if (obj->id == CY)
 		return (hit_cylinder(obj, ray, h_obj, rec_hit));
+	else if (obj->id == CN)
+		return (hit_cone(obj, ray, h_obj, rec_hit));
 	return (NO_HIT);
 }
 
@@ -39,6 +41,7 @@ int	hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p)
 	int			ret;
 
 	hit_p->dist = MAX_DIST + 1;
+	hit_p->index = -1;
 	ret = -1;
 	i = 0;
 	obj_cpy = obj;

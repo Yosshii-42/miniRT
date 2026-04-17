@@ -20,6 +20,7 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	cy.half_h = obj->height / 2.0;
 	cy.min = EPS;
 	cy.max = MAX_DIST;
+	init_t_hit_point(&tmp);
 	if (!hit_cy_core(&cy, &tmp))
 		return (NO_HIT);
 	if (rec_hit)

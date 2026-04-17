@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/17 00:43:55 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 19:57:25 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,52 +26,6 @@
 # define RENDERED_SHADOW 0
 # define NOT_RENDERED_SHADOW 1
 # define NO_LIGHT 2
-
-typedef enum e_letter
-{
-	L_A,
-	L_B,
-	L_C,
-	L_D
-}	t_letter;
-
-typedef enum e_hit_part
-{
-	HIT_NONE,
-	HIT_CY_SIDE,
-	HIT_CY_CAP_TOP,
-	HIT_CY_CAP_BOTTOM,
-	
-	HIT_SPHERE,
-	hIT_PLANE
-}	t_hit_part;
-
-typedef struct s_ray
-{
-	t_xyz	pos;
-	t_xyz	dir;
-}	t_ray;
-
-// dist is distance, pos is hit position, norm is nomral vector
-typedef struct s_hit_point
-{
-	double		dist;
-	t_xyz		pos;
-	t_xyz		norm;
-	int			index;
-	t_hit_part	part;
-}	t_hit_point;
-
-typedef struct s_cy
-{
-	t_ray	ray;
-	t_obj	*obj;
-	t_xyz	axis;
-	double	radius;
-	double	half_h;
-	double	min;
-	double	max;
-}	t_cy;
 
 // render.c
 int				ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color);
@@ -148,6 +102,13 @@ bool			hit_cy_cap(t_cy *cy, t_xyz center, t_xyz normal, t_hit_part part,
 					t_hit_point *hit);
 bool			judge_t(t_cy *cy, t_hit_point *hit, double t);
 void			calc_cy_side_abc(t_cy *cy, double abc[3]);
+
+// obj_cone.c
+double			hit_cone(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit);
+
+// init.c
+void			init_t_hit_point(t_hit_point *tmp);
+void			set_init_cone_data(t_cn *cn, t_obj *obj, t_ray *ray);
 
 // unused
 void			set_hit_obj(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
