@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/18 13:47:51 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 00:14:51 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_xyz	pls_shade(t_data_set data, double diff_ref, double spec_ref)
 	lit_rgb = vec_div(lit_rgb, 255.0);
 	dif_col = vec_scale(vec_mul(base_color, lit_rgb), diff_ref);
 	dif_col = vec_scale(dif_col, data.lit->t);
-	spec_col = vec_scale(vec_scale(lit_rgb, 255.0), spec_ref);
+	spec_col = vec_scale(vec_scale(lit_rgb, 255.0), spec_ref * 0.2);
 	spec_col = vec_scale(spec_col, data.lit->t);
 	ret_col = vec_add(dif_col, spec_col);
 	return (ret_col);
