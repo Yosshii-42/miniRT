@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:14:27 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/17 17:20:09 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/17 21:21:18 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_first_element(char *str)
 {
-	if ((*str == 'A' && str[1] == '\0')|| (*str == 'C' && str[1] == '\0'))
+	if ((*str == 'A' && str[1] == '\0') || (*str == 'C' && str[1] == '\0'))
 		return (ENV);
 	if ((*str == 'L' && str[1] == '\0'))
 		return (LIT);

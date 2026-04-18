@@ -49,7 +49,7 @@ void	set_sp_data(char **split, t_obj *new)
 	double	xyz[3];
 	double	rgb[3];
 	int		count;
-	
+
 	count = count_split(split);
 	if (count < 4 || 6 < count)
 		print_error_and_exit("set_sp_data", "invalid argument count");

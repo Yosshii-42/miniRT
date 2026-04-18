@@ -13,13 +13,7 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	t_cy		cy;
 	t_hit_point	tmp;
 
-	cy.ray = *ray;
-	cy.obj = obj;
-	cy.axis = normalize(obj->vector);
-	cy.radius = obj->diameter / 2.0;
-	cy.half_h = obj->height / 2.0;
-	cy.min = EPS;
-	cy.max = MAX_DIST;
+	set_init_cylinder_data(&cy, obj, ray);
 	init_t_hit_point(&tmp);
 	if (!hit_cy_core(&cy, &tmp))
 		return (NO_HIT);

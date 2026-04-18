@@ -42,6 +42,7 @@ SRCS	= src/parser/check_element.c \
 		  src/calc/vec_length.c \
 		  src/calc/utils.c \
 		  src/raytracing/render.c \
+		  src/raytracing/render_utils.c \
 		  src/raytracing/obj_sphere.c \
 		  src/raytracing/obj_plane.c \
 		  src/raytracing/obj_cylinder.c \
@@ -49,6 +50,7 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/obj_cone.c \
 		  src/raytracing/screen.c \
 		  src/raytracing/hit.c \
+		  src/raytracing/hit_utils.c \
 		  src/raytracing/camera.c \
 		  src/raytracing/shade.c \
 		  src/raytracing/shadow.c \
@@ -57,7 +59,6 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/texture.c \
 		  src/raytracing/texture_pl.c \
 		  src/raytracing/texture_sp.c \
-		  src/raytracing/image.c \
 		  src/raytracing/init.c
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)

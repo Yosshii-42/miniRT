@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:14:16 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/20 18:54:00 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/04/18 02:17:17 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ double	vec_dist(t_xyz a, t_xyz b);
 // utils.c
 double	sqr(double x);
 double	deg_to_rad(double deg);
-bool	solve_quadratic(double abc[3], double *t0, double *t1);
+bool	solve_quadratic(t_cy *cy, double *t0, double *t1);
 t_xyz	make_xyz(double x, double y, double z);
 
 #endif

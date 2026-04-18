@@ -89,7 +89,6 @@ typedef enum e_hit_part
 	HIT_CY_SIDE,
 	HIT_CY_CAP_TOP,
 	HIT_CY_CAP_BOTTOM,
-	
 	HIT_SPHERE,
 	hIT_PLANE
 }	t_hit_part;
@@ -119,6 +118,12 @@ typedef struct s_cy
 	double	half_h;
 	double	min;
 	double	max;
+	t_xyz	top;
+	t_xyz	bottom;
+	t_xyz	oc;
+	double	a;
+	double	b;
+	double	c;
 }	t_cy;
 
 typedef struct s_cn
@@ -136,5 +141,12 @@ typedef struct s_cn
 	double	b;
 	double	c;
 }	t_cn;
+
+typedef struct s_data_set
+{
+	t_obj		*obj;
+	t_lit		*lit;
+	t_hit_point	hit_p;
+}	t_data_set;
 
 #endif
