@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 02:53:11 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/18 13:41:44 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void			check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray);
 // shade.c
 t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
 					t_ray cam_ray);
-t_xyz			pls_shade(t_obj *obj, t_hit_point hit, t_lit *lit,
-					double diff_ref, double spec_ref);
+t_xyz			pls_shade(t_data_set data, double diff_ref, double spec_ref);
 int				set_amb_col(t_xyz *color, t_env *env);
 void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col,
 					t_hit_point hit);
@@ -93,6 +92,10 @@ double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p);
 int				hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p);
 void			fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj);
+
+// hit_utils.c
+void			init_variables(int *ret, int *i, t_obj **obj_cpy, t_obj *obj);
+void			init_hit_p(t_hit_point *hit);
 void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
 
 // obj_shpere.c

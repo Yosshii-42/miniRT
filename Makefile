@@ -50,6 +50,7 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/obj_cone.c \
 		  src/raytracing/screen.c \
 		  src/raytracing/hit.c \
+		  src/raytracing/hit_utils.c \
 		  src/raytracing/camera.c \
 		  src/raytracing/shade.c \
 		  src/raytracing/shadow.c \

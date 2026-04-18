@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/17 21:32:24 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/18 13:47:51 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include "raytracing.h"
 #include "calc.h"
 #include <math.h>
+
+static inline t_data_set	set_data(t_obj *obj, t_lit *lit, t_hit_point hit)
+{
+	t_data_set	data;
+
+	data.obj = obj;
+	data.lit = lit;
+	data.hit_p = hit;
+	return (data);
+}
 
 // this function calculate shade.
 // shade including diffuse reflection and specular reflection
@@ -38,25 +48,24 @@ t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 		specular_ref = dot(reverse_vec, view_dir);
 		specular_ref = pow(clamp_double(specular_ref, 0.0, 1.0), SHINENESS);
 	}
-	return (pls_shade(obj, hit_obj, lit, dot_res, specular_ref));
+	return (pls_shade(set_data(obj, lit, hit_obj), dot_res, specular_ref));
 }
 
-t_xyz	pls_shade(t_obj *obj, t_hit_point hit, t_lit *lit, double diff_ref,
-	double spec_ref)
+t_xyz	pls_shade(t_data_set data, double diff_ref, double spec_ref)
 {
 	t_xyz	dif_col;
 	t_xyz	spec_col;
-	t_xyz	ret_col;
 	t_xyz	lit_rgb;
 	t_xyz	base_color;
+	t_xyz	ret_col;
 
-	base_color = get_optional_color(obj, hit);
-	lit_rgb = lit->rgb;
+	base_color = get_optional_color(data.obj, data.hit_p);
+	lit_rgb = data.lit->rgb;
 	lit_rgb = vec_div(lit_rgb, 255.0);
 	dif_col = vec_scale(vec_mul(base_color, lit_rgb), diff_ref);
-	dif_col = vec_scale(dif_col, lit->t);
+	dif_col = vec_scale(dif_col, data.lit->t);
 	spec_col = vec_scale(vec_scale(lit_rgb, 255.0), spec_ref);
-	spec_col = vec_scale(spec_col, lit->t);
+	spec_col = vec_scale(spec_col, data.lit->t);
 	ret_col = vec_add(dif_col, spec_col);
 	return (ret_col);
 }

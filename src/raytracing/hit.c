@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 00:31:53 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/18 01:44:55 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/18 13:09:06 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ int	hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p)
 	int			i;
 	int			ret;
 
-	ret = -1;
-	i = 0;
-	obj_cpy = obj;
+	init_variables(&ret, &i, &obj_cpy, obj);
 	while (obj_cpy)
 	{
 		if (hit_p->index != i)
@@ -68,11 +66,8 @@ int	hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p)
 	int			i;
 	int			ret;
 
-	hit_p->dist = MAX_DIST + 1;
-	hit_p->index = -1;
-	ret = -1;
-	i = 0;
-	obj_cpy = obj;
+	init_hit_p(hit_p);
+	init_variables(&ret, &i, &obj_cpy, obj);
 	while (obj_cpy)
 	{
 		tmp_hit = *hit_p;
@@ -106,10 +101,4 @@ void	fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj)
 		if (dot(c_ray.dir, h_obj->norm) > 0)
 			h_obj->norm = vec_scale(h_obj->norm, -1);
 	}
-}
-
-void	set_face_normal(t_ray *ray, t_hit_point *h_obj)
-{
-	if (dot(ray->dir, h_obj->norm) > 0)
-		h_obj->norm = vec_scale(h_obj->norm, -1.0);
 }

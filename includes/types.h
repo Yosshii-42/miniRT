@@ -142,4 +142,11 @@ typedef struct s_cn
 	double	c;
 }	t_cn;
 
+typedef struct s_data_set
+{
+	t_obj		*obj;
+	t_lit		*lit;
+	t_hit_point	hit_p;
+}	t_data_set;
+
 #endif
