@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:26 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 22:01:36 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 22:58:49 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_xyz	calc_light_sum_color(t_scene *scene, t_shade_ctx *ctx)
 	int		shadow;
 
 	tmp_lit = scene->lit;
+	init_xyz(&color);
 	while (tmp_lit)
 	{
 		if (tmp_lit->valid_flag)
@@ -50,14 +51,14 @@ t_xyz	ray_tracing(t_scene *scene, t_ray cam_ray, int depth)
 		return (make_xyz(0, 0, 0));
 	hit_obj.index = hit_nearest_obj(scene->obj, &cam_ray, &hit_obj);
 	if (hit_obj.index < 0)
-		return (set_amb_col(scene->env));
+		return (make_xyz(0, 0, 0));
 	cpy_obj = get_indexed_obj(hit_obj.index, scene->obj);
 	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
 	if (cpy_obj.material == METAL)
 		return (calc_metal(scene, cam_ray, &hit_obj, depth));
 	pls_amb_color(&cpy_obj, scene->env, &color, hit_obj);
-	ctx = set_shade_data(&cpy_obj, hit_obj, cam_ray, &color);
-	color = calc_light_sum_color(scene, &ctx);
+	ctx = set_shade_data(&cpy_obj, hit_obj, cam_ray);
+	color = vec_add(color, calc_light_sum_color(scene, &ctx));
 	clamp_xyz(&color, 0, 255);
 	return (color);
 }

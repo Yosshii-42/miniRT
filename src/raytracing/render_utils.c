@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:37 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 22:00:01 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 22:09:03 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ void	init_offset(double sx[4], double sy[4])
 	sy[3] = 0.75;
 }
 
-t_shade_ctx	set_shade_data(t_obj *obj, t_hit_point hit, t_ray ray, t_xyz *color)
+t_shade_ctx	set_shade_data(t_obj *obj, t_hit_point hit, t_ray ray)
 {
 	t_shade_ctx	shade;
 
 	shade.obj = obj;
 	shade.hit = hit;
 	shade.ray = ray;
-	shade.color = color;
 	return (shade);
 }
 

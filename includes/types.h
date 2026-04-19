@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 21:31:59 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 22:08:03 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ typedef struct s_shade_ctx
 	t_obj		*obj;
 	t_hit_point	hit;
 	t_ray		ray;
-	t_xyz		*color;
 }	t_shade_ctx;
 
 #endif

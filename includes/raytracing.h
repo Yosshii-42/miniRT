@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 21:54:02 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 22:28:52 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define NO_HIT -99
 # define MAX_DIST 65535
 # define EPS 0.000001f
+// # define EPSILON 0.001f
 # define EPSILON 0.0078125f
 # define PLANE_PARALLEL 1e-6
 # define M_PI 3.14159265358979323846
@@ -34,8 +35,7 @@ t_xyz			ray_tracing(t_scene *scene, t_ray cam_ray, int depth);
 // render_utils.c
 void			reset_light_flags(t_env *env);
 void			init_offset(double sx[4], double sy[4]);
-t_shade_ctx		set_shade_data(t_obj *obj, t_hit_point hit, t_ray ray,
-					t_xyz *color);
+t_shade_ctx		set_shade_data(t_obj *obj, t_hit_point hit, t_ray ray);
 t_obj			get_indexed_obj(int index, t_obj *obj);
 
 // camera.c
