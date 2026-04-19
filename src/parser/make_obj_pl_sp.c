@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_obj_pl_sp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:20:25 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:20:27 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:10:42 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	set_image(char *filename, t_obj *new)
 		print_error_and_exit("image", "file name error");
 }
 
-void	set_texture(char **split, t_obj *new, int count)
+void	set_tex_or_mat(char **split, t_obj *new, int count)
 {
 	if (ft_strncmp(split[4], "checker", 7) == 0
 		&& split[4][7] == '\0' && count == 5)
@@ -31,8 +31,11 @@ void	set_texture(char **split, t_obj *new, int count)
 	else if (ft_strncmp(split[4], "image", 5) == 0
 		&& split[4][5] == '\0' && count == 6)
 		set_image(split[5], new);
+	else if (ft_strncmp(split[4], "metal", 5) == 0
+		&& split[4][5] == '\0' && count == 5)
+		new->material = METAL;
 	else
-		print_error_and_exit("texture", "bad texture option");
+		print_error_and_exit("tex or mat", "bad option");
 }
 
 void	set_pl_data(char **split, t_obj *new)
@@ -53,7 +56,7 @@ void	set_pl_data(char **split, t_obj *new)
 	set_array(split[3], rgb, RGB);
 	set_struct_xyz(&new->rgb, rgb);
 	if (count > 4)
-		set_texture(split, new, count);
+		set_tex_or_mat(split, new, count);
 }
 
 void	set_sp_data(char **split, t_obj *new)
@@ -74,5 +77,5 @@ void	set_sp_data(char **split, t_obj *new)
 	set_array(split[3], rgb, RGB);
 	set_struct_xyz(&new->rgb, rgb);
 	if (count > 4)
-		set_texture(split, new, count);
+		set_tex_or_mat(split, new, count);
 }

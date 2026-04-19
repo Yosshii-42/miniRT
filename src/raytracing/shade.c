@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/19 00:37:18 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 16:00:06 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,16 @@ t_xyz	pls_shade(t_data_set data, double diff_ref, double spec_ref)
 	return (ret_col);
 }
 
-int	set_amb_col(t_xyz *color, t_env *env)
+t_xyz	set_amb_col(t_env *env)
 {
-	color->x = (env->amb_rgb.x / 255.0) * env->amb_t;
-	color->y = (env->amb_rgb.y / 255.0) * env->amb_t;
-	color->z = (env->amb_rgb.z / 255.0) * env->amb_t;
-	return (0);
+	double	x;
+	double	y;
+	double	z;
+
+	x = (env->amb_rgb.x / 255.0) * env->amb_t;
+	y = (env->amb_rgb.y / 255.0) * env->amb_t;
+	z = (env->amb_rgb.z / 255.0) * env->amb_t;
+	return (make_xyz(x, y, z));
 }
 
 void	pls_amb_color(t_obj *obj, t_env *env, t_xyz *col, t_hit_point hit)

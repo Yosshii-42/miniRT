@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:19:39 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/19 21:31:59 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ enum
 	IM,
 	CH,
 };
+
+typedef enum e_material
+{
+	DEFAULT,
+	METAL
+}	t_material;
 
 typedef struct s_meta_img
 {
@@ -76,6 +82,7 @@ typedef struct s_env
 typedef struct s_obj
 {
 	int				id;
+	t_material		material;
 	t_xyz			xyz;
 	t_xyz			vector;
 	t_xyz			rgb;
@@ -160,5 +167,20 @@ typedef struct s_data_set
 	t_lit		*lit;
 	t_hit_point	hit_p;
 }	t_data_set;
+
+typedef struct s_scene
+{
+	t_env	*env;
+	t_lit	*lit;
+	t_obj	*obj;
+}	t_scene;
+
+typedef struct s_shade_ctx
+{
+	t_obj		*obj;
+	t_hit_point	hit;
+	t_ray		ray;
+	t_xyz		*color;
+}	t_shade_ctx;
 
 #endif

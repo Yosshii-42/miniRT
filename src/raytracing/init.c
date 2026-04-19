@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:16:35 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:16:38 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:57:23 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ void	set_init_cone_data(t_cn *cn, t_obj *obj, t_ray *ray)
 	cn->k = sqr(cn->radius / cn->height);
 	cn->dir_axis = dot(ray->dir, cn->axis);
 	cn->co_axis = dot(cn->co, cn->axis);
+}
+
+t_scene	set_scene_data(t_env *env, t_obj *obj)
+{
+	t_scene	scene;
+
+	scene.env = env;
+	scene.lit = env->lit;
+	scene.obj = obj;
+	return (scene);
 }

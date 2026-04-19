@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:19:44 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/16 22:37:25 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 14:55:35 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_lit(t_lit *lit)
 void	init_obj(t_obj *obj)
 {
 	obj->id = -1;
+	obj->material = DEFAULT;
 	init_xyz(&obj->xyz);
 	init_xyz(&obj->vector);
 	init_xyz(&obj->rgb);

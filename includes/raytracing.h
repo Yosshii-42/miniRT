@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 23:52:19 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 21:54:02 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@
 
 // render.c
 int				render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env);
-int				ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray,
-					t_xyz *color);
+t_xyz			ray_tracing(t_scene *scene, t_ray cam_ray, int depth);
 
 // render_utils.c
 void			reset_light_flags(t_env *env);
 void			init_offset(double sx[4], double sy[4]);
+t_shade_ctx		set_shade_data(t_obj *obj, t_hit_point hit, t_ray ray,
+					t_xyz *color);
+t_obj			get_indexed_obj(int index, t_obj *obj);
 
 // camera.c
 t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
@@ -56,7 +58,7 @@ void			check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray);
 t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
 					t_ray cam_ray);
 t_xyz			pls_shade(t_data_set data, double diff_ref, double spec_ref);
-int				set_amb_col(t_xyz *color, t_env *env);
+t_xyz			set_amb_col(t_env *env);
 void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col,
 					t_hit_point hit);
 
@@ -69,6 +71,10 @@ double			clamp_double(double value, double min, double max);
 void			clamp_xyz(t_xyz *rgb, double min, double max);
 void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
+
+// material.c
+t_xyz			calc_metal(t_scene *scene, t_ray ray, t_hit_point *hit,
+					int depth);
 
 // texture.c
 t_xyz			get_optional_color(t_obj *obj, t_hit_point hit);
@@ -125,5 +131,6 @@ double			hit_cone(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
 void			init_t_hit_point(t_hit_point *tmp);
 void			set_init_cylinder_data(t_cy *cy, t_obj *obj, t_ray *ray);
 void			set_init_cone_data(t_cn *cn, t_obj *obj, t_ray *ray);
+t_scene			set_scene_data(t_env *env, t_obj *obj);
 
 #endif
