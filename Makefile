@@ -59,6 +59,7 @@ SRCS	= src/parser/check_element.c \
 		  src/raytracing/texture.c \
 		  src/raytracing/texture_pl.c \
 		  src/raytracing/texture_sp.c \
+		  src/raytracing/material_metal.c \
 		  src/raytracing/init.c
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)

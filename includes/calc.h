@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:14:16 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 02:17:17 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 13:24:06 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ double	sqr(double x);
 double	deg_to_rad(double deg);
 bool	solve_quadratic(t_cy *cy, double *t0, double *t1);
 t_xyz	make_xyz(double x, double y, double z);
+t_xyz	refrect(t_xyz v, t_xyz n);
 
 #endif

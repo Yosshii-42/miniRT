@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:26 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:18:28 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/19 22:58:49 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,69 @@
 #include <mlx.h>
 #include <math.h>
 
-static t_obj	get_indexed_obj(int index, t_obj *obj)
+static t_xyz	calc_light_sum_color(t_scene *scene, t_shade_ctx *ctx)
 {
-	t_obj	*ret;
-	int		i;
+	t_lit	*tmp_lit;
+	t_xyz	color;
+	int		shadow;
 
-	if (!obj)
-		print_error_and_exit("get_indexed_obj", "obj is null");
-	if (index < 0)
-		print_error_and_exit("get_indexed_obj", "invalid index");
-	ret = obj;
-	i = 0;
-	while (ret && i < index)
+	tmp_lit = scene->lit;
+	init_xyz(&color);
+	while (tmp_lit)
 	{
-		ret = ret->next;
-		i++;
+		if (tmp_lit->valid_flag)
+		{
+			shadow = calc_shadow(scene->obj, tmp_lit, &ctx->hit);
+			if (shadow == NOT_RENDERED_SHADOW)
+				color = vec_add(color,
+						calc_shade(ctx->obj, tmp_lit, ctx->hit, ctx->ray));
+		}
+		tmp_lit = tmp_lit->next;
 	}
-	if (!ret)
-		print_error_and_exit("get_indexed_obj", "index out of range");
-	return (*ret);
+	return (color);
 }
 
-static t_xyz	render_sample(t_obj *obj, t_env *env, double x, double y)
+t_xyz	ray_tracing(t_scene *scene, t_ray cam_ray, int depth)
+{
+	t_hit_point	hit_obj;
+	t_obj		cpy_obj;
+	t_xyz		color;
+	t_shade_ctx	ctx;
+
+	init_xyz(&color);
+	if (depth <= 0)
+		return (make_xyz(0, 0, 0));
+	hit_obj.index = hit_nearest_obj(scene->obj, &cam_ray, &hit_obj);
+	if (hit_obj.index < 0)
+		return (make_xyz(0, 0, 0));
+	cpy_obj = get_indexed_obj(hit_obj.index, scene->obj);
+	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
+	if (cpy_obj.material == METAL)
+		return (calc_metal(scene, cam_ray, &hit_obj, depth));
+	pls_amb_color(&cpy_obj, scene->env, &color, hit_obj);
+	ctx = set_shade_data(&cpy_obj, hit_obj, cam_ray);
+	color = vec_add(color, calc_light_sum_color(scene, &ctx));
+	clamp_xyz(&color, 0, 255);
+	return (color);
+}
+
+static t_xyz	render_sample(t_scene *scene, double x, double y)
 {
 	t_xyz	screen_vec;
 	t_xyz	color;
 	t_ray	cam_ray;
+	int		depth;
 
-	set_screen_vector(&screen_vec, x, y, env->cam_degree);
-	cam_ray.pos = env->cam_xyz;
-	cam_ray.dir = calc_cam_dir(screen_vec, env->cam_vector);
-	reset_light_flags(env);
-	ray_tracing(obj, env, cam_ray, &color);
+	set_screen_vector(&screen_vec, x, y, scene->env->cam_degree);
+	cam_ray.pos = scene->env->cam_xyz;
+	cam_ray.dir = calc_cam_dir(screen_vec, scene->env->cam_vector);
+	reset_light_flags(scene->env);
+	depth = 2;
+	color = ray_tracing(scene, cam_ray, depth);
 	return (color);
 }
 
-static t_xyz	render_pixel(t_obj *obj, t_env *env, int x, int y)
+static t_xyz	render_pixel(t_scene *scene, int x, int y)
 {
 	double	sx[4];
 	double	sy[4];
@@ -64,7 +91,7 @@ static t_xyz	render_pixel(t_obj *obj, t_env *env, int x, int y)
 	i = 0;
 	while (i < 4)
 	{
-		color = vec_add(color, render_sample(obj, env, x + sx[i], y + sy[i]));
+		color = vec_add(color, render_sample(scene, x + sx[i], y + sy[i]));
 		i++;
 	}
 	return (vec_div(color, 4.0));
@@ -75,6 +102,7 @@ int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 	double	x;
 	double	y;
 	t_xyz	color;
+	t_scene	scene;
 
 	y = -1;
 	while (++y < W_HEIGHT)
@@ -82,42 +110,14 @@ int	render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env)
 		x = -1;
 		while (++x < W_WIDTH)
 		{
-			color = render_pixel(obj, env, x, y);
-			color_set_to_pixel
-				(mlx->img, x, y, make_trgb(0, color.x, color.y, color.z));
+			scene = set_scene_data(env, obj);
+			color = render_pixel(&scene, x, y);
+			color_set_to_pixel(mlx->img, x, y,
+				make_trgb(0, color.x, color.y, color.z));
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img->img, 0, 0);
 	mlx_destroy_image(mlx->mlx, mlx->img->img);
 	mlx->img->img = NULL;
 	return (EXIT_SUCCESS);
-}
-
-int	ray_tracing(t_obj *obj, t_env *env, t_ray cam_ray, t_xyz *color)
-{
-	t_hit_point	hit_obj;
-	t_lit		*tmp_lit;
-	t_obj		cpy_obj;
-	int			ret;
-
-	hit_obj.index = hit_nearest_obj(obj, &cam_ray, &hit_obj);
-	if (hit_obj.index < 0)
-		return (set_amb_col(color, env), 0);
-	cpy_obj = get_indexed_obj(hit_obj.index, obj);
-	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
-	tmp_lit = env->lit;
-	pls_amb_color(&cpy_obj, env, color, hit_obj);
-	while (tmp_lit)
-	{
-		if (tmp_lit->valid_flag)
-		{
-			ret = calc_shadow(obj, tmp_lit, &hit_obj);
-			if (ret == NOT_RENDERED_SHADOW)
-				*color = vec_add(calc_shade(&cpy_obj, tmp_lit, hit_obj,
-							cam_ray), *color);
-		}
-		tmp_lit = tmp_lit->next;
-	}
-	return (clamp_xyz(color, 0, 255), 1);
-	return (0);
 }

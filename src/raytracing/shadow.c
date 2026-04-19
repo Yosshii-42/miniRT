@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:12:31 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/17 18:22:13 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 00:20:12 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,11 @@ int	calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p)
 	double		ret;
 	t_hit_point	tmp_hit;
 
-	init_t_hit_point(&tmp_hit);
 	incident_dir = vec_sub(lit->xyz, hit_p->pos);
 	incident_dir = normalize(incident_dir);
 	tmp_hit = *hit_p;
 	tmp_hit.dist = MAX_DIST;
-	if (dot(hit_p->norm, incident_dir) < 0)
-		shadow_ray.pos = vec_sub(hit_p->pos, vec_scale(hit_p->norm, EPSILON));
-	else
-		shadow_ray.pos = vec_add(hit_p->pos, vec_scale(hit_p->norm, EPSILON));
+	shadow_ray.pos = vec_add(hit_p->pos, vec_scale(hit_p->norm, EPSILON));
 	shadow_ray.dir = incident_dir;
 	dist_shadow_to_lit = vec_dist(lit->xyz, hit_p->pos);
 	ret = hit_shadow_ray(obj, &shadow_ray, &tmp_hit);

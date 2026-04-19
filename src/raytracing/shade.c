@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/18 13:47:51 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/19 16:00:06 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,24 @@ t_xyz	pls_shade(t_data_set data, double diff_ref, double spec_ref)
 	lit_rgb = vec_div(lit_rgb, 255.0);
 	dif_col = vec_scale(vec_mul(base_color, lit_rgb), diff_ref);
 	dif_col = vec_scale(dif_col, data.lit->t);
+	if (data.obj->id == PL)
+		spec_ref *= 0.2;
 	spec_col = vec_scale(vec_scale(lit_rgb, 255.0), spec_ref);
 	spec_col = vec_scale(spec_col, data.lit->t);
 	ret_col = vec_add(dif_col, spec_col);
 	return (ret_col);
 }
 
-int	set_amb_col(t_xyz *color, t_env *env)
+t_xyz	set_amb_col(t_env *env)
 {
-	color->x = (env->amb_rgb.x / 255.0) * env->amb_t;
-	color->y = (env->amb_rgb.y / 255.0) * env->amb_t;
-	color->z = (env->amb_rgb.z / 255.0) * env->amb_t;
-	return (0);
+	double	x;
+	double	y;
+	double	z;
+
+	x = (env->amb_rgb.x / 255.0) * env->amb_t;
+	y = (env->amb_rgb.y / 255.0) * env->amb_t;
+	z = (env->amb_rgb.z / 255.0) * env->amb_t;
+	return (make_xyz(x, y, z));
 }
 
 void	pls_amb_color(t_obj *obj, t_env *env, t_xyz *col, t_hit_point hit)
