@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:24:54 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 16:49:06 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 01:37:37 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../includes/raytracing.h"
 #include "../../includes/calc.h"
 
-void	check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray)
+static void	check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray)
 {
 	double	dot_n_light;
 	double	dot_n_camera;
@@ -30,7 +30,7 @@ void	check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray)
 		lit->valid_flag = false;
 }
 
-void	is_light_inside_sp(t_obj *obj, t_lit *lit)
+static void	is_light_inside_sp(t_obj *obj, t_lit *lit)
 {
 	t_xyz	center_to_light;
 	double	dist2;
@@ -46,7 +46,7 @@ void	is_light_inside_sp(t_obj *obj, t_lit *lit)
 	lit->valid_flag = false;
 }
 
-void	is_light_inside_cy(t_obj *obj, t_lit *lit)
+static void	is_light_inside_cy(t_obj *obj, t_lit *lit)
 {
 	t_xyz	center_to_light;
 	t_xyz	axis;

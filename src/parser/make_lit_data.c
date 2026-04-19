@@ -3,30 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   make_lit_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <yotsurud@student.42.fr>          #+#  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-12 05:20:18 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/12 15:23:50 by yotsurud         ###   ########.fr       */
+/*   Created: 2025/04/12 05:20:18 by yotsurud          #+#    #+#             */
+/*   Updated: 2026/04/20 01:28:32 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	make_lit_data(char **split)
-{
-	t_env	*env;
-	t_lit	*lit;
-	t_lit	*new;
-
-	env = set_get_env(GET, NULL);
-	lit = set_get_lit(GET, NULL);
-	new = (t_lit *)safe_malloc(1, sizeof(t_lit));
-	init_lit(new);
-	set_lit_data(split, new, env);
-	lit_lst_add_back(lit, new);
-}
-
-void	set_lit_data(char **split, t_lit *lit, t_env *env)
+static void	set_lit_data(char **split, t_lit *lit, t_env *env)
 {
 	double	xyz[3];
 	double	rgb[3];
@@ -46,7 +32,7 @@ void	set_lit_data(char **split, t_lit *lit, t_env *env)
 	set_struct_xyz(&lit->rgb, rgb);
 }
 
-void	lit_lst_add_back(t_lit *lit, t_lit *new)
+static void	lit_lst_add_back(t_lit *lit, t_lit *new)
 {
 	if (!lit)
 	{
@@ -57,4 +43,18 @@ void	lit_lst_add_back(t_lit *lit, t_lit *new)
 	while (lit->next)
 		lit = lit->next;
 	lit->next = new;
+}
+
+void	make_lit_data(char **split)
+{
+	t_env	*env;
+	t_lit	*lit;
+	t_lit	*new;
+
+	env = set_get_env(GET, NULL);
+	lit = set_get_lit(GET, NULL);
+	new = (t_lit *)safe_malloc(1, sizeof(t_lit));
+	init_lit(new);
+	set_lit_data(split, new, env);
+	lit_lst_add_back(lit, new);
 }

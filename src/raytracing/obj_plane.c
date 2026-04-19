@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:12 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:18:14 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/20 01:54:07 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double	hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 	(void)rec_hit;
 	p_norm = normalize(obj->vector);
 	denominator = dot(ray->dir, p_norm);
-	if (fabs(denominator) < PLANE_PARALLEL)
+	if (fabs(denominator) < EPS)
 		return (NO_HIT);
 	numerator = dot(vec_sub(obj->xyz, ray->pos), p_norm);
 	ret = numerator / denominator;

@@ -3,16 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:15:59 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:16:02 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/20 01:46:12 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "calc.h"
 #include "parser.h"
 #include "raytracing.h"
+
+static double	distance_sphere(double *abcd)
+{
+	double	t[3];
+
+	t[0] = -1;
+	if (abcd[L_D] == 0)
+		t[0] = (-1 * abcd[L_B]) / (2 * abcd[L_A]);
+	else if (abcd[L_D] > 0)
+	{
+		t[1] = (-1 * abcd[L_B] + sqrt(abcd[L_D])) / (2 * abcd[L_A]);
+		t[2] = (-1 * abcd[L_B] - sqrt(abcd[L_D])) / (2 * abcd[L_A]);
+		if (t[1] > 0 && t[2] > 0)
+			t[0] = fmin(t[1], t[2]);
+		else if (t[1] > 0)
+			t[0] = t[1];
+		else if (t[2] > 0)
+			t[0] = t[2];
+	}
+	return (t[0]);
+}
 
 // check if cam_ray is hitting to sphere and return distance
 double	hit_sphere(t_obj *obj, t_ray *ray)
@@ -32,25 +53,4 @@ double	hit_sphere(t_obj *obj, t_ray *ray)
 		return (NO_HIT);
 	ret = distance_sphere(abcd);
 	return (ret);
-}
-
-double	distance_sphere(double *abcd)
-{
-	double	t[3];
-
-	t[0] = -1;
-	if (abcd[L_D] == 0)
-		t[0] = (-1 * abcd[L_B]) / (2 * abcd[L_A]);
-	else if (abcd[L_D] > 0)
-	{
-		t[1] = (-1 * abcd[L_B] + sqrt(abcd[L_D])) / (2 * abcd[L_A]);
-		t[2] = (-1 * abcd[L_B] - sqrt(abcd[L_D])) / (2 * abcd[L_A]);
-		if (t[1] > 0 && t[2] > 0)
-			t[0] = fmin(t[1], t[2]);
-		else if (t[1] > 0)
-			t[0] = t[1];
-		else if (t[2] > 0)
-			t[0] = t[2];
-	}
-	return (t[0]);
 }

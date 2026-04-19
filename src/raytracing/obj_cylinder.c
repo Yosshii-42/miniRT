@@ -3,16 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   obj_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:17:45 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:17:49 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/20 01:48:17 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "calc.h"
 #include "parser.h"
 #include "raytracing.h"
+
+/*
+** hit_cy_core
+** 円柱全体（側面 + キャップ）の交差判定
+** 1. 側面との交差をチェック
+**    → ヒットしたら最短距離を max に更新
+** 2. キャップ（上面・下面）との交差をチェック
+**    → 側面より近いものがあれば上書き
+** 3. 最終的に最も近い交点を hit に格納
+** ※ cy->max を更新することで「一番近いもの」を維持している
+*/
+static bool	hit_cy_core(t_cy *cy, t_hit_point *hit)
+{
+	t_hit_point	side_hit;
+	t_hit_point	cap_hit;
+	bool		has_side;
+	bool		has_cap;
+
+	has_side = hit_cy_side(cy, &side_hit);
+	has_cap = hit_cy_caps(cy, &cap_hit);
+	if (!has_side && !has_cap)
+		return (false);
+	if (has_side && !has_cap)
+		return (*hit = side_hit, true);
+	if (!has_side && has_cap)
+		return (*hit = cap_hit, true);
+	if (side_hit.dist < cap_hit.dist)
+		*hit = side_hit;
+	else
+		*hit = cap_hit;
+	return (true);
+}
 
 // 軸を正規化
 // top/bottom centerを作る
@@ -35,36 +67,4 @@ double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 		set_face_normal(ray, h_obj);
 	}
 	return (tmp.dist);
-}
-
-/*
-** hit_cy_core
-** 円柱全体（側面 + キャップ）の交差判定
-** 1. 側面との交差をチェック
-**    → ヒットしたら最短距離を max に更新
-** 2. キャップ（上面・下面）との交差をチェック
-**    → 側面より近いものがあれば上書き
-** 3. 最終的に最も近い交点を hit に格納
-** ※ cy->max を更新することで「一番近いもの」を維持している
-*/
-bool	hit_cy_core(t_cy *cy, t_hit_point *hit)
-{
-	t_hit_point	side_hit;
-	t_hit_point	cap_hit;
-	bool		has_side;
-	bool		has_cap;
-
-	has_side = hit_cy_side(cy, &side_hit);
-	has_cap = hit_cy_caps(cy, &cap_hit);
-	if (!has_side && !has_cap)
-		return (false);
-	if (has_side && !has_cap)
-		return (*hit = side_hit, true);
-	if (!has_side && has_cap)
-		return (*hit = cap_hit, true);
-	if (side_hit.dist < cap_hit.dist)
-		*hit = side_hit;
-	else
-		*hit = cap_hit;
-	return (true);
 }
