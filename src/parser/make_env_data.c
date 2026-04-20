@@ -6,24 +6,13 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:19:57 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 13:54:25 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 01:30:22 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	make_env_data(char **split)
-{
-	t_env	*env;
-
-	env = set_get_env(GET, NULL);
-	if (split[0][0] == 'A' && split[0][1] == '\0')
-		set_amb_data(split, env);
-	else if (split[0][0] == 'C' && split[0][1] == '\0')
-		set_cam_data(split, env);
-}
-
-void	set_amb_data(char **split, t_env *env)
+static void	set_amb_data(char **split, t_env *env)
 {
 	double	rgb[3];
 
@@ -40,7 +29,7 @@ void	set_amb_data(char **split, t_env *env)
 	set_struct_xyz(&env->amb_rgb, rgb);
 }
 
-void	set_cam_data(char **split, t_env *env)
+static void	set_cam_data(char **split, t_env *env)
 {
 	double	xyz[3];
 	double	vector[3];
@@ -60,4 +49,15 @@ void	set_cam_data(char **split, t_env *env)
 		print_error_and_exit("set_cam_data",
 			"4th element is not between 0 and 180");
 	env->cam_degree = degree;
+}
+
+void	make_env_data(char **split)
+{
+	t_env	*env;
+
+	env = set_get_env(GET, NULL);
+	if (split[0][0] == 'A' && split[0][1] == '\0')
+		set_amb_data(split, env);
+	else if (split[0][0] == 'C' && split[0][1] == '\0')
+		set_cam_data(split, env);
 }

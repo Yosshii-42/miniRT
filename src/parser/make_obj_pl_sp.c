@@ -6,13 +6,13 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:20:25 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 15:10:42 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 01:31:59 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	set_image(char *filename, t_obj *new)
+static void	set_image(char *filename, t_obj *new)
 {
 	if (check_file(filename))
 	{
@@ -23,7 +23,7 @@ void	set_image(char *filename, t_obj *new)
 		print_error_and_exit("image", "file name error");
 }
 
-void	set_tex_or_mat(char **split, t_obj *new, int count)
+static void	set_tex_or_mat(char **split, t_obj *new, int count)
 {
 	if (ft_strncmp(split[4], "checker", 7) == 0
 		&& split[4][7] == '\0' && count == 5)

@@ -6,11 +6,24 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:20:41 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/17 15:26:06 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 01:25:06 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void	obj_lst_add_back(t_obj *obj, t_obj *new)
+{
+	if (!obj)
+	{
+		obj = new;
+		set_get_obj(SET, obj);
+		return ;
+	}
+	while (obj->next)
+		obj = obj->next;
+	obj->next = new;
+}
 
 void	make_obj_data(char **split)
 {
@@ -31,17 +44,4 @@ void	make_obj_data(char **split)
 	else
 		print_error_and_exit("object", "invalid identifier");
 	obj_lst_add_back(obj, new);
-}
-
-void	obj_lst_add_back(t_obj *obj, t_obj *new)
-{
-	if (!obj)
-	{
-		obj = new;
-		set_get_obj(SET, obj);
-		return ;
-	}
-	while (obj->next)
-		obj = obj->next;
-	obj->next = new;
 }

@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 22:28:52 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 01:54:24 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 # define NO_HIT -99
 # define MAX_DIST 65535
 # define EPS 0.000001f
-// # define EPSILON 0.001f
 # define EPSILON 0.0078125f
-# define PLANE_PARALLEL 1e-6
 # define M_PI 3.14159265358979323846
 # define RENDERED_SHADOW 0
 # define NOT_RENDERED_SHADOW 1
@@ -42,23 +40,15 @@ t_obj			get_indexed_obj(int index, t_obj *obj);
 t_xyz			calc_cam_dir(t_xyz screen_vec, t_xyz cam_vec);
 
 // screen.c
-double			convert_x_to_screen(double x);
-double			convert_y_to_screen(double y);
 void			set_screen_vector(t_xyz *screen, double x, double y,
 					double fov);
 
 // light.c
-void			check_light_and_cam_pos(t_obj *obj, t_lit *lit,
-					t_ray cam_ray);
-void			is_light_inside_cy(t_obj *obj, t_lit *lit);
-void			is_light_inside_sp(t_obj *obj, t_lit *lit);
 void			check_light_pos(t_obj *obj, t_env *env, t_ray cam_ray);
 
 // shade.c
 t_xyz			calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj,
 					t_ray cam_ray);
-t_xyz			pls_shade(t_data_set data, double diff_ref, double spec_ref);
-t_xyz			set_amb_col(t_env *env);
 void			pls_amb_color(t_obj *obj, t_env *env, t_xyz *col,
 					t_hit_point hit);
 
@@ -72,7 +62,40 @@ void			clamp_xyz(t_xyz *rgb, double min, double max);
 void			color_set_to_pixel(t_meta_img *img, int x, int y,
 					unsigned int color);
 
-// material.c
+// hit.c
+double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
+					bool rec_hit);
+int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p);
+int				hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p);
+void			fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj);
+
+// hit_utils.c
+void			init_variables(int *ret, int *i, t_obj **obj_cpy, t_obj *obj);
+void			init_hit_p(t_hit_point *hit);
+void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
+
+// obj_shpere.c
+double			hit_sphere(t_obj *obj, t_ray *ray);
+
+// obj_plane.c
+double			hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
+					bool rec_hit);
+
+// obj_cylinder.c
+double			hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
+					bool rec_hit);
+
+// obj_cylinder_core.c
+bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
+bool			hit_cy_cap(t_cy *cy, t_xyz normal, t_hit_part part,
+					t_hit_point *hit);
+
+// obj_cone.c
+double			hit_cone(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
+					bool rec_hit);
+
+// material_metal.c
 t_xyz			calc_metal(t_scene *scene, t_ray ray, t_hit_point *hit,
 					int depth);
 
@@ -91,41 +114,6 @@ void			get_sp_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
 t_xyz			get_sp_checker_color(t_obj *obj, t_hit_point hit);
 t_xyz			get_sp_texture_color(t_obj *obj, t_hit_point hit,
 					t_meta_img *tex);
-
-// hit.c
-double			hit_cam_ray(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
-int				hit_shadow_ray(t_obj *obj, t_ray *sh_ray, t_hit_point *hit_p);
-int				hit_nearest_obj(t_obj *obj, t_ray *ray, t_hit_point *hit_p);
-void			fill_hit_obj(t_obj *obj, t_ray c_ray, t_hit_point *h_obj);
-
-// hit_utils.c
-void			init_variables(int *ret, int *i, t_obj **obj_cpy, t_obj *obj);
-void			init_hit_p(t_hit_point *hit);
-void			set_face_normal(t_ray *ray, t_hit_point *h_obj);
-
-// obj_shpere.c
-double			hit_sphere(t_obj *obj, t_ray *ray);
-double			distance_sphere(double *abcd);
-
-// obj_plane.c
-double			hit_plane(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
-
-// obj_cylinder.c
-double			hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
-bool			hit_cy_core(t_cy *cy, t_hit_point *hit);
-
-// obj_cylinder_core.c
-bool			hit_cy_side(t_cy *cy, t_hit_point *hit);
-bool			hit_cy_caps(t_cy *cy, t_hit_point *hit);
-bool			hit_cy_cap(t_cy *cy, t_xyz normal, t_hit_part part,
-					t_hit_point *hit);
-
-// obj_cone.c
-double			hit_cone(t_obj *obj, t_ray *ray, t_hit_point *h_obj,
-					bool rec_hit);
 
 // init.c
 void			init_t_hit_point(t_hit_point *tmp);

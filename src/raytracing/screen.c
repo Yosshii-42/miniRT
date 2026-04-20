@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:47:58 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/15 22:02:57 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 01:38:58 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "calc.h"
 #include <math.h>
 
-double	convert_x_to_screen(double x)
+static double	convert_x_to_screen(double x)
 {
 	double	ret;
 	double	aspect_ratio;
@@ -27,7 +27,7 @@ double	convert_x_to_screen(double x)
 	return (ret * aspect_ratio);
 }
 
-double	convert_y_to_screen(double y)
+static double	convert_y_to_screen(double y)
 {
 	double	ret;
 
