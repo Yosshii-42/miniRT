@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:54:24 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 16:11:02 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 # define SHINENESS 16
 # define NO_HIT -99
 # define MAX_DIST 65535
-# define EPS 0.000001f
-# define EPSILON 0.0078125f
+
 # define M_PI 3.14159265358979323846
 # define RENDERED_SHADOW 0
 # define NOT_RENDERED_SHADOW 1

@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:06:40 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:35:19 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 22:56:20 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void			print_error_and_exit(char *func_name, char *message);
 void			open_file(char *file_name, int *fd);
 void			*safe_malloc(size_t count, size_t size);
 unsigned int	make_trgb(double t, double r, double g, double b);
+void			normalize_check(t_xyz vec, char *func_name);
 
 #endif

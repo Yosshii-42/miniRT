@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:20:25 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:31:59 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 22:57:40 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	set_pl_data(char **split, t_obj *new)
 	set_struct_xyz(&new->xyz, xyz);
 	set_array(split[2], vector, VECTOR);
 	set_struct_xyz(&new->vector, vector);
+	normalize_check(new->vector, "set_pl_data");
 	set_array(split[3], rgb, RGB);
 	set_struct_xyz(&new->rgb, rgb);
 	if (count > 4)

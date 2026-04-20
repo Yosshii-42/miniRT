@@ -6,11 +6,12 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:19:57 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:30:22 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 22:56:51 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "calc.h"
 
 static void	set_amb_data(char **split, t_env *env)
 {
@@ -39,11 +40,12 @@ static void	set_cam_data(char **split, t_env *env)
 		print_error_and_exit("set_cam_data", "C data already existed");
 	env->flag[C] = 1;
 	if (count_split(split) != 4)
-		print_error_and_exit("set_cam_data", "number of arguments is not 4");
+		print_error_and_exit("set_cam_data", "invalid count of arguments");
 	set_array(split[1], xyz, OTHER);
 	set_struct_xyz(&env->cam_xyz, xyz);
 	set_array(split[2], vector, VECTOR);
 	set_struct_xyz(&env->cam_vector, vector);
+	normalize_check(env->cam_vector, "set_cam_data");
 	degree = ft_atof(split[3]);
 	if (is_0_180(degree) == false)
 		print_error_and_exit("set_cam_data",
