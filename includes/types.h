@@ -6,12 +6,15 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 22:08:03 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/20 16:11:16 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+# define EPS 0.000001f
+# define EPSILON 0.0078125f
 
 enum
 {
