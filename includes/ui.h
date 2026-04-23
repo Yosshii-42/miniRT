@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:08:53 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:56:55 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/21 13:13:40 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "parser.h"
 # include "types.h"
 
-# define W_WIDTH 1600
-# define W_HEIGHT 900
+# define W_WIDTH 800
+# define W_HEIGHT 450
 # define WIN_TITLE "minirt"
 # define DESTROY_NOTIFY 17
 

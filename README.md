@@ -7,30 +7,29 @@ The goal of this project is to
 ## Instructions
 
 ### Installations
-```bash
-	git clone <repository of this project>
-	cd project-name
-```
+
+ - `git clone <repository of this project>`<br>
+ - `cd project-name`
+
 ### Download minilibx
-```
-	download minilibx files from project page, and put it in the root of this project directory.
-```
+
+ - `download minilibx files from project page, and put it in the root of this project directory.`
+
 ### Compilation
-```bash
-	make
-	make bonus
-```
+
+ - `make`<br>
+ - `make bonus`
+
 ### Run
-```bash
-	./miniRT scene/<filename>.rt
-	./miniRT_bonus scene/<filename>.rt
-```
+
+ - `./miniRT scene/<filename>.rt`<br>
+ - `./miniRT_bonus scene/<filename>.rt`
+
 ### Close window
-```
-	ESC button
-	click x mark of the window.
-	ctrl-C
-```
+
+ - `ESC button`<br>
+ - `-click x mark of the window.`<br>
+ - `ctrl-C`
 
 ## Resources
  - https://inzkyk.xyz/ray_tracing_in_one_weekend/
@@ -38,12 +37,19 @@ The goal of this project is to
  - https://www.youtube.com/watch?v=RIgc5J_ZGu8&list=PLAqGIYgEAxrUO6ODA0pnLkM2UOijerFPv
 
 ## Feature list
- - Ambient Light
- - Camera
- - Light
- - object / Plane, Shpere, Cylinder, Cone
- - Texture / checker, image
- - Materila / non-metal, metal
+ - Mandatory part
+	 - Ambient lighting
+	 - Camera
+	 - Light
+	 - Sphere
+	 - Plane
+	 - Cylinder
+ - Bonus part
+	 - Specular reflection
+	 - color disruption: checkerboard pattern
+	 - Colored and multi-spot lights
+	 - Another object: cone
+	 - Handle bump map texture: earth.xpm
 
 ## .rt file sample
 ```bash
@@ -81,3 +87,63 @@ cn 		10,10,0   		0,1.0,0			7.5    15   	255,0,0
 ```
 
 ## Examples
+
+### [Mandatory part] ###
+- ### Symple Scene
+ ![Sphere](./image/r_sphere.png)
+ <br>*Sphere*
+
+- ### Ambient Light
+ ![Ambient](./image/r_ambient.png)
+
+- ### Light Position
+<p>
+ <img src="./image/r_light_front.png" width="400">
+ <img src="./image/r_light_back.png" width="400"><br>
+ <em>Fromt and Back</em>
+</p>
+<p>
+ <img src="./image/r_light_top.png" width="400">
+ <img src="./image/r_light_bottom.png" width="400"><br>
+ <em>Top and Bottom</em>
+</p>
+<p>
+ <img src="./image/r_light_left.png" width="400">
+ <img src="./image/r_light_right.png" width="400"><br>
+ <em>Left and Right</em>
+</p>
+<p>
+ <img src="./image/r_light_inside.png" width="400"><br>
+ <em>Inside</em>
+</p>
+
+- ### Objects
+<p>
+ <img src="./image/r_sphere.png" width="400">
+ <img src="./image/r_plane.png" width="400"><br>
+ <em>Sphere and Plane</em>
+</p>
+<p>
+ <img src="./image/r_cylinder.png" width="400">
+ <em>Cylinder</em>
+</p>
+
+### [Bonus part] ###
+
+- ### Specular refrection
+
+- ### Checker
+ ![Sphere](./image/r_checker.png)
+
+- ### Multi spot-lights
+
+- ### Cone
+ ![Cone](./image/r_cone.png)
+
+- ### Image bump
+ 
+### Mixed
+<p>
+ <img src="./image/r_default.png" width="400">
+ <img src="./image/r_mix_objs.png" width="400"><br>
+</p>
