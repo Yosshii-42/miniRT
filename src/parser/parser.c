@@ -6,14 +6,14 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:21:15 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:22:58 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/24 11:48:25 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "ui.h"
 
-static void	make_information(char *line)
+static void	make_information(char *line, int part)
 {
 	char	**split;
 
@@ -28,7 +28,7 @@ static void	make_information(char *line)
 	else if (check_first_element(split[0]) == LIT)
 		make_lit_data(split);
 	else if (check_first_element(split[0]) == OBJ)
-		make_obj_data(split);
+		make_obj_data(split, part);
 	else
 		print_error_and_exit("parser", "couldn't find identifier");
 	free_split(split);
@@ -60,7 +60,7 @@ void	parser(char *filename, int part)
 		line = NULL;
 		line = get_next_line(fd);
 		if (line)
-			make_information(line);
+			make_information(line, env->part);
 		else
 			break ;
 		free(line);

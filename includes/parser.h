@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:06:40 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 22:56:20 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/24 11:50:20 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void			make_env_data(char **split);
 void			make_lit_data(char **split);
 
 // make_obj.c
-void			make_obj_data(char **split);
+void			make_obj_data(char **split, int part);
 
 // make_obj_pl_sp.c
-void			set_pl_data(char **split, t_obj *new);
-void			set_sp_data(char **split, t_obj *new);
+void			set_pl_data(char **split, t_obj *new, int part);
+void			set_sp_data(char **split, t_obj *new, int part);
 
 // make_obj_cy_cn.c
 void			set_cy_data(char **split, t_obj *new);

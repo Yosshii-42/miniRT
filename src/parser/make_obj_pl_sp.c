@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:20:25 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 22:57:40 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/24 12:59:47 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	set_tex_or_mat(char **split, t_obj *new, int count)
 		print_error_and_exit("tex or mat", "bad option");
 }
 
-void	set_pl_data(char **split, t_obj *new)
+void	set_pl_data(char **split, t_obj *new, int part)
 {
 	double	xyz[3];
 	double	vector[3];
@@ -46,7 +46,8 @@ void	set_pl_data(char **split, t_obj *new)
 	int		count;
 
 	count = count_split(split);
-	if (count < 4 || 6 < count)
+	if (count < 4 || (part == MANDATORY && count != 4)
+		|| (part == BONUS && count > 6))
 		print_error_and_exit("set_pl_data", "invalid argument count");
 	new->id = PL;
 	set_array(split[1], xyz, OTHER);
@@ -56,18 +57,19 @@ void	set_pl_data(char **split, t_obj *new)
 	normalize_check(new->vector, "set_pl_data");
 	set_array(split[3], rgb, RGB);
 	set_struct_xyz(&new->rgb, rgb);
-	if (count > 4)
+	if (part == BONUS && count > 4)
 		set_tex_or_mat(split, new, count);
 }
 
-void	set_sp_data(char **split, t_obj *new)
+void	set_sp_data(char **split, t_obj *new, int part)
 {
 	double	xyz[3];
 	double	rgb[3];
 	int		count;
 
 	count = count_split(split);
-	if (count < 4 || 6 < count)
+	if (count < 4 || (part == MANDATORY && count != 4)
+		|| (part == BONUS && count > 6))
 		print_error_and_exit("set_sp_data", "invalid argument count");
 	new->id = SP;
 	set_array(split[1], xyz, OTHER);
@@ -77,6 +79,6 @@ void	set_sp_data(char **split, t_obj *new)
 		print_error_and_exit("set_sp_data", "diameter should be over 0");
 	set_array(split[3], rgb, RGB);
 	set_struct_xyz(&new->rgb, rgb);
-	if (count > 4)
+	if (part == BONUS && count > 4)
 		set_tex_or_mat(split, new, count);
 }

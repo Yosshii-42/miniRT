@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:20:41 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:25:06 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/24 11:52:20 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	obj_lst_add_back(t_obj *obj, t_obj *new)
 	obj->next = new;
 }
 
-void	make_obj_data(char **split)
+void	make_obj_data(char **split, int part)
 {
 	t_obj	*obj;
 	t_obj	*new;
@@ -34,12 +34,13 @@ void	make_obj_data(char **split)
 	new = (t_obj *)safe_malloc(1, sizeof(t_obj));
 	init_obj(new);
 	if (ft_strncmp(split[0], "pl", 2) == 0 && split[0][2] == '\0')
-		set_pl_data(split, new);
+		set_pl_data(split, new, part);
 	else if (ft_strncmp(split[0], "sp", 2) == 0 && split[0][2] == '\0')
-		set_sp_data(split, new);
+		set_sp_data(split, new, part);
 	else if (ft_strncmp(split[0], "cy", 2) == 0 && split[0][2] == '\0')
 		set_cy_data(split, new);
-	else if (ft_strncmp(split[0], "cn", 2) == 0 && split[0][2] == '\0')
+	else if (part == BONUS && ft_strncmp(split[0], "cn", 2) == 0
+			&& split[0][2] == '\0')
 		set_cn_data(split, new);
 	else
 		print_error_and_exit("object", "invalid identifier");
