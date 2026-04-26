@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:54 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:18:56 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/04/26 14:50:33 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 t_xyz	get_optional_color(t_obj *obj, t_hit_point hit)
 {
-	if (obj->id == PL && obj->texture == IM
+	if (obj->id == PL && obj->f_mat_tex == IM
 		&& (obj->vector.y == 1 || obj->vector.y == -1))
 		return (get_pl_texture_color(obj, hit, &(obj->tex)));
-	if (obj->id == PL && obj->texture == CH
+	if (obj->id == PL && obj->f_mat_tex == CH
 		&& (obj->vector.y == 1 || obj->vector.y == -1))
 		return (get_pl_checker_color(obj, hit));
-	if (obj->id == SP && obj->texture == IM)
+	if (obj->id == SP && obj->f_mat_tex == IM)
 		return (get_sp_texture_color(obj, hit, &(obj->tex)));
-	else if (obj->id == SP && obj->texture == CH)
+	else if (obj->id == SP && obj->f_mat_tex == CH)
 		return (get_sp_checker_color(obj, hit));
 	return (obj->rgb);
 }

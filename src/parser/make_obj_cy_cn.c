@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:20:15 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 22:57:27 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/25 15:42:30 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ void	set_cy_data(char **split, t_obj *new)
 	double	xyz[3];
 	double	vector[3];
 	double	rgb[3];
-	int		count;
 
-	count = count_split(split);
-	if (count != 6)
+	if (new->count != 6)
 		print_error_and_exit("set_cy_data", "number of arguments is not 6");
 	new->id = CY;
 	set_array(split[1], xyz, OTHER);
@@ -43,10 +41,8 @@ void	set_cn_data(char **split, t_obj *new)
 	double	xyz[3];
 	double	vector[3];
 	double	rgb[3];
-	int		count;
 
-	count = count_split(split);
-	if (count != 6)
+	if (new->count != 6)
 		print_error_and_exit("set_cn_data", "number of arguments is not 6");
 	new->id = CN;
 	set_array(split[1], xyz, OTHER);

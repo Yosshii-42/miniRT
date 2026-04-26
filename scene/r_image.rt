@@ -11,18 +11,10 @@ C       0,-5,-60         0,0,1           40
 L       5,5,-15			0.5				255,255,255
 
 # Sphere
-###     xyx             diameter        rgb
-sp      0,0,0	         20             0,255,0			image	earth.xpm
+###     xyx             diameter        rgb				mat & tex		bump		filename		
+sp      0,0,0	        20             0,255,0			image			OFF			earth.xpm
 
 # # Plane
-# ### 	xyz             vector          rgb	
-pl      0,-20,0       	0,1,0           127,127,127		image	earth.xpm
-pl		0,0,40			0,0,1			255,255,255
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cn      -10,0,0			0,1.0,0.0		7.2            	21.42           255,0,255
+###     xyx             vector	      	rgb				mat & tex		bump		filename
+pl		0,-20,0       	0,1,0           127,127,127		image			OFF			earth.xpm
+pl		0,0,40			0,0,1			255,255,255		OFF				OFF			NONE		

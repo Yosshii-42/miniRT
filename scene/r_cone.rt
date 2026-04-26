@@ -10,18 +10,6 @@ C       0,-10,-60         0,0,1           40
 ###     xyz             ratio           rgb
 L       0,10,-15		0.8				255,255,255
 
-# # Sphere
-# ###     xyx             diameter        rgb
-# sp      0,0,0         10              255,0,0
-
-# # Plane
-# ###     xyz             vector          rgb	
-# pl      0,-20,0       	0,1,0           0,255,0
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
-
 # Cylinder
 ###     xyz             vector          diameter        height          rgb	
 cn      15,0,0			0,1.0,0.0			7.2            	21.42           0,0,255

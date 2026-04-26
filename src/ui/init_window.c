@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 18:54:11 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/17 21:35:13 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/26 14:48:48 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	load_textures(t_mlx_env *mlx, t_obj *obj)
 {
 	while (obj)
 	{
-		if (obj->texture == IM && obj->filename)
+		if (obj->f_mat_tex == IM && obj->filename)
 		{
 			obj->tex.img = mlx_xpm_file_to_image(
 					mlx->mlx, obj->filename, &obj->tex.width, &obj->tex.height
