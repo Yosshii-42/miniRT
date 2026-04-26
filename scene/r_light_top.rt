@@ -13,15 +13,3 @@ L       0,20,0		0.5				255,255,255
 # Sphere
 ###     xyx             diameter        rgb
 sp      0,0,0         	20              255,0,0
-
-# Plane
-###     xyz             vector          rgb	
-# pl      0,-20,0       	0,1,0           0,255,0
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cn      -10,0,0			0,1.0,0.0		7.2           	21.42           255,0,255

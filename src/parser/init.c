@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:19:44 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 14:55:35 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/25 16:45:20 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ void	init_lit(t_lit *lit)
 void	init_obj(t_obj *obj)
 {
 	obj->id = -1;
-	obj->material = DEFAULT;
 	init_xyz(&obj->xyz);
 	init_xyz(&obj->vector);
 	init_xyz(&obj->rgb);
 	obj->diameter = 0.0;
 	obj->height = 0.0;
-	obj->texture = -1;
 	obj->filename = NULL;
+	obj->f_mat_tex = OFF;
+	obj->f_bump = OFF;
 	init_meta_img(&obj->tex);
+	obj->count = 0;
 	obj->next = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 16:11:16 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/25 16:45:01 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,23 @@ enum
 	SP,
 	CY,
 	CN,
+	ON,
+	OFF,
 	IM,
 	CH,
+	ME
 };
 
-typedef enum e_material
-{
-	DEFAULT,
-	METAL
-}	t_material;
+// typedef enum e_material
+// {
+// 	ON,
+// 	OFF,
+// 	METAL,
+// 	CHECKER,
+// 	IMAGE,
+// 	BUMP,
+// 	DEFAULT,
+// }	t_material;
 
 typedef struct s_meta_img
 {
@@ -85,16 +93,17 @@ typedef struct s_env
 typedef struct s_obj
 {
 	int				id;
-	t_material		material;
 	t_xyz			xyz;
 	t_xyz			vector;
 	t_xyz			rgb;
 	double			diameter;
 	double			height;
-	int				texture;
+	int				f_mat_tex;
+	int				f_bump;
 	char			*filename;			
-	struct s_obj	*next;
 	t_meta_img		tex;
+	int				count;
+	struct s_obj	*next;
 }	t_obj;
 
 typedef enum e_letter

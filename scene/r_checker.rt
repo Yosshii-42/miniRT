@@ -11,19 +11,11 @@ C       0,-5,-60         0,0,1           40
 L       5,5,-15			0.5				255,255,255
 
 # Sphere
-###     xyx             diameter        rgb
-sp      -15,0,0         20              255,0,0			checker
-sp      15,0,0	         20             0,255,0			checker
+###     xyx             diameter        rgb				mat & tex		bump		filename			
+sp      -15,0,0         20              255,0,0			checker			OFF			NONE
+sp      15,0,0	         20             0,255,0			checker			OFF			NONE
 
 # # Plane
 # ### 	xyz             vector          rgb	
-pl      0,-20,0       	0,1,0           127,127,127		checker
-pl		0,0,40			0,0,1			255,255,255
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
-
-# # Cylinder
-# ###     xyz             vector          diameter        height          rgb	
-# cn      -10,0,0			0,1.0,0.0		7.2            	21.42           255,0,255
+pl      0,-20,0       	0,1,0           127,127,127		checker			OFF			NONE
+pl		0,0,40			0,0,1			255,255,255		OFF				OFF			NONE
