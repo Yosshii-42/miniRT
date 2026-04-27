@@ -1,0 +1,23 @@
+# Ambient light
+###     ratio           rgb
+A       0.2             255,255,255
+
+# Camera
+###     xyz             vector          degree
+C       0,0,-60         0,0,1          	50
+
+# Light
+###     xyz             ratio           rgb
+L       -40,10,-15        0.8           255,255,255
+L       0,10,-15       	0.8             255,255,255
+L       40,10,-15      	0.8             255,255,255
+
+# Sphere
+###     xyx             diameter        rgb
+sp      0,0,0           20              255,0,0
+
+# Plane
+###     xyz             vector          rgb	
+pl      10,40,10        0,-1,0          0,0,50
+pl      10,-20,10       0,1,0           50,0,50
+pl		0,0,50			0,0,-1			0,50,0

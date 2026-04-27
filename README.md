@@ -54,36 +54,28 @@ The goal of this project is to
 ## .rt file sample
 ```bash
 # Ambient light
-###     ratio           								rgb
-A   	0.1                                       		255,255,255
+###     ratio           rgb
+A       0.1             255,255,255
 
 # Camera
-###     xyz             vector          degree
-C   	0,0,-30        	0,0,1       	45
+###     xyz             vector          degree                
+C       0,-5,-60         0,0,1           40
 
 # Light
-###     xyz             				ratio           rgb
-L   	-10,20,-10                  	0.7             255,255,255
+###     xyz             ratio           rgb
+L       15,15,-15		0.5				255,255,255
 
 # Sphere
-###     xyx             				diameter        rgb				tex/mat	filename
-sp		0,10,5							15				127,127,127		metal
-sp		0,-5,5							8				127,127,127
-sp		0,-5,5							8				0,255,0			image	earth.xpm	
+###     xyx             diameter        rgb
+sp      0,0,0         	10              255,0,0
 
 # Plane
-###     xyz             vector          				rgb				tex/mat
-pl		10,-10,10		0,1,0							127,127,127		checker
-pl		0,0,200	0,0,1									255,255,255
+###     xyz             vector          rgb	
+pl      0,-20,0       	0,1,0           0,255,0
 
 # Cylinder
-###     xyz             vector          diameter        height 
-cy 		10.0,4.0,10   	1.0,1.0,0		7.2    21.42   	0,255,0
-
-# Cone
-###     xyz             vector          diameter        height 
-cn 		0,10,0   		1.0,1.0,1.0 	7.5    15   	0,255,0
-cn 		10,10,0   		0,1.0,0			7.5    15   	255,0,0
+###     xyz             vector          diameter        height          rgb	
+cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
 ```
 
 ## Examples
@@ -117,25 +109,27 @@ cn 		10,10,0   		0,1.0,0			7.5    15   	255,0,0
  <em>Inside</em>
 </p>
 
-- ### Objects
-<p>
- <img src="./image/r_sphere.png" width="400">
- <img src="./image/r_plane.png" width="400"><br>
- <em>Sphere and Plane</em>
-</p>
-<p>
- <img src="./image/r_cylinder.png" width="400">
- <em>Cylinder</em>
-</p>
+- ### Objects [Mandatory part]
+
+ ![Sphere](./image/r_sphere.png)<br>
+ *Sphere*
+
+ ![Plane](./image/r_plane.png)"<br>
+ *Plane*
+
+ ![Cylinder](./image/r_cylinder.png)<br>
+ *Cylinder*
 
 ### [Bonus part] ###
 
 - ### Specular refrection
+ ![Metal](./image/r_metal.png)
 
 - ### Checker
  ![Sphere](./image/r_checker.png)
 
 - ### Multi spot-lights
+ ![Multi_Lights](./image/r_multi_lights.png)
 
 - ### Cone
  ![Cone](./image/r_cone.png)
