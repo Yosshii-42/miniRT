@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:08:53 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/21 13:13:40 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 23:41:20 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 // init_window.c
 int		init_window(t_obj *obj, t_env *env);
 int		render_window(t_mlx_env *mlx, t_obj *obj, t_env *env);
+
+// render.c
+int		render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env);
 
 // close_handler.c
 int		close_btn_click(t_mlx_env *mlx);

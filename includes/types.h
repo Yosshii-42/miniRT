@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 19:30:16 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 23:29:27 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,5 +197,11 @@ typedef struct s_bump
 	double	strength;
 	t_xyz	norm;
 }	t_bump;
+
+typedef struct s
+{
+	t_xyz	rand_dir;
+	double	roughness;
+}	t_rough;
 
 #endif

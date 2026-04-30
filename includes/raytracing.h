@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 20:59:40 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 23:41:52 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # define NOT_RENDERED_SHADOW 1
 # define NO_LIGHT 2
 
-// render.c
-int				render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env);
+// raytracing.c
+// int				render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env);
 t_xyz			ray_tracing(t_scene *scene, t_ray cam_ray, int depth);
 
-// render_utils.c
+// raytracing_utils.c
 void			reset_light_flags(t_env *env);
 void			init_offset(double sx[4], double sy[4]);
 t_shade_ctx		set_shade_data(t_obj *obj, t_hit_point hit, t_ray ray);

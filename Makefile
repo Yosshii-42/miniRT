@@ -36,13 +36,14 @@ SRCS	= src/parser/check_element.c \
 		  src/parser/setter_getter.c \
 		  src/parser/utils.c \
 		  src/ui/init_window.c \
+		  src/ui/render.c \
 		  src/ui/close_handler.c \
 		  src/calc/dot_cross_normalize.c \
 		  src/calc/arithmetic_operations.c \
 		  src/calc/vec_length.c \
 		  src/calc/utils.c \
-		  src/raytracing/render.c \
-		  src/raytracing/render_utils.c \
+		  src/raytracing/raytracing.c \
+		  src/raytracing/raytracing_utils.c \
 		  src/raytracing/obj_sphere.c \
 		  src/raytracing/obj_plane.c \
 		  src/raytracing/obj_cylinder.c \

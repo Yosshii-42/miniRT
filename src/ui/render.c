@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:26 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 21:16:43 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 23:40:39 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,59 +16,6 @@
 #include "calc.h"
 #include <mlx.h>
 #include <math.h>
-
-static t_xyz	calc_light_sum_color(t_scene *scene, t_shade_ctx *ctx)
-{
-	t_lit	*tmp_lit;
-	t_xyz	color;
-	int		shadow;
-
-	tmp_lit = scene->lit;
-	init_xyz(&color);
-	while (tmp_lit)
-	{
-		if (tmp_lit->valid_flag)
-		{
-			shadow = calc_shadow(scene->obj, tmp_lit, &ctx->hit);
-			if (shadow == NOT_RENDERED_SHADOW)
-				color = vec_add(color,
-						calc_shade(ctx->obj, tmp_lit, ctx->hit, ctx->ray));
-		}
-		tmp_lit = tmp_lit->next;
-	}
-	return (color);
-}
-
-t_xyz	ray_tracing(t_scene *scene, t_ray cam_ray, int depth)
-{
-	t_hit_point	hit_obj;
-	t_obj		cpy_obj;
-	t_xyz		color;
-	t_shade_ctx	ctx;
-
-	init_xyz(&color);
-	if (depth <= 0)
-		return (make_xyz(0, 0, 0));
-	hit_obj.index = hit_nearest_obj(scene->obj, &cam_ray, &hit_obj);
-	if (hit_obj.index < 0)
-		return (make_xyz(0, 0, 0));
-	cpy_obj = get_indexed_obj(hit_obj.index, scene->obj);
-	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
-	if (cpy_obj.f_bump == ON)
-	{
-		if (cpy_obj.id == SP)
-			hit_obj.norm = apply_bump_sp(&cpy_obj, hit_obj);
-		else
-			hit_obj.norm = apply_bump(&hit_obj);
-	}
-	if (cpy_obj.f_mat_tex == ME)
-		return (calc_metal(scene, cam_ray, &hit_obj, depth));
-	pls_amb_color(&cpy_obj, scene->env, &color, hit_obj);
-	ctx = set_shade_data(&cpy_obj, hit_obj, cam_ray);
-	color = vec_add(color, calc_light_sum_color(scene, &ctx));
-	clamp_xyz(&color, 0, 255);
-	return (color);
-}
 
 static t_xyz	render_sample(t_scene *scene, double x, double y)
 {
