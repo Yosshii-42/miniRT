@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:54 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/26 14:50:33 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 14:24:20 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,21 @@ t_xyz	get_optional_color(t_obj *obj, t_hit_point hit)
 	return (obj->rgb);
 }
 
-unsigned int	get_tex_pixel(t_meta_img *tex, int x, int y)
+unsigned int	get_tex_pixel(t_meta_img *img, int x, int y)
 {
-	char	*dst;
+	char	*pixel;
 
-	dst = tex->addr + (y * tex->line_length + x * (tex->bits_per_pixel / 8));
-	return (*(unsigned int *)dst);
+	if (x < 0)
+		x = 0;
+	if (y < 0)
+		y = 0;
+	if (x >= img->width)
+		x = img->width - 1;
+	if (y >= img->height)
+		y = img->height - 1;
+	pixel = img->addr + y * img->line_length
+		+ x * (img->bits_per_pixel / 8);
+	return (*(unsigned int *)pixel);
 }
 
 t_xyz	color_from_int(unsigned int c)

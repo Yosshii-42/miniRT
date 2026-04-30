@@ -12,7 +12,7 @@ L       15,15,-15		0.5				255,255,255
 
 # Sphere
 ###     xyx             diameter        rgb
-sp      0,0,0         10              255,0,0
+sp      0,0,0         	10              255,0,0
 
 # Plane
 ###     xyz             vector          rgb	

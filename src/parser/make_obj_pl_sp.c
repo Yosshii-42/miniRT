@@ -6,19 +6,11 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:20:25 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/26 15:53:00 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/27 17:35:51 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-// static void	set_image(char *filename, t_obj *new)
-// {
-// 		new->filename = ft_strdup(filename);
-// 	}
-// 	else
-// 		print_error_and_exit("image", "file name error");
-// }
 
 static void	set_tex_or_mat(char **split, t_obj *new)
 {
@@ -54,7 +46,7 @@ void	set_pl_data(char **split, t_obj *new, int part)
 	double	rgb[3];
 
 	if ((part == MANDATORY && new->count != 4)
-		|| (part ==  BONUS && !(new->count == 4 || new->count == 7)))
+		|| (part == BONUS && !(new->count == 4 || new->count == 7)))
 		print_error_and_exit("set_pl_data", "invalid argument count");
 	new->id = PL;
 	set_array(split[1], xyz, OTHER);
@@ -74,7 +66,7 @@ void	set_sp_data(char **split, t_obj *new, int part)
 	double	rgb[3];
 
 	if ((part == MANDATORY && new->count != 4)
-		|| (part ==  BONUS && !(new->count == 4 || new->count == 7)))
+		|| (part == BONUS && !(new->count == 4 || new->count == 7)))
 		print_error_and_exit("set_sp_data", "invalid argument count");
 	new->id = SP;
 	set_array(split[1], xyz, OTHER);

@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/25 16:45:01 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 23:29:27 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@ enum
 	ME
 };
 
-// typedef enum e_material
-// {
-// 	ON,
-// 	OFF,
-// 	METAL,
-// 	CHECKER,
-// 	IMAGE,
-// 	BUMP,
-// 	DEFAULT,
-// }	t_material;
-
 typedef struct s_meta_img
 {
 	void	*img;
@@ -61,7 +50,7 @@ typedef struct s_mlx_env
 	t_meta_img	*img;
 }	t_mlx_env;
 
-typedef struct s_xyx
+typedef struct s_xyz
 {
 	double	x;
 	double	y;
@@ -193,5 +182,26 @@ typedef struct s_shade_ctx
 	t_hit_point	hit;
 	t_ray		ray;
 }	t_shade_ctx;
+
+typedef struct s_bump
+{
+	double	u;
+	double	v;
+	double	du;
+	double	dv;
+	double	h;
+	double	dx;
+	double	dy;
+	double	hx;
+	double	hy;
+	double	strength;
+	t_xyz	norm;
+}	t_bump;
+
+typedef struct s
+{
+	t_xyz	rand_dir;
+	double	roughness;
+}	t_rough;
 
 #endif
