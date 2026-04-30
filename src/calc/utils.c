@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:29:01 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/19 13:25:17 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 20:21:29 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_xyz	make_xyz(double x, double y, double z)
 	return (ret);
 }
 
-t_xyz	refrect(t_xyz v, t_xyz n)
+t_xyz	reflect(t_xyz v, t_xyz n)
 {
 	return (vec_sub(v, vec_scale(n, 2.0 * dot(v, n))));
 }

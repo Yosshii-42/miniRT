@@ -122,7 +122,7 @@ cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
 
 ### [Bonus part] ###
 
-- ### Specular refrection
+- ### Specular reflection
  ![Metal](./image/r_metal.png)
 
 - ### Checker

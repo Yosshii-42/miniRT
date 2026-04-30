@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:26 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/27 16:49:31 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 21:16:43 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ t_xyz	ray_tracing(t_scene *scene, t_ray cam_ray, int depth)
 		return (make_xyz(0, 0, 0));
 	cpy_obj = get_indexed_obj(hit_obj.index, scene->obj);
 	fill_hit_obj(&cpy_obj, cam_ray, &hit_obj);
+	if (cpy_obj.f_bump == ON)
+	{
+		if (cpy_obj.id == SP)
+			hit_obj.norm = apply_bump_sp(&cpy_obj, hit_obj);
+		else
+			hit_obj.norm = apply_bump(&hit_obj);
+	}
 	if (cpy_obj.f_mat_tex == ME)
 		return (calc_metal(scene, cam_ray, &hit_obj, depth));
 	pls_amb_color(&cpy_obj, scene->env, &color, hit_obj);
@@ -74,7 +81,7 @@ static t_xyz	render_sample(t_scene *scene, double x, double y)
 	cam_ray.pos = scene->env->cam_xyz;
 	cam_ray.dir = calc_cam_dir(screen_vec, scene->env->cam_vector);
 	reset_light_flags(scene->env);
-	depth = 2;
+	depth = 5;
 	color = ray_tracing(scene, cam_ray, depth);
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 16:11:02 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/04/30 20:59:40 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ void			get_sp_uv(t_obj *obj, t_hit_point hit, double *u, double *v);
 t_xyz			get_sp_checker_color(t_obj *obj, t_hit_point hit);
 t_xyz			get_sp_texture_color(t_obj *obj, t_hit_point hit,
 					t_meta_img *tex);
+
+// bump.c
+t_xyz			apply_bump(t_hit_point *hit);
+t_xyz			apply_bump_sp(t_obj *obj, t_hit_point hit);
 
 // init.c
 void			init_t_hit_point(t_hit_point *tmp);
