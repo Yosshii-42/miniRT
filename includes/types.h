@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:36 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 23:29:27 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 14:19:44 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,10 +198,18 @@ typedef struct s_bump
 	t_xyz	norm;
 }	t_bump;
 
-typedef struct s
+typedef struct s_rough
 {
 	t_xyz	rand_dir;
 	double	roughness;
 }	t_rough;
+
+typedef struct s_shade_data
+{
+	double	dot_res;
+	double	specular_ref;
+	double	light_dist;
+	double	attenuation;
+}	t_shade_data;
 
 #endif
