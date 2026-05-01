@@ -40,6 +40,7 @@ t_xyz	ray_tracing(t_scene *scene, t_ray cam_ray, int depth)
 
 	if (depth <= 0)
 		return (make_xyz(0, 0, 0));
+	init_xyz(&color);
 	hit_obj.index = hit_nearest_obj(scene->obj, &cam_ray, &hit_obj);
 	if (hit_obj.index < 0)
 		return (make_xyz(0, 0, 0));
@@ -51,7 +52,6 @@ t_xyz	ray_tracing(t_scene *scene, t_ray cam_ray, int depth)
 		return (calc_metal(scene, cam_ray, &hit_obj, depth));
 	pls_amb_color(&cpy_obj, scene->env, &color, hit_obj);
 	ctx = set_shade_data(&cpy_obj, hit_obj, cam_ray);
-	init_xyz(&color);
 	color = vec_add(color, calc_light_sum_color(scene, &ctx));
 	clamp_xyz(&color, 0, 255);
 	return (color);
