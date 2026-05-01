@@ -6,13 +6,13 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:24:54 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/20 01:37:37 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 20:26:09 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
-#include "../../includes/raytracing.h"
-#include "../../includes/calc.h"
+#include "parser.h"
+#include "raytracing.h"
+#include "calc.h"
 
 static void	check_light_and_cam_pos(t_obj *obj, t_lit *lit, t_ray cam_ray)
 {

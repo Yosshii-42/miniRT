@@ -1,5 +1,13 @@
 *This project has been created as part of the 42 curriculum by yotsurud, tamatsuu.*
 
+## overview
+- [Description](#description)
+- [Instructions](#instructions)
+- [Resources](#resources)
+- [Features](#features)
+- [.rt file sample](#sample)
+- [Examples](#examples)
+
 ## Description
 
 The goal of this project is to 
@@ -36,7 +44,7 @@ The goal of this project is to
  - https://jun-networks.hatenablog.com/entry/2021/04/02/043216
  - https://www.youtube.com/watch?v=RIgc5J_ZGu8&list=PLAqGIYgEAxrUO6ODA0pnLkM2UOijerFPv
 
-## Feature list
+## Features
  - Mandatory part
 	 - Ambient lighting
 	 - Camera
@@ -51,7 +59,7 @@ The goal of this project is to
 	 - Another object: cone
 	 - Handle bump map texture: earth.xpm
 
-## .rt file sample
+## Sample
 ```bash
 # Ambient light
 ###     ratio           rgb
@@ -140,6 +148,8 @@ cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
  
 ### Mixed
 <p>
- <img src="./image/r_default.png" width="400">
- <img src="./image/r_mix_objs.png" width="400"><br>
+ <img src="./image/r_default.png"><br><br>
+ <img src="./image/r_mix_objs.png"><br><br>
+ <img src="./image/r_metal_metal.png"><br><br>
+ <img src="./image/r_palace.png">
 </p>
