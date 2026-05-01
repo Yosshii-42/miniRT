@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:10:58 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 23:41:52 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 14:24:11 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define NO_LIGHT 2
 
 // raytracing.c
-// int				render_scene(t_mlx_env *mlx, t_obj *obj, t_env *env);
 t_xyz			ray_tracing(t_scene *scene, t_ray cam_ray, int depth);
 
 // raytracing_utils.c

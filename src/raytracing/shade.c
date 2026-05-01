@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/27 17:11:32 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 14:21:53 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,29 @@ static t_xyz	pls_shade(t_data_set data, double diff_ref, double spec_ref)
 // shade including diffuse reflection and specular reflection
 t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 {
-	double	dot_res;
-	t_xyz	reverse_vec;
-	t_xyz	view_dir;
-	double	specular_ref;
-	t_xyz	incident_dir;
+	t_xyz			reverse_vec;
+	t_xyz			view_dir;
+	t_xyz			incident_dir;
+	t_shade_data	s;
 
-	specular_ref = 0.0;
+	s.specular_ref = 0.0;
 	incident_dir = vec_sub(lit->xyz, hit_obj.pos);
+	s.light_dist = vec_length(incident_dir);
 	incident_dir = normalize(incident_dir);
-	dot_res = fmax(dot(incident_dir, hit_obj.norm), 0.0);
-	if (dot_res > 0)
+	s.attenuation = 1.0 / (1.0 + 0.00005 * s.light_dist * s.light_dist);
+	s.dot_res = fmax(dot(incident_dir, hit_obj.norm), 0.0);
+	s.dot_res *= s.attenuation;
+	if (s.dot_res > 0)
 	{
 		reverse_vec = vec_sub(
-				vec_scale(hit_obj.norm, 2 * dot_res), incident_dir);
+				vec_scale(hit_obj.norm, 2 * s.dot_res), incident_dir);
 		reverse_vec = normalize(reverse_vec);
 		view_dir = normalize(vec_sub(cam_ray.pos, hit_obj.pos));
-		specular_ref = dot(reverse_vec, view_dir);
-		specular_ref = pow(clamp_double(specular_ref, 0.0, 1.0), SHINENESS);
+		s.specular_ref = dot(reverse_vec, view_dir);
+		s.specular_ref = pow(clamp_double(s.specular_ref, 0.0, 1.0), SHINENESS);
+		s.specular_ref *= s.attenuation;
 	}
-	return (pls_shade(set_data(obj, lit, hit_obj), dot_res, specular_ref));
+	return (pls_shade(set_data(obj, lit, hit_obj), s.dot_res, s.specular_ref));
 }
 
 void	pls_amb_color(t_obj *obj, t_env *env, t_xyz *col, t_hit_point hit)
