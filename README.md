@@ -5,12 +5,14 @@
 - [Instructions](#instructions)
 - [Resources](#resources)
 - [Features](#features)
-- [.rt file sample](#sample)
+- [Implementation Details](#implementation_details)
+- [file_sample](#file_sample)
 - [Examples](#examples)
 
 ## Description
 
-The goal of this project is to 
+The goal of this project is to implement ray tracing.
+In simple terms, ray tracing is a technique for tracing light rays. By simulating the intensity, angle, refraction, and reflection of light emitted from a light source using a computer, it is possible to render images that closely resemble the real world.
 
 ## Instructions
 
@@ -36,7 +38,7 @@ The goal of this project is to
 ### Close window
 
  - `ESC button`<br>
- - `-click x mark of the window.`<br>
+ - `click x mark of the window.`<br>
  - `ctrl-C`
 
 ## Resources
@@ -58,8 +60,20 @@ The goal of this project is to
 	 - Colored and multi-spot lights
 	 - Another object: cone
 	 - Handle bump map texture: earth.xpm
+ - Additional Features
+	 - Anti-Aliasing
+	 - Image Texture
+	 - Light Attenuation
+	 - Roughness
 
-## Sample
+## Implementation_Details
+
+### Ambient lighting
+### Camera
+### Light
+### Sphere
+
+## file_Sample
 ```bash
 # Ambient light
 ###     ratio           rgb
