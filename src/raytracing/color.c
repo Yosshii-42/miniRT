@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clamp_utils.c                                      :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:20:15 by tamatsuu          #+#    #+#             */
-/*   Updated: 2025/04/23 19:21:03 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/05/01 20:25:31 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raytracing.h"
+#include "raytracing.h"
 
 unsigned int	clamp(double value, int min, int max)
 {

@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:17:45 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/20 01:48:17 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 20:27:35 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 #include "parser.h"
 #include "raytracing.h"
 
-/*
-** hit_cy_core
-** 円柱全体（側面 + キャップ）の交差判定
-** 1. 側面との交差をチェック
-**    → ヒットしたら最短距離を max に更新
-** 2. キャップ（上面・下面）との交差をチェック
-**    → 側面より近いものがあれば上書き
-** 3. 最終的に最も近い交点を hit に格納
-** ※ cy->max を更新することで「一番近いもの」を維持している
-*/
 static bool	hit_cy_core(t_cy *cy, t_hit_point *hit)
 {
 	t_hit_point	side_hit;
@@ -46,12 +36,6 @@ static bool	hit_cy_core(t_cy *cy, t_hit_point *hit)
 	return (true);
 }
 
-// 軸を正規化
-// top/bottom centerを作る
-//　side
-// cap
-// cap
-// 一番近いものを採用
 double	hit_cylinder(t_obj *obj, t_ray *ray, t_hit_point *h_obj, bool rec_hit)
 {
 	t_cy		cy;

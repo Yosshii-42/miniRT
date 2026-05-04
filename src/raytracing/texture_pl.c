@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_pl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:19:08 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/18 18:19:10 by yotsurud         ###   ########.fr       */
+/*   Updated: 2026/05/01 18:16:18 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_xyz	get_pl_checker_color(t_obj *obj, t_hit_point hit)
 	int		iz;
 	double	scale;
 
-	scale = 0.2;
+	scale = 0.1;
 	ix = (int)floor(hit.pos.x * scale);
 	iz = (int)floor(hit.pos.z * scale);
 	check = (ix + iz) & 1;

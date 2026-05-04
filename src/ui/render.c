@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/18 18:18:26 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 23:40:39 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 17:16:19 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ static t_xyz	render_sample(t_scene *scene, double x, double y)
 	t_xyz	screen_vec;
 	t_xyz	color;
 	t_ray	cam_ray;
-	int		depth;
 
 	set_screen_vector(&screen_vec, x, y, scene->env->cam_degree);
 	cam_ray.pos = scene->env->cam_xyz;
 	cam_ray.dir = calc_cam_dir(screen_vec, scene->env->cam_vector);
 	reset_light_flags(scene->env);
-	depth = 5;
-	color = ray_tracing(scene, cam_ray, depth);
+	color = ray_tracing(scene, cam_ray, DEPTH);
 	return (color);
 }
 

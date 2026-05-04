@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:09:51 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/05/01 14:21:53 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/03 23:49:41 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_xyz	calc_shade(t_obj *obj, t_lit *lit, t_hit_point hit_obj, t_ray cam_ray)
 	incident_dir = vec_sub(lit->xyz, hit_obj.pos);
 	s.light_dist = vec_length(incident_dir);
 	incident_dir = normalize(incident_dir);
-	s.attenuation = 1.0 / (1.0 + 0.00005 * s.light_dist * s.light_dist);
+	s.attenuation = 1.0 / (1.0 + 0.0001 * s.light_dist * s.light_dist);
 	s.dot_res = fmax(dot(incident_dir, hit_obj.norm), 0.0);
 	s.dot_res *= s.attenuation;
 	if (s.dot_res > 0)

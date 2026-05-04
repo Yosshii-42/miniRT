@@ -6,12 +6,12 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:12:31 by tamatsuu          #+#    #+#             */
-/*   Updated: 2026/04/19 00:20:12 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 20:28:44 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raytracing.h"
-#include "../../includes/calc.h"
+#include "raytracing.h"
+#include "calc.h"
 
 int	calc_shadow(t_obj *obj, t_lit *lit, t_hit_point *hit_p)
 {

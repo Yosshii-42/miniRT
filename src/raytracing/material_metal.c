@@ -52,7 +52,7 @@ t_xyz	calc_metal(t_scene *scene, t_ray ray, t_hit_point *hit, int depth)
 	rough.rand_dir = vec_scale(rough.rand_dir, 0.5);
 	if (dot(rough.rand_dir, hit->norm) < 0)
 		rough.rand_dir = vec_scale(rough.rand_dir, -1);
-	rough.roughness = 0.03;
+	rough.roughness = 0.005;
 	ref_ray.dir = normalize(vec_add(dir,
 				vec_scale(rough.rand_dir, rough.roughness)));
 	ref_color = ray_tracing(scene, ref_ray, depth - 1);

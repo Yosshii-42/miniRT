@@ -60,12 +60,16 @@ t_xyz	apply_bump(t_hit_point *hit)
 {
 	t_xyz	norm;
 	double	f;
+	double	g;
 
 	norm = hit->norm;
-	f = sin(hit->pos.x * 3.1 + hit->pos.z * 1.7) * 0.35;
-	f += sin(hit->pos.x * 7.3 - hit->pos.z * 4.9) * 0.25;
-	f += cos(hit->pos.x * 11.1 + hit->pos.z * 8.6) * 0.15;
-	norm.x += 0.15 * f;
-	norm.z += 0.15 * f;
+	f = sin(hit->pos.x * 3.0 + hit->pos.z * 7.0) * 0.3;
+	f += sin(hit->pos.x * 7.0 - hit->pos.z * 5.0) * 0.2;
+	f += cos(hit->pos.x * 6.0 + hit->pos.z * 8.0) * 0.1;
+	g = cos(hit->pos.x * 4.0 - hit->pos.z * 3.0) * 0.3;
+	g += sin(hit->pos.x * 6.0 + hit->pos.z * 9.0) * 0.2;
+	norm.x += 0.06 * f;
+	norm.z += 0.08 * g;
+	norm.y += 0.02 * (f + g);
 	return (normalize(norm));
 }

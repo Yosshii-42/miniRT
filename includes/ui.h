@@ -6,7 +6,7 @@
 /*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 20:08:53 by yotsurud          #+#    #+#             */
-/*   Updated: 2026/04/30 23:41:20 by yosshii          ###   ########.fr       */
+/*   Updated: 2026/05/01 19:48:24 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define W_HEIGHT 450
 # define WIN_TITLE "minirt"
 # define DESTROY_NOTIFY 17
+# define DEPTH 6
 
 // init_window.c
 int		init_window(t_obj *obj, t_env *env);
