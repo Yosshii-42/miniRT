@@ -4,14 +4,14 @@
 - [Description](#description)
 - [Instructions](#instructions)
 - [Resources](#resources)
-- [Features](#features)
-- [Implementation Details](#implementation_details)
-- [file_sample](#file_sample)
+- [Feature List](#feature-list)
+- [Implementation Details](#implementation-details)
+- [RT File_Sample](#rt-file-sample)
 - [Examples](#examples)
 
 ## Description
 
-The goal of this project is to implement ray tracing.
+The goal of this project is to implement a basic ray tracing engine.
 In simple terms, ray tracing is a technique for tracing light rays. By simulating the intensity, angle, refraction, and reflection of light emitted from a light source using a computer, it is possible to render images that closely resemble the real world.
 
 ## Instructions
@@ -23,7 +23,7 @@ In simple terms, ray tracing is a technique for tracing light rays. By simulatin
 
 ### Download minilibx
 
- - `download minilibx files from project page, and put it in the root of this project directory.`
+ - `Download the MiniLibX files from the project page and place them in the root directory of this project.`
 
 ### Compilation
 
@@ -38,7 +38,7 @@ In simple terms, ray tracing is a technique for tracing light rays. By simulatin
 ### Close window
 
  - `ESC button`<br>
- - `click x mark of the window.`<br>
+ - `Click the window close button.`<br>
  - `ctrl-C`
 
 ## Resources
@@ -46,7 +46,8 @@ In simple terms, ray tracing is a technique for tracing light rays. By simulatin
  - https://jun-networks.hatenablog.com/entry/2021/04/02/043216
  - https://www.youtube.com/watch?v=RIgc5J_ZGu8&list=PLAqGIYgEAxrUO6ODA0pnLkM2UOijerFPv
 
-## Features
+## Feature List
+
  - Mandatory part
 	 - Ambient lighting
 	 - Camera
@@ -55,25 +56,108 @@ In simple terms, ray tracing is a technique for tracing light rays. By simulatin
 	 - Plane
 	 - Cylinder
  - Bonus part
-	 - Specular reflection
-	 - color disruption: checkerboard pattern
+	 - Full Phong reflection model
+	 - Checkerboard pattern
 	 - Colored and multi-spot lights
-	 - Another object: cone
-	 - Handle bump map texture: earth.xpm
+	 - Cone
+	 - Bump mapping
  - Additional Features
 	 - Anti-Aliasing
 	 - Image Texture
 	 - Light Attenuation
 	 - Roughness
 
-## Implementation_Details
+## Implementation Details
 
-### Ambient lighting
-### Camera
-### Light
-### Sphere
+### Mandatory Part
+The rendering process follows a standard ray tracing pipeline:
+rays are cast from the camera through each pixel, intersections are computed,
+and lighting is applied based on surface normals and light sources.
 
-## file_Sample
+Key: Ray → Hit → Normal → Lighting
+
+#### Ambient Lighting
+Provides a constant base illumination applied to all objects,
+ensuring that surfaces are visible even without direct light.
+
+#### Camera
+Defines the viewpoint and generates rays through each pixel
+based on position, orientation, and field of view.
+
+#### Light
+Represents a point light source used to compute shading
+based on the angle between the light direction and the surface normal.
+
+#### Sphere
+Intersection is computed by solving a quadratic equation
+derived from the ray-sphere equation.
+
+#### Plane
+Intersection is computed using a linear equation based on
+the plane normal and ray direction.
+
+#### Cylinder
+Intersection is computed using a quadratic equation for the curved surface,
+with additional checks to validate the height and caps.
+
+---
+
+### Bonus Part
+
+Additional features were implemented to enhance visual realism
+and extend the basic ray tracing functionality.
+
+#### Full Phong Reflection Model
+Implements a complete lighting model by combining ambient, diffuse,
+and specular components to simulate realistic surface shading.
+
+#### Checkerboard Pattern
+Generates procedural patterns on surfaces by alternating colors
+based on spatial coordinates.
+
+#### Multiple Lights
+Supports multiple light sources, with each contributing
+independently to the final color.
+
+#### Cone
+Adds support for cone geometry, including intersection tests
+and normal computation.
+
+#### Bump Map
+Simulates surface detail by perturbing the normal vector
+based on a texture or procedural function without modifying geometry.
+
+---
+
+## Additional Features
+
+### Anti-Aliasing
+Multiple rays are cast per pixel and averaged to reduce jagged edges.
+Random sampling improves visual smoothness.
+
+Key: 1 pixel = average
+
+### Image Texture
+Surface points are mapped to UV coordinates to fetch colors from an image.
+Texture color replaces object color.
+
+Key: UV mapping
+
+### Light Attenuation
+Light intensity decreases with distance from the source.
+This adds depth and realism to the scene.
+
+Key: 1 / d²
+
+### Roughness
+Reflection direction is slightly randomized to simulate imperfect surfaces.
+Higher roughness results in blurrier reflections.
+
+Key: blur reflection
+
+---
+
+## RT File Sample
 ```bash
 # Ambient light
 ###     ratio           rgb
