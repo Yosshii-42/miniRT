@@ -1,0 +1,21 @@
+# Ambient light
+###     ratio           rgb
+A       0.2             255,255,255
+
+# Camera
+###     xyz             vector          degree                
+C       0,-5,-60         0,0,1           40
+
+# Light
+###     xyz             ratio           rgb
+L       5,5,-15			0.5				255,255,255
+
+# Sphere
+###     xyx             diameter        rgb				mat & tex		bump		filename			
+sp      -15,0,0         20              255,0,0			checker			OFF			NONE
+sp      15,0,0	         20             0,255,0			checker			OFF			NONE
+
+# # Plane
+# ### 	xyz             vector          rgb	
+pl      0,-20,0       	0,1,0           127,127,127		checker			OFF			NONE
+pl		0,0,40			0,0,1			255,255,255		OFF				OFF			NONE

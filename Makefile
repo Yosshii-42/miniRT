@@ -3,7 +3,7 @@ ifeq ($(UNAME_S), Darwin)
 MLX_DIR	= minilibx_opengl
 LIBS	= -lmlx ./src/libft/libft.a -framework OpenGL -framework AppKit
 else
-MLX_DIR	= mlx_linux
+MLX_DIR	= minilibx_linux
 LIBS	= -lmlx ./src/libft/libft.a -lXext -lX11 -lm -lbsd
 endif
 
@@ -15,6 +15,7 @@ HEADER	= ./includes
 LIBFT_DIR = ./src/libft
 
 CFLAGS	= -Wall -Wextra -Werror -O3
+# CFLAGS  += -fsanitize=address
 IFLAGS	= -I$(HEADER) -I$(MLX_DIR)
 LDFLAGS	= -L$(LIBFT_DIR) -L$(MLX_DIR)
 
@@ -27,29 +28,41 @@ SRCS	= src/parser/check_element.c \
 		  src/parser/init.c\
 		  src/parser/make_env_data.c \
 		  src/parser/make_lit_data.c \
-		  src/parser/make_obj_data.c \
+		  src/parser/make_obj.c \
+		  src/parser/make_obj_pl_sp.c \
+		  src/parser/make_obj_cy_cn.c \
 		  src/parser/parser.c \
 		  src/parser/print_function.c \
 		  src/parser/setter_getter.c \
 		  src/parser/utils.c \
 		  src/ui/init_window.c \
+		  src/ui/render.c \
 		  src/ui/close_handler.c \
-		  src/calc/dot_cross.c \
-		  src/calc/multi_divid_vector.c \
-		  src/calc/plus_minus_vector.c \
-		  src/calc/normalize.c \
-		  src/calc/distance_vector.c \
-		  src/raytracing/ray_intersections.c \
-		  src/raytracing/calc_screen_vector.c \
-		  src/raytracing/calc_distance_obj.c \
-		  src/raytracing/hit_obj_calc.c \
-		  src/raytracing/calc_camera_pos.c \
-		  src/raytracing/calc_shade.c \
-		  src/raytracing/calc_shadow.c \
-		  src/raytracing/check_light_pos.c \
-		  src/raytracing/check_nearest_obj.c \
-		  src/raytracing/clamp_utils.c \
-		  src/raytracing/color_utils.c 
+		  src/calc/dot_cross_normalize.c \
+		  src/calc/arithmetic_operations.c \
+		  src/calc/vec_length.c \
+		  src/calc/utils.c \
+		  src/raytracing/raytracing.c \
+		  src/raytracing/raytracing_utils.c \
+		  src/raytracing/obj_sphere.c \
+		  src/raytracing/obj_plane.c \
+		  src/raytracing/obj_cylinder.c \
+		  src/raytracing/obj_cylinder_core.c \
+		  src/raytracing/obj_cone.c \
+		  src/raytracing/screen.c \
+		  src/raytracing/hit.c \
+		  src/raytracing/hit_utils.c \
+		  src/raytracing/camera.c \
+		  src/raytracing/shade.c \
+		  src/raytracing/shadow.c \
+		  src/raytracing/light.c \
+		  src/raytracing/color.c \
+		  src/raytracing/texture.c \
+		  src/raytracing/texture_pl.c \
+		  src/raytracing/texture_sp.c \
+		  src/raytracing/material_metal.c \
+		  src/raytracing/bump.c \
+		  src/raytracing/init.c
 OBJS_M  = $(SRCS_M:.c=.o)
 OBJS_B  = $(SRCS_B:.c=.o)
 OBJS	= $(SRCS:.c=.o)

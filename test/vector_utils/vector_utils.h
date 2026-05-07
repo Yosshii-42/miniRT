@@ -11,7 +11,7 @@ typedef struct {
 } vector_t;
 
 float dot(const vector_t* a, const vector_t* b);
-float squared_norm(const vector_t*v);
+float vec_length_sq(const vector_t*v);
 
 float norm(const vector_t *v);
 float normalize(vector_t* v);

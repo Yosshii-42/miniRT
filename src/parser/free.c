@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yotsurud <yotsurud@student.42.fr>          #+#  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-12 05:15:54 by yotsurud          #+#    #+#             */
-/*   Updated: 2025/04/12 15:28:38 by yotsurud         ###   ########.fr       */
+/*   Created: 2025/04/12 05:15:54 by yotsurud          #+#    #+#             */
+/*   Updated: 2026/04/17 20:11:03 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "mlx.h"
 
 void	free_split(char **split)
 {
@@ -41,7 +42,7 @@ void	free_lit(t_lit *lit)
 	}
 }
 
-void	free_obj(t_obj *obj)
+void	free_obj(t_obj *obj, t_mlx_env *mlx)
 {
 	t_obj	*tmp;
 
@@ -50,6 +51,13 @@ void	free_obj(t_obj *obj)
 		while (obj)
 		{
 			tmp = obj->next;
+			if (obj->filename)
+				free(obj->filename);
+			if (obj->tex.img)
+			{
+				mlx_destroy_image(mlx->mlx, obj->tex.img);
+				obj->tex.img = NULL;
+			}
 			free(obj);
 			obj = tmp;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamatsuu <tamatsuu@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yosshii <yosshii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:49:41 by tamatsuu          #+#    #+#             */
-/*   Updated: 2025/04/23 13:49:43 by tamatsuu         ###   ########.fr       */
+/*   Updated: 2026/05/01 21:33:03 by yosshii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,18 @@ int	close_btn_click(t_mlx_env *mlx)
 	t_env	*env;
 	t_obj	*obj;
 
+	env = set_get_env(GET, NULL);
+	obj = set_get_obj(GET, NULL);
+	free_obj(obj, mlx);
 	if (mlx->img)
+	{
 		free(mlx->img);
+		mlx->img = NULL;
+	}
 	mlx_destroy_window(mlx->mlx, mlx->window);
 	mlx_destroy_display(mlx->mlx);
 	free(mlx->mlx);
-	env = set_get_env(GET, NULL);
-	obj = set_get_obj(GET, NULL);
 	free_lit(env->lit);
 	free(env);
-	free_obj(obj);
 	exit(0);
 }
