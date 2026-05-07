@@ -16,8 +16,8 @@
 # include "parser.h"
 # include "types.h"
 
-# define W_WIDTH 800
-# define W_HEIGHT 450
+# define W_WIDTH 1600
+# define W_HEIGHT 900
 # define WIN_TITLE "minirt"
 # define DESTROY_NOTIFY 17
 # define DEPTH 6

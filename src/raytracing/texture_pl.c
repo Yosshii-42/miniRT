@@ -41,11 +41,11 @@ t_xyz	get_pl_checker_color(t_obj *obj, t_hit_point hit)
 	int		check;
 	int		ix;
 	int		iz;
-	double	scale;
+	// double	scale;
 
-	scale = 0.1;
-	ix = (int)floor(hit.pos.x * scale);
-	iz = (int)floor(hit.pos.z * scale);
+	// scale = 0.1;
+	ix = (int)floor(hit.pos.x * SCALE_PL);
+	iz = (int)floor(hit.pos.z * SCALE_PL);
 	check = (ix + iz) & 1;
 	if (check == 0)
 		return (make_xyz(255.0, 255.0, 255.0));

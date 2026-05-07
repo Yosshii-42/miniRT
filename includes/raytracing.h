@@ -19,6 +19,9 @@
 # define SHINENESS 16
 # define NO_HIT -99
 # define MAX_DIST 65535
+# define SCALE_PL 0.2
+# define SCALE_SP 20
+# define ROUGHNESS
 
 # define M_PI 3.14159265358979323846
 # define RENDERED_SHADOW 0

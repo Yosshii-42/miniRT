@@ -8,7 +8,7 @@ C       0,-5,-60         0,0,1           40
 
 # Light
 ###     xyz             ratio           rgb
-L       5,5,-15			0.7				255,255,255
+L       5,5,-15			0.8				255,255,255
 
 # Sphere
 ###     xyx             diameter        rgb				mat & tex		bump		filename			

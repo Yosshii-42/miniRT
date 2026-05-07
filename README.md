@@ -242,6 +242,7 @@ cy      10,0,0			0,1.0,0.0		7.2            	21.42           0,0,255
 
 - ### Handle bump map texture
  ![Bump](./image/r_bump.png)
+ ![Bump](./image/r_bump_checker.png)
 
  
 ### Mixed
