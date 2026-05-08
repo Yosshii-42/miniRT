@@ -23,6 +23,8 @@ static double	get_bump_height(t_meta_img *img, double u, double v)
 
 	if (!img || !img->addr || img->width <= 0 || img->height <= 0)
 		return (0.0);
+  u = u - floor(u);
+  v = v - floor(v);
 	x = (int)(u * (img->width - 1));
 	y = (int)(v * (img->height - 1));
 	color = get_tex_pixel(img, x, y);
@@ -62,7 +64,7 @@ t_xyz	apply_bump_sp(t_obj *obj, t_hit_point hit)
 		tangent = normalize(cross((t_xyz){0, 1, 0}, norm));
 	else
 		tangent = normalize(cross((t_xyz){1, 0, 0}, norm));
-	bitangent = cross(norm, tangent);
+	bitangent = normalize(cross(norm, tangent));
 	norm = vec_add(norm, vec_scale(tangent, bump.dx * bump.strength));
 	norm = vec_add(norm, vec_scale(bitangent, bump.dy * bump.strength));
 	return (normalize(norm));
@@ -75,13 +77,13 @@ t_xyz	apply_bump(t_hit_point *hit)
 	double	g;
 
 	norm = hit->norm;
-	f = sin(hit->pos.x * 3.0 + hit->pos.z * 7.0) * 0.3;
-	f += sin(hit->pos.x * 7.0 - hit->pos.z * 5.0) * 0.2;
-	f += cos(hit->pos.x * 6.0 + hit->pos.z * 8.0) * 0.1;
-	g = cos(hit->pos.x * 4.0 - hit->pos.z * 3.0) * 0.3;
-	g += sin(hit->pos.x * 6.0 + hit->pos.z * 9.0) * 0.2;
-	norm.x += 0.06 * f;
-	norm.z += 0.08 * g;
-	norm.y += 0.02 * (f + g);
+	f = sin(hit->pos.x * 2.0 + hit->pos.z * 4.0) * 0.15;
+	f += sin(hit->pos.x * 4.0 - hit->pos.z * 3.0) * 0.1;
+	f += cos(hit->pos.x * 3.0 + hit->pos.z * 4.0) * 0.07;
+	g = cos(hit->pos.x * 2.0 - hit->pos.z * 2.0) * 0.15;
+	g += sin(hit->pos.x * 3.0 + hit->pos.z * 5.0) * 0.1;
+	norm.x += 0.03 * f;
+	norm.z += 0.04 * g;
+	norm.y += 0.01 * (f + g);
 	return (normalize(norm));
 }

@@ -8,7 +8,7 @@ C       0,5,-30         0,0,1           60
 
 # Light
 ###     xyz             ratio           rgb
-L       15,3,-5     0.5             255,255,255
+L       15,3,-5     0.7             255,255,255
 
 # Sphere
 ###     xyx             diameter        rgb
