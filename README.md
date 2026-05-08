@@ -167,7 +167,7 @@ L  15,15,-15 0.5          255,255,255
 
 # Sphere
 ## xyz       diameter     rgb          mat & tex  bump    filename			
-sp -15,0,0   20           255,0,0	     metal      ON      NONE
+sp -15,0,0   20           255,0,0      metal      ON      NONE
 sp 0,0,0     10           255,0,0
 
 # Plane
