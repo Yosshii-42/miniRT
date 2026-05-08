@@ -154,33 +154,33 @@
 ## RT File Sample
 ```bash
 # Ambient light
-###     ratio           rgb
-A       0.1             255,255,255
+## ratio     rgb
+A  0.1       255,255,255
 
 # Camera
-###     xyz             vector          degree                
-C       0,-5,-60        0,0,1           40
+## xyz       vector       degree                
+C  0,-5,-60  0,0,1        40
 
 # Light
-###     xyz             ratio           rgb
-L       15,15,-15       0.5             255,255,255
+## xyz       ratio        rgb
+L  15,15,-15 0.5          255,255,255
 
 # Sphere
-###     xyz             diameter        rgb         mat & tex   bump    filename			
-sp      -15,0,0         20              255,0,0	    metal       ON      NONE
-sp      0,0,0           10              255,0,0
+## xyz       diameter     rgb          mat & tex  bump    filename			
+sp -15,0,0   20           255,0,0	     metal      ON      NONE
+sp 0,0,0     10           255,0,0
 
 # Plane
-###     xyz             vector          rgb	
-pl      0,-20,0         0,1,0           0,255,0
+## xyz       vector       rgb	
+pl 0,-20,0   0,1,0        0,255,0
 
 # Cylinder
-###     xyz             vector          diameter        height          rgb	
-cy      10,0,0          0,1.0,0.0       7.2             21.42           0,0,255
+## xyz       vector       diameter     height     rgb	
+cy 10,0,0    0,1.0,0.0    7.2          21.42      0,0,255
 
 # Cone
-###     xyz             vector          diameter        height          rgb	
-cn      -15,0,0         1.0,0.0,0.0     7.2            	21.42           255,0,255
+## xyz       vector       diameter     height     rgb	
+cn -15,0,0   1.0,0.0,0.0  7.2          21.42      255,0,255
 ```
 
 ---
