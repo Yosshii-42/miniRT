@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by yotsurud, tamatsuu.*
+*This project has been created as part of the 42 curriculum by tamatsuu, yotsurud.*
 
 ## Overview
   - [Description](#description)
