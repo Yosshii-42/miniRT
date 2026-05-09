@@ -4,7 +4,7 @@
 miniRT
 miniRT_bonus
 out
-test/*
+test/
 vector_utils/*
 minilibx-linux/
 
