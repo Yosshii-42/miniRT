@@ -1,9 +1,9 @@
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
-MLX_DIR	= minilibx_opengl
+MLX_DIR	= minilibx-opengl
 LIBS	= -lmlx ./src/libft/libft.a -framework OpenGL -framework AppKit
 else
-MLX_DIR	= minilibx_linux
+MLX_DIR	= minilibx-linux
 LIBS	= -lmlx ./src/libft/libft.a -lXext -lX11 -lm -lbsd
 endif
 
