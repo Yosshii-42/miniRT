@@ -34,10 +34,8 @@ t_xyz	get_sp_checker_color(t_obj *obj, t_hit_point hit)
 	double	v;
 	int		iu;
 	int		iv;
-	// double	scale;
 
 	get_sp_uv(obj, hit, &u, &v);
-	// scale = 20.0;
 	iu = (int)floor(u * SCALE_SP);
 	iv = (int)floor(v * SCALE_SP);
 	if (((iu + iv) & 1) == 0)

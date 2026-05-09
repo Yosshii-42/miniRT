@@ -23,8 +23,8 @@ static double	get_bump_height(t_meta_img *img, double u, double v)
 
 	if (!img || !img->addr || img->width <= 0 || img->height <= 0)
 		return (0.0);
-  u = u - floor(u);
-  v = v - floor(v);
+	u = u - floor(u);
+	v = v - floor(v);
 	x = (int)(u * (img->width - 1));
 	y = (int)(v * (img->height - 1));
 	color = get_tex_pixel(img, x, y);
